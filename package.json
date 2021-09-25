@@ -1,0 +1,26 @@
+{
+  "name": "tidewave",
+  "version": "1.0.0",
+  "description": "",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhren-byte/tidewave.git"
+  },
+  "keywords": [],
+  "author": "zhren,ahazel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhren-byte/tidewave/issues"
+  },
+  "homepage": "https://github.com/zhren-byte/tidewave#readme",
+  "dependencies": {
+    "ascii-table": "^0.0.9",
+    "canvas": "^2.8.0",
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0"
+  }
+}
