@@ -18,12 +18,14 @@
   },
   "homepage": "https://github.com/zhren-byte/tidewave#readme",
   "dependencies": {
+    "@discordjs/builders": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "ascii-table": "^0.0.9",
     "canvas": "^2.8.0",
     "discord-api-types": "^0.23.1",
     "discord.js": "^13.1.0",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "fs": "^0.0.1-security"
   },
   "devDependencies": {
     "eslint": "^7.32.0"
