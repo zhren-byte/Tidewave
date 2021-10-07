@@ -9,9 +9,9 @@ const token = process.env.TOKEN;
 const ascii = require("ascii-table");
 let table = new ascii("Comandos");
 const commands = [];
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync('./interactions').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
+	const command = require(`./interactions/${file}`);
 	commands.push(command.data.toJSON());
 	if (command.name) {
 		table.addRow(file);
