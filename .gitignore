@@ -21,6 +21,8 @@ Thumbs.db
 
 # Node modules
 /node_modules
+/assets
+/utils
 
 # Coveralls
 coverage
@@ -56,9 +58,8 @@ build/Release
 
 # Dependency directories
 node_modules
-/utils
 jspm_packages
-/assets
+
 # Optional npm cache directory
 .npm
 
