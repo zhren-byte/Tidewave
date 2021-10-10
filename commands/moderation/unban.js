@@ -3,7 +3,7 @@ module.exports = {
     name: 'unban',
     aliases: ['pardon', 'desban'],
     description: 'desbanea al wachin desterrado',
-    category: 'modCommands',
+    category: 'moderation',
     run: async (client, message, args) => {
     const channel = client.channels.cache.get('675585949983440897')
     if(!message.member.hasPermission(["BAN_MEMBERS", "ADMINISTRATOR"])) return message.channel.send("No tienes permiso para utilizar este comando")

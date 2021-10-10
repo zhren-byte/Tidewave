@@ -1,10 +1,10 @@
-// const db = require("megadb");
-// let warns_db = new db.crearDB("warns");
+
 const Discord = require("discord.js");
 module.exports = {
     name: 'warn',
     aliases: ['w', 'adv'],
     description: 'destierra del server al wachin seleccionado',
+    category: 'moderation',
     run: async (client, message, args) => {
         var prms = message.member.hasPermission("KICK_MEMBERS")
         let warneado = message.mentions.users.first();

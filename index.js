@@ -12,6 +12,9 @@ const client = new Client({
 		Intents.FLAGS.GUILD_VOICE_STATES
 	]
 })
+//mongoose
+client.mongoose = require('./utils/mongoose');
+const Guild = require('./models/guild');
 //Handler Interactions
 client.interactions = new Collection();
 const interactionFiles = fs.readdirSync('./interactions').filter(file => file.endsWith('.js'));
@@ -22,6 +25,7 @@ for (const file of interactionFiles) {
 //Handler Commands
 client.commands  = new Collection();
 client.aliases = new Collection();
+client.categories = fs.readdirSync('./commands/');
 ["command"].forEach(handler => {
 	require(`./handler/${handler}`)(client);
 });
@@ -29,10 +33,11 @@ client.aliases = new Collection();
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 for (const file of eventFiles) {
 	const event = require(`./events/${file}`);
+	console.log(`Evento: '${event.name}'`);
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args));
 	} else {
-		client.on(event.name, (...args) => event.execute(...args));
+		client.on(event.name, (...args) => event.execute(client, ...args));
 	}
 }
 
@@ -43,15 +48,34 @@ client.on('interactionCreate', async interaction => {
 	try {
 		await command.execute(interaction);
 	} catch (error) {
-		console.error(error);
 		return interaction.reply({ content: 'Ocurrio un error al ejecutar el comando', ephemeral: true });
 	}
 });
 
 client.on('messageCreate', async (message) => {
 	if(!message.guild) return;
-	let prefix = '>'
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	if(message.author.bot)return;
+	const settings = await Guild.findOne({
+        guildID: message.guild.id
+    }, (err, guild) => {
+        if (err) console.error(err)
+        if (!guild) {
+            const newGuild = new Guild({
+                _id: mongoose.Types.ObjectId(),
+                guildID: message.guild.id,
+                guildName: message.guild.name,
+                prefix: '>',
+                logChannelID: null,
+                muteRoleID: null,
+                autoRoleID: null,
+            })
+            newGuild.save()
+            .then(result => console.log(result))
+            .catch(err => console.error(err));
+        }
+    });
+	let prefix = settings.prefix;
+	if (!message.content.startsWith(prefix)) return;
 	if (!message.member) message.member = await message.guild.fetchMember(message)
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);
 	const cmd = args.shift().toLowerCase();
@@ -61,9 +85,10 @@ client.on('messageCreate', async (message) => {
 	try {
 		await commando.execute(client, message, args);
 	} catch (error) {
-		console.error(error);
-		return message.reply({ content: 'Ocurrio un error al ejecutar el comando', ephemeral: true });
+		console.log(error);
+		return message.reply({ content: 'El comando ejecutado no es correcto', ephemeral: true });
 	}
 });
 
+client.mongoose.init();
 client.login(process.env.TOKEN)

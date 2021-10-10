@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 module.exports = {
 name: "ping",
 aliases: [],
-category: "modCommands",
+category: "admin",
 description: "Command description",
 usage: "[args input]",
    run: async (client, message, args) => {

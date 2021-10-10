@@ -1,7 +1,7 @@
 const { readdirSync } = require("fs");
 const ascii = require("ascii-table");
 let table = new ascii("Comandos");
-table.setHeading("Comando", "Estado", "Categoria");
+table.setHeading("Comando", "Estado");
 module.exports = (client) => {
     readdirSync("./commands/").forEach(dir => {
         const commands = readdirSync(`./commands/${dir}/`).filter(file => file.endsWith(".js"));

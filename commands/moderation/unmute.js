@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 module.exports = {
   name: 'unmute',
   description: 'lo demutea al wachin muteado',
+  category: 'moderation',
   run: async (client, message, args) => { 
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("No tienes permisos para hacer esto.");
     let member = message.mentions.members.first();

@@ -2,6 +2,7 @@ const Discord = require("discord.js")
 module.exports = {
     name: 'ban',
     aliases: ['desterrar', 'expatriar','b'],
+    category: 'moderation',
     description: 'destierra del server al wachin seleccionado',
     run: async (client, message, args) => {
         const channel = client.channels.cache.get('675585949983440897')
@@ -19,7 +20,7 @@ module.exports = {
 	      .setAuthor(`O'Connor`, client.user.avatarURL())
         .setDescription(`**Miembro:** ${user} (${user.id})\n **Accion:** Mute\n**Razon:** ${reason}\n **Moderador:** ${message.author.username}`)
         .setTimestamp()
-        channel.send(embed)
+        channel.send({ embeds: [embed] });
         }).catch(err => {
           message.reply("No he podido banear al miembro");
         })

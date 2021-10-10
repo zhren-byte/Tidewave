@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 module.exports = {
     name: 'kick',
     aliases: ['k', 'expulsar'],
-    category: 'modCommands', 
+    category: 'moderation',
     description: 'expulsa a un wachin seleccionado',
     run: async (client, message, args) => {
         const channel = client.channels.cache.get('675585949983440897')
