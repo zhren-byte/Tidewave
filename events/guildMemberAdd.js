@@ -7,16 +7,16 @@ module.exports = {
 	on: true,
     async execute(client, member){
     welcomeSet = await Guild.findOne({
-        guildID: member.guild.id
+        _id: member.guild.id
     });
-    var autoRoleBot = '891140384196009994';
+    const autoRoleBot = welcomeSet.botRoleID;
     if (member.user.bot) return member.roles.add(autoRoleBot);
     const channel = client.channels.cache.get(welcomeSet.welcomeChannelID)
     if (!channel) return;
     x++ % 3 + 1;
     registerFont('assets/seagram.ttf', { family: 'Seagram' })
     registerFont('assets/dalgona.ttf', { family: 'Dalgona' })
-    var autoRole = '891140387157184512';
+    var autoRole = welcomeSet.autoRoleID;
     member.roles.add(autoRole);
     const applyText = (canvas, text) => {
         const ctx = canvas.getContext('2d');

@@ -7,7 +7,7 @@ category: 'moderation',
 description: 'Le quita el derecho a la voz a todo aquel que le sobe el miembro a algún admin',
 async execute(client, message, args) {
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send("No tienes permisos para hacer esto.");
-		warningSet = await Guild.findOne({guildID: message.guild.id});
+		warningSet = await Guild.findOne({_id: message.guild.id});
 		let channel = client.channels.cache.get(warningSet.logChannelID) || message.channel
 		let user = message.mentions.users.first() || message.guild.members.cache.get(args[0]);
     let role = message.guild.roles.cache.find(r => r.id == '891140387954118706')

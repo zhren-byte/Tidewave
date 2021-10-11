@@ -7,7 +7,7 @@ category: 'moderation',
 description: 'Expulsa de la comunidad yacente a aquel que haya perturbado su armonía como un pelotudo',
 async execute(client, message, args) {
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send("No tienes permisos para hacer esto.");
-		warningSet = await Guild.findOne({guildID: message.guild.id});
+		warningSet = await Guild.findOne({_id: message.guild.id});
 		let channel = client.channels.cache.get(warningSet.logChannelID) || message.channel
 		let user = message.mentions.users.first() || message.guild.members.cache.get(args[0]);
 		let mod = message.author.username;

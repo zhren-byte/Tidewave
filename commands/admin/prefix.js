@@ -11,13 +11,12 @@ module.exports = {
     async execute (client, message, args) {
         message.delete();
         const settings = await Guild.findOne({
-            guildID: message.guild.id
+            _id: message.guild.id
         }, (err, guild) => {
             if (err) console.error(err)
             if (!guild) {
                 const newGuild = new Guild({
-                    _id: mongoose.Types.ObjectId(),
-                    guildID: message.guild.id,
+                    _id: message.guild.id,
                     guildName: message.guild.name,
                     prefix: process.env.PREFIX
                 })

@@ -57,24 +57,17 @@ client.on('interactionCreate', async interaction => {
 client.on('messageCreate', async (message) => {
 	if(!message.guild) return;
 	if(message.author.bot)return;
-	const settings = await Guild.findOne({
-        guildID: message.guild.id
-    }, (err, guild) => {
-        if (err) console.error(err)
-        if (!guild) {
-            const newGuild = new Guild({
-                _id: message.guild.id,
-                guildID: message.guild.id,
-                guildName: message.guild.name,
-                prefix: '>',
-                logChannelID: null,
-                muteRoleID: null,
-                autoRoleID: null,
-            })
-            newGuild.save()
-            .then(result => console.log(result))
-            .catch(err => console.error(err));
-        }
+	const settings = await Guild.findOne({_id: message.guild.id}, (err, guild) => {
+    if (err) console.error(err)
+    if (!guild) {
+        const newGuild = new Guild({
+            _id: message.guild.id,
+            guildName: message.guild.name,
+            prefix: '>',
+        })
+        newGuild.save()
+        .catch(err => console.error(err));
+    }
     });
 	const userSet = await User.findOne({
         guildID: message.guild.id,
@@ -93,7 +86,7 @@ client.on('messageCreate', async (message) => {
             .catch(err => console.error(err));
         }
     });
-	let prefix = settings.prefix;
+	let prefix = settings.prefix || '>';
 	if (!message.content.startsWith(prefix)) return;
 	if (!message.member) message.member = await message.guild.fetchMember(message)
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);

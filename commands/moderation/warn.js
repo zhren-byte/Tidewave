@@ -9,7 +9,7 @@ category: 'moderation',
 async execute(client, message, args) {
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send("No tienes permisos para hacer esto.");
 		//canal
-		warningSet = await Guild.findOne({guildID: message.guild.id});
+		warningSet = await Guild.findOne({_id: message.guild.id});
 		let channel = client.channels.cache.get(warningSet.logChannelID) || message.channel
 		//usuario
 		let user = message.mentions.users.first() || message.guild.members.cache.get(args[0]);
@@ -22,7 +22,7 @@ async execute(client, message, args) {
 		warnSet = await User.findOne({_id: user.id}, (err, usuario) => {
 			if (err) console.error(err)
 			if (!usuario) {
-					const newUser = new User({
+				const newUser = new User({
 					_id: user.id,
 					guildID: message.guild.id,
 					userName: user.username,
@@ -33,7 +33,7 @@ async execute(client, message, args) {
 					const warnembed = new MessageEmbed()
 					.setColor('#ff0000')
 					.setAuthor(`Tidewave`, client.user.avatarURL())
-					.setDescription(`**Miembro:** ${user} (${user.id})\n**Accion:** Warn\n**Razon:** ${reason}\n**Warns:** ${usuario.warns}\n**Moderador:** ${mod}`)
+					.setDescription(`**Miembro:** ${user} (${user.id})\n**Accion:** Warn\n**Razon:** ${reason}\n**Warns:** 1\n**Moderador:** ${mod}`)
 					.setTimestamp()
 					return channel.send({ embeds: [warnembed] })
 			}else{
@@ -42,10 +42,10 @@ async execute(client, message, args) {
 					})
 					.catch(err => console.error(err));
 					const warnembed = new MessageEmbed()
-					.setColor('#ff0000')
-					.setAuthor(`Tidewave`, client.user.avatarURL())
-					.setDescription(`**Miembro:** ${user} (${user.id})\n**Accion:** Warn\n**Razon:** ${reason}\n**Warns:** ${usuario.warns}\n**Moderador:** ${mod}`)
-					.setTimestamp()
+						.setColor('#ff0000')
+						.setAuthor(`Tidewave`, client.user.avatarURL())
+						.setDescription(`**Miembro:** ${user} (${user.id})\n**Accion:** Warn\n**Razon:** ${reason}\n**Warns:** ${(usuario.warns)+1}\n**Moderador:** ${mod}`)
+						.setTimestamp()
 					return channel.send({ embeds: [warnembed] })
 			}
 		});

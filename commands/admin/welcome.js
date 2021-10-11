@@ -12,13 +12,12 @@ module.exports = {
         if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send('No tienes permisos para utilizar este comando')
         const channel = await message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
         welcomeSet = await Guild.findOne({
-            guildID: message.guild.id
+            _id: message.guild.id
         }, async (err, guild) => {
             if (err) console.error(err);
             if (!guild) {
                 const newGuild = new Guild({
-                    _id: mongoose.Types.ObjectId(),
-                    guildID: message.guild.id,
+                    _id: message.guild.id,
                     guildName: message.guild.name,
                     welcomeChannelID: channel.id
                 });
