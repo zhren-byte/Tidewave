@@ -10,6 +10,7 @@ const guildSchema = mongoose.Schema({
     sugestionChannelID: String,
     muteRoleID: String,
     autoRoleID: String,
+    botRoleID: String
 });
 
 module.exports = mongoose.model('Guild', guildSchema, 'guilds');

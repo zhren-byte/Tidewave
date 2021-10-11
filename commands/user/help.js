@@ -37,7 +37,7 @@ async function helpMSG(client, message) {
         guildID: message.guild.id
     });
     const embed = new MessageEmbed()
-        .setColor(process.env.COLOR)
+        .setColor('#ffffff')
         .setTitle('O-Connor')
         .setThumbnail(client.user.avatarURL())
         .setDescription(`Para ver la lista completa de comandos: \`${guildDB.prefix}commands\` \n\n`)

@@ -1,23 +1,28 @@
-const Discord = require("discord.js")
+const {MessageEmbed, Permissions} = require("discord.js")
+const Guild = require('../../models/guild');
 module.exports = {
-  name: 'mute',
-  description: 'se le asigna el rol de muteado al wachin porque juy todavia no sabe como hacer para que tengamos que elegir el rol jaja',
-  aliases: ['silenciar', 'enmudecer'],
-  category: 'moderation',
-  run: async (client, message, args) => { 
-    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("No tienes permisos para hacer esto.");
-    let member = message.mentions.members.first();
-    let role = message.guild.roles.cache.find(r => r.id == '691040456758394941')
-    member.roles.add(role).catch(console.error);
-    let reason = args.slice(1).join(" ");
-    if (!reason) reason = "No hay razón provista."
-    const channel = client.channels.cache.get('675585949983440897')
-    const embed = new Discord.MessageEmbed()
-	        .setColor('#ff0000')
-	        .setAuthor(`O'Connor`, client.user.avatarURL())
-          .setDescription(`**Miembro:** ${member} (${member.id})\n **Accion:** Mute\n**Razon:** ${reason}\n **Moderador:** ${message.author.username}`)
-          .setTimestamp()
-    channel.send(embed)
+name: 'mute',
+aliases: ['silenciar', 'm'],
+category: 'moderation',
+description: 'Le quita el derecho a la voz a todo aquel que le sobe el miembro a algún admin',
+async execute(client, message, args) {
+		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send("No tienes permisos para hacer esto.");
+		warningSet = await Guild.findOne({guildID: message.guild.id});
+		let channel = client.channels.cache.get(warningSet.logChannelID) || message.channel
+		let user = message.mentions.users.first() || message.guild.members.cache.get(args[0]);
+    let role = message.guild.roles.cache.find(r => r.id == '891140387954118706')
+		let mod = message.author.username;
+		let reason = args.slice(1).join(" ");
+		if (!user) return message.channel.send("Utilice el ID de un usuario.");
+		if (user.id === message.author.id) return message.channel.send("No te puedes expulsar a ti mismo.");
+		if (user.id === client.user.id) return message.channel.send("No puedes expulsarme.");
+		if (!reason) reason = "No hay razón provista";
+    (user.id).roles.add(role).catch(console.error);
+		const muteembed = new MessageEmbed()
+				.setColor('#ff0000')
+				.setAuthor(`Tidewave`, client.user.avatarURL())
+				.setDescription(`**Miembro:** ${user} (${user.id})\n **Accion:** Mute\n**Razon:** ${reason}\n **Moderador:** ${mod}`)
+				.setTimestamp()
+		channel.send({ embeds: [muteembed] });
   }
 }
-  

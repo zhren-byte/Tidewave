@@ -13,8 +13,10 @@ const client = new Client({
 	]
 })
 //mongoose
+const mongoose = require('mongoose')
 client.mongoose = require('./utils/mongoose');
 const Guild = require('./models/guild');
+const User = require('./models/user');
 //Handler Interactions
 client.interactions = new Collection();
 const interactionFiles = fs.readdirSync('./interactions').filter(file => file.endsWith('.js'));
@@ -61,7 +63,7 @@ client.on('messageCreate', async (message) => {
         if (err) console.error(err)
         if (!guild) {
             const newGuild = new Guild({
-                _id: mongoose.Types.ObjectId(),
+                _id: message.guild.id,
                 guildID: message.guild.id,
                 guildName: message.guild.name,
                 prefix: '>',
@@ -70,6 +72,23 @@ client.on('messageCreate', async (message) => {
                 autoRoleID: null,
             })
             newGuild.save()
+            .then(result => console.log(result))
+            .catch(err => console.error(err));
+        }
+    });
+	const userSet = await User.findOne({
+        guildID: message.guild.id,
+		_id: message.author.id
+    }, (err, user) => {
+        if (err) console.error(err)
+        if (!user) {
+            const newUser = new User({
+                _id: message.author.id,
+    			guildID: message.guild.id,
+    			userName: message.author.username,
+    			warns: 0
+            })
+            newUser.save()
             .then(result => console.log(result))
             .catch(err => console.error(err));
         }
