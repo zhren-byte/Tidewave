@@ -1,6 +1,4 @@
 const fs = require('fs');
-const dotenv = require('dotenv');
-dotenv.config()
 const { Client, Collection, Intents } = require('discord.js');
 const client = new Client({
 	intents: [
@@ -63,7 +61,7 @@ client.on('messageCreate', async (message) => {
         const newGuild = new Guild({
             _id: message.guild.id,
             guildName: message.guild.name,
-            prefix: '>',
+            prefix: process.env.PREFIX,
         })
         newGuild.save()
         .catch(err => console.error(err));
@@ -86,7 +84,7 @@ client.on('messageCreate', async (message) => {
             .catch(err => console.error(err));
         }
     });
-	let prefix = settings.prefix || '>';
+	let prefix = settings.prefix || process.env.PREFIX;
 	if (!message.content.startsWith(prefix)) return;
 	if (!message.member) message.member = await message.guild.fetchMember(message)
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);
