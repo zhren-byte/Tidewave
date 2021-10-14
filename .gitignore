@@ -21,9 +21,6 @@ Thumbs.db
 
 # Node modules
 /node_modules
-/assets
-/utils
-
 # Coveralls
 coverage
 
