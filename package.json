@@ -3,16 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "16.x",
+    "npm": "*"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zhren-byte/tidewave.git"
   },
-  "keywords": [],
-  "author": "zhren,ahazel",
+  "keywords": [
+    "heroku",
+    "discord.js"
+  ],
+  "author": "zhren, ahazel",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/zhren-byte/tidewave/issues"
