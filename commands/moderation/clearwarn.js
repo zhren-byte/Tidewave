@@ -26,7 +26,7 @@ async execute(client, message, args) {
 		const warnembed = new MessageEmbed()
 			.setColor('#4697e1')
 			.setAuthor(`Tidewave`, client.user.avatarURL())
-			.setDescription(`**Miembro:** ${user} (${user.id})\n**Accion:** UnWarn\n**Razon:** ${reason}\n**Warns:** 0\n**Moderador:** ${mod}`)
+			.setDescription(`**Miembro:** ${user} (${user.id})\n**Accion:** Clear Warn\n**Razon:** ${reason}\n**Warns:** 0\n**Moderador:** ${mod}`)
 			.setTimestamp()
 		if (!usuario) {
 			const newUser = new User({

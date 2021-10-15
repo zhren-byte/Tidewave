@@ -24,7 +24,12 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
-        if (!autoRole) return message.channel.send(`Rol automatico: \`${message.guild.roles.cache.get(autoRoleSettings.autoRoleID)}\``);
+        const autoRoleEmbed = new MessageEmbed()
+            .setColor('#ffffff')
+            .setThumbnail(icon)
+            .addField('Auto Role', `${message.guild.roles.cache.get(autoRoleSettings.autoRoleID)}`)
+            .setFooter('Tidewave', avtTW);
+        if (!channel) return message.channel.send({ embeds: [autoRoleEmbed] });
         await autoRoleSettings.updateOne({
             autoRoleID: autoRole.id
         });

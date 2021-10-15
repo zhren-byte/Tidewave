@@ -25,7 +25,13 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
-        if (!channel) return message.channel.send(`Logs: \`${message.guild.roles.cache.get(autoRoleSettings.logChannelID)}\``)
+        let icon = message.guild.iconURL() || client.user.avatarURL();
+        const warningEmbed = new MessageEmbed()
+            .setColor('#ffffff')
+            .setThumbnail(icon)
+            .addField('Warnings', `${message.guild.roles.cache.get(autoRoleSettings.logChannelID)}`)
+            .setFooter('Tidewave', avtTW);
+        if (!channel) return message.channel.send({ embeds: [warningEmbed] })
         await warningSet.updateOne({
             logChannelID: channel.id
         });

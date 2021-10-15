@@ -25,7 +25,12 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
-        if (!muteRole) return message.channel.send(`Rol muteo: \`${message.guild.roles.cache.get(autoRoleSettings.muteRoleID)}\``)
+        const muteRoleEmbed = new MessageEmbed()
+            .setColor('#ffffff')
+            .setThumbnail(icon)
+            .addField('Mute Role', `${message.guild.roles.cache.get(muteRoleSettings.muteRoleID)}`)
+            .setFooter('Tidewave', avtTW);
+        if (!channel) return message.channel.send({ embeds: [muteRoleEmbed] })
         await muteRoleSettings.updateOne({
             muteRoleID: muteRole.id
         });

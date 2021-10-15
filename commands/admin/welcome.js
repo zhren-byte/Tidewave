@@ -25,7 +25,13 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
-        if (!channel) return message.channel.send(`Welcome:\`${message.guild.roles.cache.get(autoRoleSettings.welcomeChannelID)}\``)
+        let icon = message.guild.iconURL() || client.user.avatarURL();
+        const welcomeEmbed = new MessageEmbed()
+            .setColor('#ffffff')
+            .setThumbnail(icon)
+            .addField('Welcome', `${message.guild.roles.cache.get(welcomeSet.welcomeChannelID)}`)
+            .setFooter('Tidewave', avtTW);
+        if (!channel) return message.channel.send({ embeds: [welcomeEmbed] })
         await welcomeSet.updateOne({
             welcomeChannelID: channel.id
         });

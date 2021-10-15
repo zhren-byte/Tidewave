@@ -25,7 +25,13 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
-        if (!botRole) return message.channel.send(`Rol bot: \`${message.guild.roles.cache.get(autoRoleSettings.botRoleID)}\``)
+        let icon = message.guild.iconURL() || client.user.avatarURL();
+        const botRoleEmbed = new MessageEmbed()
+            .setColor('#ffffff')
+            .setThumbnail(icon)
+            .addField('Bot Role', `${message.guild.roles.cache.get(botRoleSettings.botRoleID)}`)
+            .setFooter('Tidewave', avtTW);
+        if (!channel) return message.channel.send({ embeds: [botRoleEmbed] })
         await botRoleSettings.updateOne({
             botRoleID: botRole.id
         });

@@ -26,7 +26,12 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
-        if (!channel) return message.channel.send(`Canal de sugerencias: \`${message.guild.roles.cache.get(autoRoleSettings.sugestionChannelID)}\``)
+        const sugestionEmbed = new MessageEmbed()
+            .setColor('#ffffff')
+            .setThumbnail(icon)
+            .addField('Sugerencias', `${message.guild.roles.cache.get(sugestionSettings.sugestionChannelID)}`)
+            .setFooter('Tidewave', avtTW);
+        if (!channel) return message.channel.send({ embeds: [sugestionEmbed] })
         await sugestionSettings.updateOne({
             sugestionChannelID: channel.id
         });

@@ -5,7 +5,7 @@ const User = require('../../models/user');
 module.exports = {
 name: 'warn',
 aliases: ['w', 'adv'],
-description: 'destierra del server al wachin seleccionado',
+description: 'Advierte al usuario por su comportamiento',
 category: 'moderation',
 async execute(client, message, args) {
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send("No tienes permisos para hacer esto.");
@@ -13,7 +13,9 @@ async execute(client, message, args) {
 		warningSet = await Guild.findOne({_id: message.guild.id});
 		let channel = client.channels.cache.get(warningSet.logChannelID) || message.channel
 		//usuario
-		let user = message.guild.members.cache.get(args[0]) || message.mentions.users.first();
+		let ids = args[0]
+		let user = message.mentions.users.first()||message.guild.members.cache.get(ids);
+		console.log(user)
 		let mod = message.author.username;
 		let reason = args.slice(1).join(" ");
 		if (!user) return message.channel.send("Mencione un usuario.");
