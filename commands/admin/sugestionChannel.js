@@ -28,7 +28,7 @@ module.exports = {
         });
         let avtTW = client.user.avatarURL();
         let icon = message.guild.iconURL() || client.user.avatarURL();
-        let sugestionChFetch = message.guild.channels.cache.get(serverSettings.sugestionChannelID);
+        let sugestionChFetch = message.guild.channels.cache.get(sugestionSettings.sugestionChannelID);
         const sugestionChFetchEmbed = new MessageEmbed()
             .setColor('#ffffff')
             .setThumbnail(icon)

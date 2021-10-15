@@ -33,9 +33,7 @@ module.exports = {
     }
 }
 async function helpMSG(client, message) {
-    const guildDB = await Guild.findOne({
-        guildID: message.guild.id
-    });
+    const guildDB = await Guild.findOne({_id: message.guild.id});
     const embed = new MessageEmbed()
         .setColor('#ffffff')
         .setTitle('O-Connor')
@@ -46,9 +44,7 @@ async function helpMSG(client, message) {
     message.channel.send({ embeds: [embed] });
 }
 async function getCMD(client, message, input) {
-    const guildDB = await Guild.findOne({
-        guildID: message.guild.id
-    });
+    const guildDB = await Guild.findOne({_id: message.guild.id});
     const embed = new MessageEmbed()
     const cmd = client.commands.get(input.toLowerCase()) || client.commands.get(client.aliases.get(input.toLowerCase()));
     let info = `No information found for command **${input.toLowerCase()}**`;
