@@ -11,13 +11,12 @@ usage: "sugerencia <text>",
     message.delete()
     if(!args[0]) return message.channel.send("Escribe una sugerencia")
     const guildDB = await Guild.findOne({
-        guildID: message.guild.id
+        _id: message.guild.id
     }, async (err, guild) => {
         if (err) console.error(err);
         if (!guild) {
             const newGuild = new Guild({
-                _id: mongoose.Types.ObjectId(),
-                guildID: message.guild.id,
+                _id: message.guild.id,
                 guildName: message.guild.name,
                 sugestionChannelID: null,
             });
