@@ -11,6 +11,7 @@ module.exports = {
         message.delete();
         if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send('No tienes permisos para utilizar este comando')
         const muteRole = await message.mentions.roles.first() || message.guild.roles.cache.get(args[0]);
+        if (!muteRole) return message.channel.send('No selecciono un role')
         const muteRoleSettings = await Guild.findOne({
             _id: message.guild.id
         }, async (err, guild) => {
@@ -33,7 +34,7 @@ module.exports = {
             .setThumbnail(icon)
             .addField('Mute Role', `${muteRoleFetch}`)
             .setFooter('Tidewave', avtTW);
-        if (!channel) return message.channel.send({ embeds: [muteRoleFetchEmbed] });
+        message.channel.send({ embeds: [muteRoleFetchEmbed] });
         await muteRoleSettings.updateOne({
             muteRoleID: muteRole.id
         });
@@ -42,6 +43,6 @@ module.exports = {
             .setThumbnail(icon)
             .addField('Mute Role', `${muteRole}`)
             .setFooter('Tidewave', avtTW);
-        return message.channel.send({ embeds: [muteRoleEmbed] });
+        message.channel.send({ embeds: [muteRoleEmbed] });
     }
 }

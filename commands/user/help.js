@@ -8,7 +8,7 @@ module.exports = {
     usage: `help [commandName]`,
     async execute(client, message, args) {
         await Guild.findOne({
-            guildID: message.guild.id
+            _id: message.guild.id
         }, (err, guild) => {
             if (err) console.error(err)
             if (!guild) {
