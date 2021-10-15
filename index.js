@@ -84,7 +84,6 @@ client.on('messageCreate', async (message) => {
             .catch(err => console.error(err));
         }
     });
-	userSet()
 	let prefix = settings.prefix || process.env.PREFIX;
 	if (!message.content.startsWith(prefix)) return;
 	if (!message.member) message.member = await message.guild.fetchMember(message)

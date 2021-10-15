@@ -21,6 +21,5 @@ async execute(client, guild){
             .catch(err => console.error(err));
         }
         });
-        Settings()
     }
 };
