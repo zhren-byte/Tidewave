@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const Guild = require('../../models/guild');
 const User = require('../../models/user');
 module.exports = {
-name: 'unwarn',
-aliases: ['unw', 'unadv'],
+name: 'clearwarn',
+aliases: ['clrw'],
 description: 'Saca un warn o mas a un usuario',
 category: 'moderation',
 async execute(client, message, args) {
