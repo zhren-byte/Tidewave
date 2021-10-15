@@ -68,19 +68,18 @@ client.on('messageCreate', async (message) => {
     }
     });
 	const userSet = await User.findOne({
-        _id: message.guild.id,
-		userID: message.author.id
+		userID: message.author.id,
+        guildID: message.guild.id,
     }, (err, user) => {
         if (err) console.error(err)
         if (!user) {
             const newUser = new User({
-				_id: message.guild.id,
+				guildID: message.guild.id,
                 userID: message.author.id,
     			userName: message.author.username,
     			warns: 0
             })
             newUser.save()
-            .then(result => console.log(result))
             .catch(err => console.error(err));
         }
     });

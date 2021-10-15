@@ -23,7 +23,7 @@ async execute(client, message, args) {
 	if (user.id === client.user.id) return message.channel.send("No puedes banearme.");
 	if (!reason) reason = "No hay razón provista";
 	warnSet = await User.findOne({
-		_id: message.guild.id,
+		guildID: message.guild.id,
 		userID: message.author.id
 	}, (err, usuario) => {
 		if (err) console.error(err)
@@ -34,10 +34,10 @@ async execute(client, message, args) {
 			.setTimestamp()
 		if (!usuario) {
 			const newUser = new User({
-				_id: message.guild.id,
-				userID: user.id,
-				userName: user.username,
-				warns: 0
+				guildID: message.guild.id,
+                userID: message.author.id,
+    			userName: message.author.username,
+    			warns: 0
 			})
 			newUser.save().catch(err => console.error(err));
 			return channel.send({ embeds: [warnembed] })
