@@ -74,7 +74,7 @@ client.on('messageCreate', async (message) => {
         if (err) console.error(err)
         if (!user) {
             const newUser = new User({
-				_id: mongoose.Schema.Types.ObjectId,
+				_id: mongoose.Types.ObjectId(),
 				guildID: message.guild.id,
                 userID: message.author.id,
     			userName: message.author.username,
