@@ -22,7 +22,10 @@ async execute(client, message, args) {
 	if (user.id === message.author.id) return message.channel.send("No te puedes banear a ti mismo.");
 	if (user.id === client.user.id) return message.channel.send("No puedes banearme.");
 	if (!reason) reason = "No hay razón provista";
-	warnSet = await User.findOne({_id: user.id}, (err, usuario) => {
+	warnSet = await User.findOne({
+		_id: message.guild.id,
+		userID: message.author.id
+	}, (err, usuario) => {
 		if (err) console.error(err)
 		const warnembed = new MessageEmbed()
 			.setColor('#ff0000')
@@ -31,10 +34,10 @@ async execute(client, message, args) {
 			.setTimestamp()
 		if (!usuario) {
 			const newUser = new User({
-			_id: user.id,
-			guildID: message.guild.id,
-			userName: user.username,
-			warns: 0
+				_id: message.guild.id,
+				userID: user.id,
+				userName: user.username,
+				warns: 0
 			})
 			newUser.save().catch(err => console.error(err));
 			return channel.send({ embeds: [warnembed] })
