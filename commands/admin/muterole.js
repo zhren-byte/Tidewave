@@ -25,6 +25,7 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
+        let icon = message.guild.iconURL() || client.user.avatarURL();
         const muteRoleEmbed = new MessageEmbed()
             .setColor('#ffffff')
             .setThumbnail(icon)

@@ -24,6 +24,7 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
+        let icon = message.guild.iconURL() || client.user.avatarURL();
         const autoRoleEmbed = new MessageEmbed()
             .setColor('#ffffff')
             .setThumbnail(icon)
