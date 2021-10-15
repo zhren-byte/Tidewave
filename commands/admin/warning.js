@@ -28,15 +28,21 @@ module.exports = {
         });
         let avtTW = client.user.avatarURL();
         let icon = message.guild.iconURL() || client.user.avatarURL();
-        const warningEmbed = new MessageEmbed()
+        let warningChFetch = message.guild.channels.cache.get(warningSet.warningChannelID);
+        const warningChFetchEmbed = new MessageEmbed()
             .setColor('#ffffff')
             .setThumbnail(icon)
-            .addField('Warnings', `${message.guild.roles.cache.get(warningSet.logChannelID)}`)
+            .addField('Warnings', `${warningChFetch}`)
             .setFooter('Tidewave', avtTW);
-        if (!channel) return message.channel.send({ embeds: [warningEmbed] })
+        if (!channel) return message.channel.send({ embeds: [warningChFetchEmbed] });
         await warningSet.updateOne({
-            logChannelID: channel.id
+            warningChannelID: channel.id
         });
-        return message.channel.send(`El canal de logs se ha seleccionado para \`${channel}\``);
+        const warningChEmbed = new MessageEmbed()
+            .setColor('#ffffff')
+            .setThumbnail(icon)
+            .addField('Warnings', `${channel}`)
+            .setFooter('Tidewave', avtTW);
+        return message.channel.send({ embeds: [warningChEmbed] });
     }
 }

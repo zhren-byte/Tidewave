@@ -28,15 +28,21 @@ module.exports = {
         });
         let avtTW = client.user.avatarURL();
         let icon = message.guild.iconURL() || client.user.avatarURL();
-        const sugestionEmbed = new MessageEmbed()
+        let sugestionChFetch = message.guild.channels.cache.get(serverSettings.sugestionChannelID);
+        const sugestionChFetchEmbed = new MessageEmbed()
             .setColor('#ffffff')
             .setThumbnail(icon)
-            .addField('Sugerencias', `${message.guild.roles.cache.get(sugestionSettings.sugestionChannelID)}`)
+            .addField('Sugerencias', `${sugestionChFetch}`)
             .setFooter('Tidewave', avtTW);
-        if (!channel) return message.channel.send({ embeds: [sugestionEmbed] })
+        if (!channel) return message.channel.send({ embeds: [sugestionChFetchEmbed] });
         await sugestionSettings.updateOne({
             sugestionChannelID: channel.id
         });
-        return message.channel.send(`El canal de sugerencias se ha seleccionado para \`${channel}\``);
+        const sugestionChEmbed = new MessageEmbed()
+            .setColor('#ffffff')
+            .setThumbnail(icon)
+            .addField('Sugerencias', `${channel}`)
+            .setFooter('Tidewave', avtTW);
+        return message.channel.send({ embeds: [sugestionChEmbed] });
     }
 }

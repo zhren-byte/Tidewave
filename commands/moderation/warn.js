@@ -14,7 +14,7 @@ async execute(client, message, args) {
 		let channel = client.channels.cache.get(warningSet.logChannelID) || message.channel
 		//usuario
 		let ids = args[0]
-		let user = message.mentions.users.first()||message.guild.members.cache.get(ids);
+		let user = await message.mentions.users.first()||message.guild.members.cache.get(ids);
 		console.log(user)
 		let mod = message.author.username;
 		let reason = args.slice(1).join(" ");

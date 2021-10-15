@@ -26,15 +26,21 @@ module.exports = {
         });
         let avtTW = client.user.avatarURL();
         let icon = message.guild.iconURL() || client.user.avatarURL();
-        const autoRoleEmbed = new MessageEmbed()
+        let autoRoleFetch = message.guild.roles.cache.get(autoRoleSettings.autoRoleID);
+        const autoRoleFetchEmbed = new MessageEmbed()
             .setColor('#ffffff')
             .setThumbnail(icon)
-            .addField('Auto Role', `${message.guild.roles.cache.get(autoRoleSettings.autoRoleID)}`)
+            .addField('Auto Role', `${autoRoleFetch}`)
             .setFooter('Tidewave', avtTW);
-        if (!channel) return message.channel.send({ embeds: [autoRoleEmbed] });
+        if (!channel) return message.channel.send({ embeds: [autoRoleFetchEmbed] });
         await autoRoleSettings.updateOne({
             autoRoleID: autoRole.id
         });
-        return message.channel.send(`El role automatico se ha seleccionado para \`${autoRole}\``);
+        const autoRoleEmbed = new MessageEmbed()
+            .setColor('#ffffff')
+            .setThumbnail(icon)
+            .addField('Auto Role', `${autoRole}`)
+            .setFooter('Tidewave', avtTW);
+        return message.channel.send({ embeds: [autoRoleEmbed] });
     }
 }

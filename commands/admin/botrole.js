@@ -27,15 +27,21 @@ module.exports = {
         });
         let avtTW = client.user.avatarURL();
         let icon = message.guild.iconURL() || client.user.avatarURL();
-        const botRoleEmbed = new MessageEmbed()
+        let botRoleFetch = message.guild.roles.cache.get(botRoleSettings.botRoleID);
+        const botRoleFetchEmbed = new MessageEmbed()
             .setColor('#ffffff')
             .setThumbnail(icon)
-            .addField('Bot Role', `${message.guild.roles.cache.get(botRoleSettings.botRoleID)}`)
+            .addField('Bot Role', `${botRoleFetch}`)
             .setFooter('Tidewave', avtTW);
-        if (!channel) return message.channel.send({ embeds: [botRoleEmbed] })
+        if (!channel) return message.channel.send({ embeds: [botRoleFetchEmbed] });
         await botRoleSettings.updateOne({
             botRoleID: botRole.id
         });
-        return message.channel.send(`El role bot se ha seleccionado para \`${botRole}\``);
+        const botRoleEmbed = new MessageEmbed()
+            .setColor('#ffffff')
+            .setThumbnail(icon)
+            .addField('Bot Role', `${botRole}`)
+            .setFooter('Tidewave', avtTW);
+        return message.channel.send({ embeds: [botRoleEmbed] });
     }
 }

@@ -27,15 +27,21 @@ module.exports = {
         });
         let avtTW = client.user.avatarURL();
         let icon = message.guild.iconURL() || client.user.avatarURL();
-        const welcomeEmbed = new MessageEmbed()
+        let welcomeChFetch = message.guild.channels.cache.get(welcomeSet.welcomeChannelID);
+        const welcomeChFetchEmbed = new MessageEmbed()
             .setColor('#ffffff')
             .setThumbnail(icon)
-            .addField('Welcome', `${message.guild.roles.cache.get(welcomeSet.welcomeChannelID)}`)
+            .addField('Welcome', `${welcomeChFetch}`)
             .setFooter('Tidewave', avtTW);
-        if (!channel) return message.channel.send({ embeds: [welcomeEmbed] })
+        if (!channel) return message.channel.send({ embeds: [welcomeChFetchEmbed] });
         await welcomeSet.updateOne({
             welcomeChannelID: channel.id
         });
-        return message.channel.send(`El canal de welcome se ha seleccionado para \`${channel}\``);
+        const welcomeChEmbed = new MessageEmbed()
+            .setColor('#ffffff')
+            .setThumbnail(icon)
+            .addField('Welcome', `${channel}`)
+            .setFooter('Tidewave', avtTW);
+        return message.channel.send({ embeds: [welcomeChEmbed] });
     }
 }

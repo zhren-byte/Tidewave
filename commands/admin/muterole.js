@@ -27,15 +27,21 @@ module.exports = {
         });
         let avtTW = client.user.avatarURL();
         let icon = message.guild.iconURL() || client.user.avatarURL();
-        const muteRoleEmbed = new MessageEmbed()
+        let muteRoleFetch = message.guild.roles.cache.get(muteRoleSettings.muteRoleID);
+        const muteRoleFetchEmbed = new MessageEmbed()
             .setColor('#ffffff')
             .setThumbnail(icon)
-            .addField('Mute Role', `${message.guild.roles.cache.get(muteRoleSettings.muteRoleID)}`)
+            .addField('Mute Role', `${muteRoleFetch}`)
             .setFooter('Tidewave', avtTW);
-        if (!channel) return message.channel.send({ embeds: [muteRoleEmbed] })
+        if (!channel) return message.channel.send({ embeds: [muteRoleFetchEmbed] });
         await muteRoleSettings.updateOne({
             muteRoleID: muteRole.id
         });
-        return message.channel.send(`El role muteo se ha seleccionado para \`${muteRole}\``);
+        const muteRoleEmbed = new MessageEmbed()
+            .setColor('#ffffff')
+            .setThumbnail(icon)
+            .addField('Mute Role', `${muteRole}`)
+            .setFooter('Tidewave', avtTW);
+        return message.channel.send({ embeds: [muteRoleEmbed] });
     }
 }
