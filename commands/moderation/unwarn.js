@@ -19,25 +19,25 @@ async execute(client, message, args) {
 		number = 1
 	}
 	if (!user) return message.channel.send("Mencione un usuario.");
-	if (user.id === message.author.id) return message.channel.send("No te puedes banear a ti mismo.");
-	if (user.id === client.user.id) return message.channel.send("No puedes banearme.");
+	if (user.id === message.author.id) return message.channel.send("No te puedes unwarnear a ti mismo.");
+	if (user.id === client.user.id) return message.channel.send("No puedes unwarnearme.");
 	if (!reason) reason = "No hay razón provista";
 	warnSet = await User.findOne({
 		guildID: message.guild.id,
-		userID: message.author.id
+		userID: user.id
 	}, (err, usuario) => {
 		if (err) console.error(err)
 		const warnembed = new MessageEmbed()
-			.setColor('#ff0000')
+			.setColor('#4697e1')
 			.setAuthor(`Tidewave`, client.user.avatarURL())
-			.setDescription(`**Miembro:** ${user} (${user.id})\n**Accion:** Warn\n**Razon:** ${reason}\n**Warns:** ${(usuario.warns)-number}\n**Moderador:** ${mod}`)
+			.setDescription(`**Miembro:** ${user} (${user.id})\n**Accion:** UnWarn\n**Razon:** ${reason}\n**Warns:** ${(usuario.warns)-number}\n**Moderador:** ${mod}`)
 			.setTimestamp()
 		if (!usuario) {
 			const newUser = new User({
 				_id: mongoose.Types.ObjectId(),
 				guildID: message.guild.id,
-                userID: message.author.id,
-    			userName: message.author.username,
+                userID: user.id,
+    			userName: user.username,
     			warns: 0
 			})
 			newUser.save().catch(err => console.error(err));

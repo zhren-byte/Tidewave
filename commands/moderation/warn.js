@@ -21,15 +21,15 @@ async execute(client, message, args) {
 		if (!reason) reason = "No hay razón provista";
 		warnSet = await User.findOne({
 			guildID: message.guild.id,
-			userID: message.author.id
+			userID: user.id
 		}, (err, usuario) => {
 			if (err) console.error(err)
 			if (!usuario) {
 				const newUser = new User({
 					_id: mongoose.Types.ObjectId(),
 					guildID: message.guild.id,
-                	userID: message.author.id,
-    				userName: message.author.username,
+                	userID: user.id,
+    				userName: user.username,
     				warns: 1
 					})
 					newUser.save()
