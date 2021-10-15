@@ -12,7 +12,7 @@ async execute(client, message, args) {
 		warningSet = await Guild.findOne({_id: message.guild.id});
 		let channel = client.channels.cache.get(warningSet.logChannelID) || message.channel
 		//usuario
-		let user = message.mentions.users.first() || message.guild.members.cache.get(args[0]);
+		let user = message.guild.members.cache.get(args[0]) || message.mentions.users.first();
 		let mod = message.author.username;
 		let reason = args.slice(1).join(" ");
 		if (!user) return message.channel.send("Mencione un usuario.");
