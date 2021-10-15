@@ -3,7 +3,8 @@ const Guild = require('../../models/guild');
 const mongoose = require('mongoose');
 
 module.exports = {
-    name: 'warnings',
+    name: 'warning',
+    aliases: ['warnings'],
     category: 'admin',
     description: 'Selecciona el canal donde se enviaran los mensajes de advertencias',
     usage: `warnings <#channel, channelID>`,
