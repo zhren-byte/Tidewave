@@ -28,7 +28,7 @@ async execute (client, message, args) {
 }
 async function getAll(client, message) {
     const guildDB = await Guild.findOne({
-        guildID: message.guild.id
+        _id: message.guild.id
     });
     const embed = new MessageEmbed()
     .setColor(process.env.COLOR)
