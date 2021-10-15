@@ -30,7 +30,7 @@ module.exports = {
         const warningEmbed = new MessageEmbed()
             .setColor('#ffffff')
             .setThumbnail(icon)
-            .addField('Warnings', `${message.guild.roles.cache.get(autoRoleSettings.logChannelID)}`)
+            .addField('Warnings', `${message.guild.roles.cache.get(warningSet.logChannelID)}`)
             .setFooter('Tidewave', avtTW);
         if (!channel) return message.channel.send({ embeds: [warningEmbed] })
         await warningSet.updateOne({
