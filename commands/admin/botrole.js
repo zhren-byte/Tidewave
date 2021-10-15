@@ -25,6 +25,7 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
+        let avtTW = client.user.avatarURL();
         let icon = message.guild.iconURL() || client.user.avatarURL();
         const botRoleEmbed = new MessageEmbed()
             .setColor('#ffffff')
