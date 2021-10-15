@@ -25,10 +25,10 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
-        if (!muteRole) return message.channel.send(`Rol muteo: ${message.guild.roles.cache.get(muteRoleSettings.muteRoleID)}`)
+        if (!muteRole) return message.channel.send(`Rol muteo: \`${message.guild.roles.cache.get(autoRoleSettings.muteRoleID)}\``)
         await muteRoleSettings.updateOne({
             muteRoleID: muteRole.id
         });
-        return message.channel.send(`El role muteo se ha seleccionado para ${muteRole}`);
+        return message.channel.send(`El role muteo se ha seleccionado para \`${muteRole}\``);
     }
 }

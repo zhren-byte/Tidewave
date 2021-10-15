@@ -25,10 +25,10 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
-        if (!botRole) return message.channel.send(`Rol bot: ${message.guild.roles.cache.get(botRoleSettings.botRoleID)}`)
+        if (!botRole) return message.channel.send(`Rol bot: \`${message.guild.roles.cache.get(autoRoleSettings.botRoleID)}\``)
         await botRoleSettings.updateOne({
             botRoleID: botRole.id
         });
-        return message.channel.send(`El role bot se ha seleccionado para ${botRole}`);
+        return message.channel.send(`El role bot se ha seleccionado para \`${botRole}\``);
     }
 }

@@ -1,7 +1,6 @@
 const { MessageEmbed, Permissions } = require('discord.js');
 const Guild = require('../../models/guild');
 const mongoose = require('mongoose');
-
 module.exports = {
     name: 'autorole',
     category: 'admin',
@@ -25,10 +24,10 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
-        if (!autoRole) return message.channel.send(`Rol automatico: ${message.guild.roles.cache.get(autoRoleSettings.autoRoleID)}`)
+        if (!autoRole) return message.channel.send(`Rol automatico: \`${message.guild.roles.cache.get(autoRoleSettings.autoRoleID)}\``);
         await autoRoleSettings.updateOne({
             autoRoleID: autoRole.id
         });
-        return message.channel.send(`El role automatico se ha seleccionado para ${autoRole}`);
+        return message.channel.send(`El role automatico se ha seleccionado para \`${autoRole}\``);
     }
 }

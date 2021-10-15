@@ -25,10 +25,10 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
-        if (!channel) return message.channel.send(`Logs: ${message.guild.channels.cache.get(welcomeSet.welcomeChannelID)}`)
+        if (!channel) return message.channel.send(`Welcome:\`${message.guild.roles.cache.get(autoRoleSettings.welcomeChannelID)}\``)
         await welcomeSet.updateOne({
             welcomeChannelID: channel.id
         });
-        return message.channel.send(`El role automatico se ha seleccionado para ${channel}`);
+        return message.channel.send(`El canal de welcome se ha seleccionado para \`${channel}\``);
     }
 }

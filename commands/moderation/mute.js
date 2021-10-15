@@ -1,4 +1,4 @@
-const {MessageEmbed, Permissions} = require("discord.js")
+/*const {MessageEmbed, Permissions} = require("discord.js")
 const Guild = require('../../models/guild');
 module.exports = {
 name: 'mute',
@@ -26,3 +26,4 @@ async execute(client, message, args) {
 		channel.send({ embeds: [muteembed] });
   }
 }
+*/

@@ -25,10 +25,10 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
-        if (!channel) return message.channel.send(`Logs: ${message.guild.channels.cache.get(warningSet.logChannelID)}`)
+        if (!channel) return message.channel.send(`Logs: \`${message.guild.roles.cache.get(autoRoleSettings.logChannelID)}\``)
         await warningSet.updateOne({
             logChannelID: channel.id
         });
-        return message.channel.send(`El role automatico se ha seleccionado para ${channel}`);
+        return message.channel.send(`El canal de logs se ha seleccionado para \`${channel}\``);
     }
 }

@@ -26,10 +26,10 @@ module.exports = {
                 .catch(err => console.error(err));
             }
         });
-        if (!channel) return message.channel.send(`Rol automatico: ${message.guild.channels.cache.get(sugestionSettings.sugestionChannelID)}`)
+        if (!channel) return message.channel.send(`Canal de sugerencias: \`${message.guild.roles.cache.get(autoRoleSettings.sugestionChannelID)}\``)
         await sugestionSettings.updateOne({
             sugestionChannelID: channel.id
         });
-        return message.channel.send(`El role automatico se ha seleccionado para ${channel}`);
+        return message.channel.send(`El canal de sugerencias se ha seleccionado para \`${channel}\``);
     }
 }
