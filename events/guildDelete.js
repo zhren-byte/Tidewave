@@ -6,7 +6,7 @@ name: 'guildDelete',
 on: true,
 async execute(client, guild){
     Guild.findOneAndDelete({
-        guildID: guild.id
+        _id: guild.id
     }, (err, res) => {
         if(err) console.error(err)
     });

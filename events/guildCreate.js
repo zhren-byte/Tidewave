@@ -5,18 +5,21 @@ module.exports = {
 name: 'guildCreate',
 on: true,
 async execute(client, guild){
-    guild = new Guild({
-        _id: mongoose.Types.ObjectId(),
-        guildID: guild.id,
-        guildName: guild.name,
-        prefix: '>',
-        logChannelID: null,
-        welcomeChannelID: null,
-        muteRoleID: null,
-        autoRoleID: null,
-    });
-    guild.save()
-    .then(result => console.log(result))
-    .catch(err => console.error(err));
+    const Settings = await Guild.findOne({_id: message.guild.id}, (err, guild) => {
+        if (err) console.error(err)
+        if (!guild) {
+            const newGuild = new Guild({
+                _id: guildID,
+                guildName: guild.name,
+                prefix: process.env.PREFIX,
+                logChannelID: null,
+                welcomeChannelID: null,
+                muteRoleID: null,
+                autoRoleID: null,
+            })
+            newGuild.save()
+            .catch(err => console.error(err));
+        }
+        });
     }
 };

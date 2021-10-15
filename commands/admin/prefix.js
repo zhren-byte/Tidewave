@@ -23,12 +23,11 @@ module.exports = {
                 newGuild.save()
                 .then(result => console.log(result))
                 .catch(err => console.error(err));
-                return message.channel.send('Este servidor no esta en la base de datos, vuelve a intentarlo').then(m => m.delete({timeout: 10000}));
+                return message.channel.send('Este servidor no esta en la base de datos, vuelve a intentarlo')
             }
         });
         if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
             return message.channel.send(`El prefix del servidor es: \`${settings.prefix}\``);
-            //.then(m => m.delete({timeout: 10000}));
         };
         if (args.length < 1) {
             return message.channel.send(`El prefix del servidor es: \`${settings.prefix}\``);
