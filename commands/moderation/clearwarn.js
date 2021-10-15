@@ -5,7 +5,7 @@ const User = require('../../models/user');
 module.exports = {
 name: 'clearwarn',
 aliases: ['clrw'],
-description: 'Saca un warn o mas a un usuario',
+description: 'Establece el valor de advertencias del usuario a cero',
 category: 'moderation',
 async execute(client, message, args) {
 	if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send("No tienes permisos para hacer esto.");
@@ -26,7 +26,7 @@ async execute(client, message, args) {
 		const warnembed = new MessageEmbed()
 			.setColor('#4697e1')
 			.setAuthor(`Tidewave`, client.user.avatarURL())
-			.setDescription(`**Miembro:** ${user} (${user.id})\n**Accion:** UnWarn\n**Razon:** ${reason}\n**Warns:** ${(usuario.warns)-number}\n**Moderador:** ${mod}`)
+			.setDescription(`**Miembro:** ${user} (${user.id})\n**Accion:** UnWarn\n**Razon:** ${reason}\n**Warns:** 0\n**Moderador:** ${mod}`)
 			.setTimestamp()
 		if (!usuario) {
 			const newUser = new User({
