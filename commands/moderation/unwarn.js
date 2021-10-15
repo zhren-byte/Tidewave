@@ -34,6 +34,7 @@ async execute(client, message, args) {
 			.setTimestamp()
 		if (!usuario) {
 			const newUser = new User({
+				_id: mongoose.Schema.Types.ObjectId,
 				guildID: message.guild.id,
                 userID: message.author.id,
     			userName: message.author.username,
