@@ -15,7 +15,6 @@ async execute(client, message, args) {
 		//usuario
 		let ids = args[0]
 		let user = await message.mentions.users.first()||message.guild.members.cache.get(ids);
-		console.log(user)
 		let mod = message.author.username;
 		let reason = args.slice(1).join(" ");
 		if (!user) return message.channel.send("Mencione un usuario.");

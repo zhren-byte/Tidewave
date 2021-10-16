@@ -23,7 +23,7 @@ module.exports = {
           .setTimestamp()
         channel.send(embed)
     } catch(e) {
-        console.log(e.message)
+        message.reply('No se pudo banear al miembro')
     }
   }
 }

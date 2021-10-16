@@ -21,7 +21,6 @@ usage: "sugerencia <text>",
                 sugestionChannelID: null,
             });
             await newGuild.save()
-            .then(result => console.log(result))
             .catch(err => console.error(err));
         };
     });

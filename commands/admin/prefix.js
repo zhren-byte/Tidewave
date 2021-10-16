@@ -21,7 +21,6 @@ module.exports = {
                     prefix: process.env.PREFIX
                 })
                 newGuild.save()
-                .then(result => console.log(result))
                 .catch(err => console.error(err));
                 return message.channel.send('Este servidor no esta en la base de datos, vuelve a intentarlo')
             }

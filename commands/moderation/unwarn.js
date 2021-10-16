@@ -11,7 +11,7 @@ async execute(client, message, args) {
 	if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send("No tienes permisos para hacer esto.");
 	warningSet = await Guild.findOne({_id: message.guild.id});
 	let channel = client.channels.cache.get(warningSet.logChannelID) || message.channel
-	let user = message.guild.members.cache.get(args[0]) || message.mentions.users.first();
+	let user = await message.guild.members.cache.get(args[0]) || message.mentions.users.first();
 	let mod = message.author.username;
 	let number = parseInt(args[1]);
 	let reason = args.slice(2).join(" ");

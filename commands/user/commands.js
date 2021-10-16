@@ -19,7 +19,6 @@ async execute (client, message, args) {
                 prefix: '>'
             });
             newGuild.save()
-            .then(result => console.log(result))
             .catch(err => console.error(err));
         }
     });

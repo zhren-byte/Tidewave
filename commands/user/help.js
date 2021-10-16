@@ -19,7 +19,6 @@ module.exports = {
                     logChannelID: null
                 });
                 newGuild.save()
-                .then(result => console.log(result))
                 .catch(err => console.error(err));
             }
         });

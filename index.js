@@ -95,7 +95,6 @@ client.on('messageCreate', async (message) => {
 	try {
 		await commando.execute(client, message, args);
 	} catch (error) {
-		console.log(error);
 		return message.reply({ content: 'El comando ejecutado no es correcto', ephemeral: true });
 	}
 });
