@@ -28,7 +28,7 @@ module.exports = {
         });
         let avtTW = client.user.avatarURL();
         let icon = message.guild.iconURL() || client.user.avatarURL();
-        let warningChFetch = message.guild.channels.cache.get(warningSet.warningChannelID);
+        let warningChFetch = message.guild.channels.cache.get(warningSet.logChannelID);
         const warningChFetchEmbed = new MessageEmbed()
             .setColor('#ffffff')
             .setThumbnail(icon)
