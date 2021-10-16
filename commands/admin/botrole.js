@@ -11,7 +11,6 @@ module.exports = {
         message.delete();
         if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send('No tienes permisos para utilizar este comando')
         const botRole = await message.mentions.roles.first() || message.guild.roles.cache.get(args[0]);
-        if (!botRole) return message.channel.send('No selecciono un role')
         const botRoleSettings = await Guild.findOne({
             _id: message.guild.id
         }, async (err, guild) => {
@@ -34,7 +33,7 @@ module.exports = {
             .setThumbnail(icon)
             .addField('Bot Role', `${botRoleFetch}`)
             .setFooter('Tidewave', avtTW);
-        message.channel.send({ embeds: [botRoleFetchEmbed] });
+        if (!botRole) return message.channel.send({ embeds: [botRoleFetchEmbed] });
         await botRoleSettings.updateOne({
             botRoleID: botRole.id
         });
@@ -43,6 +42,6 @@ module.exports = {
             .setThumbnail(icon)
             .addField('Bot Role', `${botRole}`)
             .setFooter('Tidewave', avtTW);
-        message.channel.send({ embeds: [botRoleEmbed] });
+        return message.channel.send({ embeds: [botRoleEmbed] });
     }
 }

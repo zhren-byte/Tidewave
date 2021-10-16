@@ -12,7 +12,6 @@ module.exports = {
         message.delete();
         if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send('No tienes permisos para utilizar este comando')
         const channel = await message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
-        if (!channel) return message.channel.send('No selecciono un canal')
         sugestionSettings = await Guild.findOne({
             _id: message.guild.id
         }, async (err, guild) => {
@@ -35,7 +34,7 @@ module.exports = {
             .setThumbnail(icon)
             .addField('Sugerencias', `${sugestionChFetch}`)
             .setFooter('Tidewave', avtTW);
-        message.channel.send({ embeds: [sugestionChFetchEmbed] });
+        if (!channel) return message.channel.send({ embeds: [sugestionChFetchEmbed] });
         await sugestionSettings.updateOne({
             sugestionChannelID: channel.id
         });
@@ -44,6 +43,6 @@ module.exports = {
             .setThumbnail(icon)
             .addField('Sugerencias', `${channel}`)
             .setFooter('Tidewave', avtTW);
-        message.channel.send({ embeds: [sugestionChEmbed] });
+        return message.channel.send({ embeds: [sugestionChEmbed] });
     }
 }

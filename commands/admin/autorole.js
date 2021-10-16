@@ -10,7 +10,6 @@ module.exports = {
         message.delete();
         if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send('No tienes permisos para utilizar este comando')
         const autoRole = await message.mentions.roles.first() || message.guild.roles.cache.get(args[0]);
-        if (!autoRole) return message.channel.send('No selecciono un role')
         const autoRoleSettings = await Guild.findOne({
             _id: message.guild.id
         }, async (err, guild) => {
@@ -33,7 +32,7 @@ module.exports = {
             .setThumbnail(icon)
             .addField('Auto Role', `${autoRoleFetch}`)
             .setFooter('Tidewave', avtTW);
-        message.channel.send({ embeds: [autoRoleFetchEmbed] });
+        if (!autoRole) return message.channel.send({ embeds: [autoRoleFetchEmbed] });
         await autoRoleSettings.updateOne({
             autoRoleID: autoRole.id
         });
@@ -42,6 +41,6 @@ module.exports = {
             .setThumbnail(icon)
             .addField('Auto Role', `${autoRole}`)
             .setFooter('Tidewave', avtTW);
-        message.channel.send({ embeds: [autoRoleEmbed] });
+        return message.channel.send({ embeds: [autoRoleEmbed] });
     }
 }
