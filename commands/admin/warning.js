@@ -36,7 +36,7 @@ module.exports = {
             .setFooter('Tidewave', avtTW);
         if (!channel) return message.channel.send({ embeds: [warningChFetchEmbed] });
         await warningSet.updateOne({
-            warningChannelID: channel.id
+            logChannelID: channel.id
         });
         const warningChEmbed = new MessageEmbed()
             .setColor('#ffffff')
