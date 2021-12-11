@@ -22,7 +22,7 @@ Thumbs.db
 # Node modules
 /node_modules
 /assets
-/utils
+/utils/mongoose1.js
 
 # Coveralls
 coverage

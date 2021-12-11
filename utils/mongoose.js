@@ -7,7 +7,7 @@ module.exports = {
             useFindAndModify: false,
             useCreateIndex: true
         };
-        mongoose.connect('mongodb+srv://heroku:potlJchO0nhMLA7s@cluster0.vs1u1.mongodb.net/oconnor?retryWrites=true&w=majority', dbOptions);
+        mongoose.connect(process.env.TOKENMONGO, dbOptions);
         mongoose.set('useFindAndModify', false);
         mongoose.Promise = global.Promise;
         mongoose.connection.on('err', err => {
