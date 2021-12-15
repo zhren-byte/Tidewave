@@ -84,9 +84,8 @@ client.on("messageCreate", async (message) => {
       ++msgCount;
       if (parseInt(msgCount) === LIMIT) {
         warningSet = await Guild.findOne({ _id: message.guild.id });
-        let channel =
-          client.channels.cache.get(warningSet.logChannelID) || message.channel;
-        const role = message.guild.roles.cache.get("781918621386670091");
+        let channel = client.channels.cache.get(warningSet.logChannelID) || message.channel;
+        const role = await message.guild.roles.fetch(warningSet.muteRoleID);
         message.member.roles.add(role);
         const muted = new MessageEmbed()
           .setColor("#ff0000")
