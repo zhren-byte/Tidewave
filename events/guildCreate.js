@@ -5,7 +5,7 @@ module.exports = {
 name: 'guildCreate',
 on: true,
 async execute(client, guild){
-    const Settings = await Guild.findOne({_id: message.guild.id}, (err, guild) => {
+    const Settings = await Guild.findOne({_id: guild.id}, (err, guild) => {
         if (err) console.error(err)
         if (!guild) {
             const newGuild = new Guild({
