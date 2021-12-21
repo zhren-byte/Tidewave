@@ -11,7 +11,7 @@ async execute(client, guild){
         if (!guild) {
             const newGuild = new Guild({
                 _id: server.id,
-                guildName: guild.name,
+                guildName: server.name,
                 prefix: process.env.PREFIX,
                 logChannelID: null,
                 welcomeChannelID: null,
