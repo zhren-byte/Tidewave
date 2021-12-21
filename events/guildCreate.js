@@ -5,11 +5,12 @@ module.exports = {
 name: 'guildCreate',
 on: true,
 async execute(client, guild){
-    const Settings = await Guild.findOne({_id: guild.id}, (err, guild) => {
+    const guildID = guild.id.shift().replace(/[<@!&>]/g, '');
+    const Settings = await Guild.findOne({_id: guildID}, (err, guild) => {
         if (err) console.error(err)
         if (!guild) {
             const newGuild = new Guild({
-                _id: guild.id,
+                _id: guildID,
                 guildName: guild.name,
                 prefix: process.env.PREFIX,
                 logChannelID: null,
