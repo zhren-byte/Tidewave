@@ -9,7 +9,7 @@ const conn = mysql.createConnection({
 });
 conn.connect(function (err) {
   if (err) {
-    console.log('Base de datos no disponible');
+    console.log("Base de datos no disponible");
     console.log(err);
   } else {
     console.log(`- Conectado a 'sugerencias' -`);
@@ -25,8 +25,12 @@ module.exports = {
   async execute(client, message, args) {
     if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return;
     let contenido = args.slice(1).join(" ");
+    let date = message.createdAt
+      .toISOString()
+      .replace(/T/, " ")
+      .replace(/\..+/, "");
     conn.query(
-      `INSERT INTO sugerencia (dname, sugerencia) VALUES ('${message.member.user.tag}','${contenido}')`,
+      `INSERT INTO sugerencia (dname, sugerencia, fecha) VALUES ('${message.member.user.tag}','${contenido}', '${date}')`,
       (message, err) => {
         if (err) console.log(err);
       }

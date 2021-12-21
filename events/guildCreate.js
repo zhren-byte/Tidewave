@@ -11,10 +11,6 @@ module.exports = {
           _id: guild.id,
           guildName: guild.name,
           prefix: process.env.PREFIX,
-          logChannelID: null,
-          welcomeChannelID: null,
-          muteRoleID: null,
-          autoRoleID: null,
         });
         newGuild.save().catch((err) => console.error(err));
       }
