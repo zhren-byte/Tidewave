@@ -10,8 +10,9 @@ module.exports = {
     if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD))
       return message.channel.send("No tienes permisos para hacer esto.");
     warningSet = await Guild.findOne({ _id: message.guild.id });
-    let channel = client.channels.cache.get(warningSet.logChannelID) || message.channel;
-    const userID = args.shift().replace(/[<@!&>]/g, '');
+    let channel =
+      client.channels.cache.get(warningSet.logChannelID) || message.channel;
+    const userID = args.shift().replace(/[<@!&>]/g, "");
     const user = message.guild.members.cache.get(userID);
     const role = await message.guild.roles.fetch(warningSet.muteRoleID);
     let mod = message.author.username;

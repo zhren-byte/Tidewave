@@ -9,6 +9,7 @@ const conn = mysql.createConnection({
 });
 conn.connect(function (err) {
   if (err) {
+    console.log('Base de datos no disponible');
     console.log(err);
   } else {
     console.log(`- Conectado a 'sugerencias' -`);
