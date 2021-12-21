@@ -24,7 +24,7 @@ module.exports = {
   usage: ">chebo [sugerencia, error, arreglo]",
   async execute(client, message, args) {
     if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return;
-    let contenido = args.slice(1).join(" ");
+    let contenido = args.slice(0).join(" ");
     let date = message.createdAt
       .toISOString()
       .replace(/T/, " ")
