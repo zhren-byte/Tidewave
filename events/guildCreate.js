@@ -9,7 +9,7 @@ async execute(client, guild){
         if (err) console.error(err)
         if (!guild) {
             const newGuild = new Guild({
-                _id: guildID,
+                _id: guild.id,
                 guildName: guild.name,
                 prefix: process.env.PREFIX,
                 logChannelID: null,
