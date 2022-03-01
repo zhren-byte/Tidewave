@@ -7,14 +7,6 @@ const conn = mysql.createConnection({
   password: `${process.env.DB_PASS}`,
   database: "sugerencias",
 });
-conn.connect(function (err) {
-  if (err) {
-    console.log("Base de datos no disponible");
-    console.log(err);
-  } else {
-    console.log(`- Conectado a 'sugerencias' -`);
-  }
-});
 module.exports = {
   name: "chebo",
   aliases: [],
@@ -24,6 +16,14 @@ module.exports = {
   usage: ">chebo [sugerencia, error, arreglo]",
   async execute(client, message, args) {
     if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return;
+	conn.connect(function (err) {
+	if (err) {
+		console.log("Base de datos no disponible");
+		console.log(err);
+	} else {
+    console.log(`- Se envio una nueva propuesta desde -> ${message.member.user.tag}`);
+	}
+	});
     let contenido = args.slice(0).join(" ");
     let date = message.createdAt
       .toISOString()
