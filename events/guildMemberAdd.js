@@ -10,7 +10,13 @@ module.exports = {
       _id: member.guild.id,
     });
     const autoRoleBot = welcomeSet.botRoleID;
-    if (member.user.bot) return member.roles.add(autoRoleBot);
+    const logChannel = client.channels.cache.get(warningSet.logChannelID) || message.channel;
+    if (member.user.bot) {
+      member.roles.add(autoRoleBot)
+      .catch((err) => {
+        logChannel.reply("No le pude dar rango al bot");
+      });
+    }
     const channel = client.channels.cache.get(welcomeSet.welcomeChannelID);
     if (!channel) return;
     (x++ % 3) + 1;
@@ -19,7 +25,7 @@ module.exports = {
     var autoRole = welcomeSet.autoRoleID;
     member.roles.add(autoRole)
     .catch((err) => {
-      message.reply("No le pude dar rango al miembro");
+      logChannel.reply("No le pude dar rango al miembro");
     });
     const applyText = (canvas, text) => {
       const ctx = canvas.getContext("2d");
