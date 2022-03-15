@@ -1,13 +1,12 @@
 const { Permissions } = require("discord.js");
 module.exports = {
   name: "join",
-  aliases: [],
-  category: "adminHades",
-  description: "Command description",
-  usage: "[args input]",
+  category: "admin",
+  description: "Emite una entrada al servidor, para probar el mensaje de welcome",
+  usage: ">join",
   async execute(client, message, args) {
     message.delete();
-    if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return;
+    if (!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
     client.emit("guildMemberAdd", message.member);
   },
 };

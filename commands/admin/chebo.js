@@ -9,7 +9,6 @@ const conn = mysql.createConnection({
 });
 module.exports = {
   name: "chebo",
-  aliases: [],
   category: "admin",
   description:
     "Envia una sugerencia, error, o arreglo hacia los creadores de este humilde bot",

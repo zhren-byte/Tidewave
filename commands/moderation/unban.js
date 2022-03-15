@@ -2,7 +2,8 @@ const Discord = require("discord.js");
 module.exports = {
   name: "unban",
   aliases: ["pardon", "desban"],
-  description: "desbanea al wachin desterrado",
+  description: "Desbanea permanentemente al usuario",
+  usage: `unban <usuario>`,
   category: "moderation",
   run: async (client, message, args) => {
     const channel = client.channels.cache.get("675585949983440897");

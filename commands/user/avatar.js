@@ -1,10 +1,9 @@
 const { MessageEmbed } = require("discord.js");
 module.exports = {
   name: "avatar",
-  aliases: [],
-  category: "usersCommands",
+  category: "users",
   description: "Command description",
-  usage: "[args input]",
+  usage: ">avatar",
   async execute(client, message, args) {
     let user =
       message.mentions.users.first() ||

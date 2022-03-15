@@ -4,7 +4,7 @@ module.exports = {
   description: "Envia un mensaje al canal",
   usage: `say <mensaje>`,
   async execute(client, message, args) {
-    if (!message.member.hasPermission("ADMINISTRATOR"))
+    if (!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR))
       return message.channel
         .send("No tienes permisos para utilizar este comando")
         .then((m) => m.delete({ timeout: 5000 }));

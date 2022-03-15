@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 module.exports = {
   name: "warning",
-  aliases: ["warnings"],
+  aliases: ["warnings","logs"],
   category: "admin",
   description:
     "Selecciona el canal donde se enviaran los mensajes de advertencias",

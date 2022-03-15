@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 module.exports = {
   name: "unmute",
-  description: "lo demutea al wachin muteado",
+  description: "Se le permite al usuario seleccionado poder entablar conversaciones en los canales",
   category: "moderation",
   run: async (client, message, args) => {
     if (!message.member.hasPermission("ADMINISTRATOR"))

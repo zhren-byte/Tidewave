@@ -4,8 +4,9 @@ module.exports = {
   name: "mute",
   aliases: ["silenciar", "m"],
   category: "moderation",
+  usage: `mute <usuario> <tiempo> <razon>`,
   description:
-    "Le quita el derecho a la voz a todo aquel que le sobe el miembro a algún admin",
+    "Le quita el derecho a la voz al usuario mencionado, para que no pueda hablar en el servidor",
   async execute(client, message, args) {
     if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD))
       return message.channel.send("No tienes permisos para hacer esto.");

@@ -4,7 +4,8 @@ module.exports = {
   name: "ban",
   aliases: ["desterrar", "expatriar", "b"],
   category: "moderation",
-  description: "destierra del server al wachin seleccionado",
+  usage: `ban <usuario> <razon>`,
+  description: "Banea permanentemente al usuario",
   async execute(client, message, args) {
     if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD))
       return message.channel.send("No tienes permisos para hacer esto.");

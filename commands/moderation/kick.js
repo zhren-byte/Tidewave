@@ -4,8 +4,8 @@ module.exports = {
   name: "kick",
   aliases: ["expulsar", "patear", "k"],
   category: "moderation",
-  description:
-    "Expulsa de la comunidad yacente a aquel que haya perturbado su armonía como un pelotudo",
+  usage: `kick <usuario> <razon>`,
+  description: "Expulsa de la comunidad a aquel que haya perturbado su armonía",
   async execute(client, message, args) {
     if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD))
       return message.channel.send("No tienes permisos para hacer esto.");
