@@ -14,6 +14,7 @@ module.exports = {
     if (member.user.bot) {
       member.roles.add(autoRoleBot)
       .catch((err) => {
+        if(!logChannel) return;
         logChannel.send("No le pude dar rango al bot");
       });
     }
@@ -25,6 +26,7 @@ module.exports = {
     var autoRole = welcomeSet.autoRoleID;
     member.roles.add(autoRole)
     .catch((err) => {
+      if(!logChannel) return;
       logChannel.send("No le pude dar rango al miembro");
     });
     const applyText = (canvas, text) => {
