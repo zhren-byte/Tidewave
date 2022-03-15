@@ -19,7 +19,7 @@
     "heroku",
     "discord.js"
   ],
-  "author": "zhren, ahazel",
+  "author": "zhren, jojo",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/zhren-byte/tidewave/issues"
@@ -27,15 +27,16 @@
   "homepage": "https://github.com/zhren-byte/tidewave#readme",
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
+    "@discordjs/node-pre-gyp": "^0.4.2",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@discordjs/voice": "^0.6.0",
     "ascii-table": "^0.0.9",
     "canvas": "^2.8.0",
     "common-tags": "^1.8.0",
     "discord-api-types": "^0.23.1",
-    "discord.js": "^13.2.0",
+    "discord.js": "^13.6.0",
     "dotenv": "^10.0.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "fs": "^0.0.1-security",
     "libsodium-wrappers": "^0.7.9",
     "mongoose": "^5.13.10",
