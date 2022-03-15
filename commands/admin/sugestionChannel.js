@@ -34,7 +34,7 @@ module.exports = {
         }
       }
     );
-    let avtTW = client.user.avatarURL();
+    let avtTW = client.user.displayAvatarURL();
     let icon = message.guild.iconURL() || client.user.avatarURL();
     let sugestionChFetch = message.guild.channels.cache.get(
       sugestionSettings.sugestionChannelID
@@ -43,7 +43,7 @@ module.exports = {
       .setColor("#ffffff")
       .setThumbnail(icon)
       .addField("Sugerencias", `${sugestionChFetch}`)
-      .setFooter("Tidewave", avtTW);
+      .setFooter({ text: 'Tidewave', iconURL: avtTW });
     if (!channel)
       return message.channel.send({ embeds: [sugestionChFetchEmbed] });
     await sugestionSettings.updateOne({
@@ -53,7 +53,7 @@ module.exports = {
       .setColor("#ffffff")
       .setThumbnail(icon)
       .addField("Sugerencias", `${channel}`)
-      .setFooter("Tidewave", avtTW);
+      .setFooter({ text: 'Tidewave', iconURL: avtTW });
     return message.channel.send({ embeds: [sugestionChEmbed] });
   },
 };

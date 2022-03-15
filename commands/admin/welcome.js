@@ -33,7 +33,7 @@ module.exports = {
         }
       }
     );
-    let avtTW = client.user.avatarURL();
+    let avtTW = client.user.displayAvatarURL();
     let icon = message.guild.iconURL() || client.user.avatarURL();
     let welcomeChFetch = message.guild.channels.cache.get(
       welcomeSet.welcomeChannelID
@@ -42,7 +42,7 @@ module.exports = {
       .setColor("#ffffff")
       .setThumbnail(icon)
       .addField("Welcome", `${welcomeChFetch}`)
-      .setFooter("Tidewave", avtTW);
+      .setFooter({ text: 'Tidewave', iconURL: avtTW });
     if (!channel)
       return message.channel.send({ embeds: [welcomeChFetchEmbed] });
     await welcomeSet.updateOne({
@@ -52,7 +52,7 @@ module.exports = {
       .setColor("#ffffff")
       .setThumbnail(icon)
       .addField("Welcome", `${channel}`)
-      .setFooter("Tidewave", avtTW);
+      .setFooter({ text: 'Tidewave', iconURL: avtTW });
     return message.channel.send({ embeds: [welcomeChEmbed] });
   },
 };

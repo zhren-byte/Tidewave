@@ -31,8 +31,8 @@ module.exports = {
         }
       }
     );
-    let avtTW = client.user.avatarURL();
-    let icon = message.guild.iconURL() || client.user.avatarURL();
+    let avtTW = client.user.displayAvatarURL();
+    let icon = message.guild.iconURL() || client.user.displayAvatarURL();
     let autoRoleFetch = message.guild.roles.cache.get(
       autoRoleSettings.autoRoleID
     );
@@ -40,7 +40,7 @@ module.exports = {
       .setColor("#ffffff")
       .setThumbnail(icon)
       .addField("Auto Role", `${autoRoleFetch}`)
-      .setFooter("Tidewave", avtTW);
+      .setFooter({ text: 'Tidewave', iconURL: avtTW });
     if (!autoRole)
       return message.channel.send({ embeds: [autoRoleFetchEmbed] });
     await autoRoleSettings.updateOne({
@@ -50,7 +50,7 @@ module.exports = {
       .setColor("#ffffff")
       .setThumbnail(icon)
       .addField("Auto Role", `${autoRole}`)
-      .setFooter("Tidewave", avtTW);
+      .setFooter({ text: 'Tidewave', iconURL: avtTW });
     return message.channel.send({ embeds: [autoRoleEmbed] });
   },
 };

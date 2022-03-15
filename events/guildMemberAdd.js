@@ -1,6 +1,7 @@
 const { MessageAttachment, MessageEmbed } = require("discord.js");
 const { createCanvas, loadImage, registerFont } = require("canvas");
 const Guild = require("../models/guild");
+const { format } = require("express/lib/response");
 let x = 0;
 module.exports = {
   name: "guildMemberAdd",
@@ -13,7 +14,7 @@ module.exports = {
     const logChannel = client.channels.cache.get(welcomeSet.logChannelID) || undefined;
     const errembed = new MessageEmbed()
       .setColor("#ff0000")
-      .setAuthor(`Tidewave`, client.user.avatarURL())
+      .setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://exithades.tk' })
       .setDescription(
         `**Miembro:** ${member.user.tag} (${member.id})\n **Error:** No le pude dar rango`
       )

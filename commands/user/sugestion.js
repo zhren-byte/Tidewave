@@ -32,7 +32,7 @@ module.exports = {
     if (!sugestionChannel) return "No hay un canal de sugerencias";
     const sugerencia = new MessageEmbed()
       .setColor("#ffffff")
-      .setAuthor(`${message.author.tag}`, message.author.avatarURL())
+      .setAuthor({ name: `${message.author.tag}`, iconURL: message.author.displayAvatarURL()})
       .setDescription(args.join(" "))
       .setTimestamp();
     sugestionChannel.send({ embeds: [sugerencia] }).then((m) => {

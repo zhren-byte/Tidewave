@@ -14,7 +14,7 @@ module.exports = {
     const channel = client.channels.cache.get("675585949983440897");
     const embed = new Discord.MessageEmbed()
       .setColor("#ff0000")
-      .setAuthor(`O'Connor`, client.user.avatarURL())
+      .setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://exithades.tk' })
       .setDescription(
         `**Miembro:** ${member} (${member.id})\n **Accion:** Un-Mute\n **Moderador:** ${message.author.username}`
       )

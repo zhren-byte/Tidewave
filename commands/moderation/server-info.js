@@ -31,7 +31,7 @@ module.exports = {
         }
       }
     );
-    let avtTW = client.user.avatarURL();
+    let avtTW = client.user.displayAvatarURL();
     let icon = message.guild.iconURL() || client.user.avatarURL();
     let srvname = message.guild.name || "Tidewave";
     let prefix = serverSettings.prefix;
@@ -62,7 +62,7 @@ module.exports = {
         { name: "Auto", value: `${autoRole}`, inline: true },
         { name: "Bot", value: `${botRole}`, inline: true }
       )
-      .setFooter("Tidewave", avtTW);
+      .setFooter({ text: 'Tidewave', iconURL: avtTW });
     return message.channel.send({ embeds: [ServedEmbed] });
   },
 };

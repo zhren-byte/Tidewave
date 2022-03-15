@@ -32,14 +32,14 @@ module.exports = {
         }
       }
     );
-    let avtTW = client.user.avatarURL();
+    let avtTW = client.user.displayAvatarURL();
     let icon = message.guild.iconURL() || client.user.avatarURL();
     let botRoleFetch = message.guild.roles.cache.get(botRoleSettings.botRoleID);
     const botRoleFetchEmbed = new MessageEmbed()
       .setColor("#ffffff")
       .setThumbnail(icon)
       .addField("Bot Role", `${botRoleFetch}`)
-      .setFooter("Tidewave", avtTW);
+      .setFooter({ text: 'Tidewave', iconURL: avtTW });
     if (!botRole) return message.channel.send({ embeds: [botRoleFetchEmbed] });
     await botRoleSettings.updateOne({
       botRoleID: botRole.id,
@@ -48,7 +48,7 @@ module.exports = {
       .setColor("#ffffff")
       .setThumbnail(icon)
       .addField("Bot Role", `${botRole}`)
-      .setFooter("Tidewave", avtTW);
+      .setFooter({ text: 'Tidewave', iconURL: avtTW });
     return message.channel.send({ embeds: [botRoleEmbed] });
   },
 };

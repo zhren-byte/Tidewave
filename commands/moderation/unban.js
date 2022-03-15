@@ -25,7 +25,7 @@ module.exports = {
       message.guild.members.unban(bannedMember, reason);
       const embed = new Discord.MessageEmbed()
         .setColor("#ff0000")
-        .setAuthor(`O'Connor`, client.user.avatarURL())
+        .setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://exithades.tk' })
         .setDescription(
           `**Miembro:** ${bannedMember} (${bannedMember.id})\n **Accion:** Un-Ban\n **Moderador:** ${message.author.username}`
         )

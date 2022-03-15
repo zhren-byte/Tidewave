@@ -34,7 +34,7 @@ module.exports = {
         }
       }
     );
-    let avtTW = client.user.avatarURL();
+    let avtTW = client.user.displayAvatarURL();
     let icon = message.guild.iconURL() || client.user.avatarURL();
     let warningChFetch = message.guild.channels.cache.get(
       warningSet.logChannelID
@@ -43,7 +43,7 @@ module.exports = {
       .setColor("#ffffff")
       .setThumbnail(icon)
       .addField("Warnings", `${warningChFetch}`)
-      .setFooter("Tidewave", avtTW);
+      .setFooter({ text: 'Tidewave', iconURL: avtTW });
     if (!channel)
       return message.channel.send({ embeds: [warningChFetchEmbed] });
     await warningSet.updateOne({
@@ -53,7 +53,7 @@ module.exports = {
       .setColor("#ffffff")
       .setThumbnail(icon)
       .addField("Warnings", `${channel}`)
-      .setFooter("Tidewave", avtTW);
+      .setFooter({ text: 'Tidewave', iconURL: avtTW });
     return message.channel.send({ embeds: [warningChEmbed] });
   },
 };

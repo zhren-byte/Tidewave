@@ -33,7 +33,7 @@ module.exports = {
         if (err) console.error(err);
         const warnembed = new MessageEmbed()
           .setColor("#4697e1")
-          .setAuthor(`Tidewave`, client.user.avatarURL())
+          .setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://exithades.tk' })
           .setDescription(
             `**Miembro:** ${user} (${user.id})\n**Accion:** Clear Warn\n**Razon:** ${reason}\n**Warns:** 0\n**Moderador:** ${mod}`
           )

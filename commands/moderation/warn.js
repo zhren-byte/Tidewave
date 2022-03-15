@@ -43,7 +43,7 @@ module.exports = {
           newUser.save().catch((err) => console.error(err));
           const warnembed = new MessageEmbed()
             .setColor("#ff0000")
-            .setAuthor(`Tidewave`, client.user.avatarURL())
+            .setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://exithades.tk' })
             .setDescription(
               `**Miembro:** ${user} (${user.id})\n**Accion:** Warn\n**Razon:** ${reason}\n**Warns:** 1\n**Moderador:** ${mod}`
             )
@@ -57,7 +57,7 @@ module.exports = {
             .catch((err) => console.error(err));
           const warnembed = new MessageEmbed()
             .setColor("#ff0000")
-            .setAuthor(`Tidewave`, client.user.avatarURL())
+            .setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://exithades.tk' })
             .setDescription(
               `**Miembro:** ${user} (${
                 user.id

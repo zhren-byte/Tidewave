@@ -32,7 +32,7 @@ module.exports = {
         }
       }
     );
-    let avtTW = client.user.avatarURL();
+    let avtTW = client.user.displayAvatarURL();
     let icon = message.guild.iconURL() || client.user.avatarURL();
     let muteRoleFetch = message.guild.roles.cache.get(
       muteRoleSettings.muteRoleID
@@ -41,7 +41,7 @@ module.exports = {
       .setColor("#ffffff")
       .setThumbnail(icon)
       .addField("Mute Role", `${muteRoleFetch}`)
-      .setFooter("Tidewave", avtTW);
+      .setFooter({ text: 'Tidewave', iconURL: avtTW });
     if (!muteRole)
       return message.channel.send({ embeds: [muteRoleFetchEmbed] });
     await muteRoleSettings.updateOne({
@@ -51,7 +51,7 @@ module.exports = {
       .setColor("#ffffff")
       .setThumbnail(icon)
       .addField("Mute Role", `${muteRole}`)
-      .setFooter("Tidewave", avtTW);
+      .setFooter({ text: 'Tidewave', iconURL: avtTW });
     return message.channel.send({ embeds: [muteRoleEmbed] });
   },
 };
