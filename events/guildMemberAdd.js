@@ -17,7 +17,10 @@ module.exports = {
     registerFont("assets/seagram.ttf", { family: "Seagram" });
     registerFont("assets/dalgona.ttf", { family: "Dalgona" });
     var autoRole = welcomeSet.autoRoleID;
-    member.roles.add(autoRole);
+    member.roles.add(autoRole)
+    .catch((err) => {
+      message.reply("No le pude dar rango al miembro");
+    });
     const applyText = (canvas, text) => {
       const ctx = canvas.getContext("2d");
       let fontSize = 76;
