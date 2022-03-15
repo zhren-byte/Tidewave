@@ -54,21 +54,26 @@ async function getCMD(client, message, input) {
   const cmd =
     client.commands.get(input.toLowerCase()) ||
     client.commands.get(client.aliases.get(input.toLowerCase()));
-  let info = `No information found for command **${input.toLowerCase()}**`;
+  let info = `No hay informacion para **${input.toLowerCase()}**`;
   if (!cmd) {
-    embed.setColor("#ff0000").setDescription(info);
+    embed
+    .setColor("#ff0000")
+    .setDescription(info);
     return message.channel.send({ embeds: [embed] });
   }
   if (cmd.name) info = `**Comando**: ${cmd.name}`;
-  if (cmd.aliases)
-    info += `\n**Alias**: ${cmd.aliases.map((a) => `\`{a}\``).join(", ")}`;
+  if (cmd.aliases) info += `\n**Alias**: \`${cmd.aliases.join(", ")}\``;
   if (cmd.description) info += `\n**Descripcion**: ${cmd.description}`;
   if (cmd.usage) {
     info += `\n**Uso**: ${guildDB.prefix}${cmd.usage}`;
     
-    embed.setFooter({ text: '<> = REQUERIDO | [] = OPCIONAL'});
+    embed
+    .setFooter({ text: '<> = REQUERIDO | [] = OPCIONAL'});
   }
   if (cmd.usage2) info += `\n**Segundo uso**: ${guildDB.prefix}${cmd.usage2}`;
-  embed.setColor(process.env.COLOR).setDescription(info);
+  embed
+  .setColor(process.env.COLOR)
+  .setDescription(info)
+  .setFooter({ text: 'Tidewave', iconURL: client.user.displayAvatarURL() });
   return message.channel.send({ embeds: [embed] });
 }
