@@ -36,16 +36,16 @@ async function helpMSG(client, message) {
   const guildDB = await Guild.findOne({ _id: message.guild.id });
   const embed = new MessageEmbed()
     .setColor("#ffffff")
-    .setTitle("O-Connor")
-    .setThumbnail(client.user.avatarURL())
+    .setTitle('Tidewave')
+    .setThumbnail(client.user.displayAvatarURL())
     .setDescription(
       `Para ver la lista completa de comandos: \`${guildDB.prefix}commands\` \n\n`
     )
     .addField(
       "Links",
-      "[Discord](https://discord.gg/sjqDZde)\n[Pagina Web](https://discord.gg/sjqDZde)"
+      "[Discord](https://discord.gg/rUADwcj4kf)\n[Pagina Web](https://exithades.tk)"
     )
-    .setFooter("Creado por Zhren#7777");
+    .setFooter({ text: 'Creado por Zhren#5164'});
   message.channel.send({ embeds: [embed] });
 }
 async function getCMD(client, message, input) {
@@ -65,7 +65,8 @@ async function getCMD(client, message, input) {
   if (cmd.description) info += `\n**Descripcion**: ${cmd.description}`;
   if (cmd.usage) {
     info += `\n**Uso**: ${guildDB.prefix}${cmd.usage}`;
-    embed.setFooter("<> = REQUERIDO | [] = OPCIONAL");
+    
+    embed.setFooter({ text: '<> = REQUERIDO | [] = OPCIONAL'});
   }
   if (cmd.usage2) info += `\n**Segundo uso**: ${guildDB.prefix}${cmd.usage2}`;
   embed.setColor(process.env.COLOR).setDescription(info);

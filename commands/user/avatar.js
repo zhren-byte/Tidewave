@@ -13,7 +13,7 @@ module.exports = {
     const AvatarEmbed = new MessageEmbed()
       .setImage(user.avatarURL({ dynamic: true, size: 2048, format: "png" }))
       .setColor(0x66b3ff)
-      .setFooter(`Avatar de ${user.tag}`);
+      .setFooter({ text: 'Avatar de ${user.tag}'});
     if (user) return message.reply({ embeds: [AvatarEmbed] });
   },
 };
