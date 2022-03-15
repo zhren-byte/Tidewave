@@ -1,4 +1,4 @@
-const { MessageAttachment } = require("discord.js");
+const { MessageAttachment, MessageEmbed } = require("discord.js");
 const { createCanvas, loadImage, registerFont } = require("canvas");
 const Guild = require("../models/guild");
 let x = 0;
@@ -11,11 +11,18 @@ module.exports = {
     });
     const autoRoleBot = welcomeSet.botRoleID;
     const logChannel = client.channels.cache.get(welcomeSet.logChannelID) || undefined;
+    const errembed = new MessageEmbed()
+      .setColor("#ff0000")
+      .setAuthor(`Tidewave`, client.user.avatarURL())
+      .setDescription(
+        `**Miembro:** ${member.user.tag} (${member.id})\n **Error:** No le pude dar rango`
+      )
+      .setTimestamp();
     if (member.user.bot) {
       member.roles.add(autoRoleBot)
       .catch((err) => {
         if(!logChannel) return;
-        logChannel.send("No le pude dar rango al bot");
+        logChannel.send({ embeds: [errembed] });
       });
     }
     const channel = client.channels.cache.get(welcomeSet.welcomeChannelID);
@@ -27,7 +34,7 @@ module.exports = {
     member.roles.add(autoRole)
     .catch((err) => {
       if(!logChannel) return;
-      logChannel.send("No le pude dar rango al miembro");
+      logChannel.send({ embeds: [errembed] });
     });
     const applyText = (canvas, text) => {
       const ctx = canvas.getContext("2d");
