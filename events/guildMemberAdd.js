@@ -10,7 +10,7 @@ module.exports = {
       _id: member.guild.id,
     });
     const autoRoleBot = welcomeSet.botRoleID;
-    const logChannel = client.channels.cache.get(warningSet.logChannelID) || message.channel;
+    const logChannel = client.channels.cache.get(welcomeSet.logChannelID) || message.channel;
     if (member.user.bot) {
       member.roles.add(autoRoleBot)
       .catch((err) => {
