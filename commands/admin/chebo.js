@@ -25,12 +25,10 @@ module.exports = {
         );
       }
     });
-    let id = message.author.id;
-    // conn.query(`select count(*) from sugerencia`, (err, results) => {
-    //   if (err) console.log(err);
-    //   id = (results[0]['count(*)']);
-    // });
-    // console.log(id);
+    let id = conn.query(`select count(*) from sugerencia`, (err, results) => {
+      if (err) console.log(err);
+    });
+    console.log(id);
     let contenido = args.slice(0).join(" ");
     let date = message.createdAt
       .toISOString()
@@ -45,5 +43,6 @@ module.exports = {
     message.author.send(
       `${message.member.user.tag}: Tu mensaje se envio correctamente, gracias por tu ayuda`
     );
+    conn.end();
   },
 };
