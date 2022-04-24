@@ -15,21 +15,31 @@ module.exports = {
   usage: ">chebo [sugerencia, error, arreglo]",
   async execute(client, message, args) {
     if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return;
-	conn.connect(function (err) {
-	if (err) {
-		console.log("Base de datos no disponible");
-		console.log(err);
-	} else {
-    console.log(`- Se envio una nueva propuesta desde -> ${message.member.user.tag}`);
-	}
-	});
+    conn.connect(function (err) {
+      if (err) {
+        console.log("Base de datos no disponible");
+        console.log(err);
+      } else {
+        console.log(
+          `- Se envio una nueva propuesta desde -> ${message.member.user.tag}`
+        );
+      }
+    });
+    conn.query(
+      `select count(*) from sugerencia`,
+      (message, err) => {
+        if (err) console.log(err);
+        console.log(message);
+      }
+    );
+    let id = message.author.id;
     let contenido = args.slice(0).join(" ");
     let date = message.createdAt
       .toISOString()
       .replace(/T/, " ")
       .replace(/\..+/, "");
     conn.query(
-      `INSERT INTO sugerencia (dname, sugerencia, fecha) VALUES ('${message.member.user.tag}','${contenido}', '${date}')`,
+      `INSERT INTO sugerencia (dname, sugerencia, fecha) VALUES (${message.member.user.tag}','${contenido}', '${date}')`,
       (message, err) => {
         if (err) console.log(err);
       }

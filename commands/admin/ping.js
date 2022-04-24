@@ -6,6 +6,7 @@ module.exports = {
   usage: "Devuelve el ping (ms) del bot",
   async execute(client, message, args) {
     message.delete();
+    if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send("No tienes permisos para hacer esto.");
     const pingEmbed = new MessageEmbed()
       .setColor("#ffffff")
       .setTitle("Pong!")
