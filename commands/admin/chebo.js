@@ -25,21 +25,19 @@ module.exports = {
         );
       }
     });
-    conn.query(
-      `select count(*) from sugerencia`,
-      (message, err) => {
-        if (err) console.log(err);
-        console.log(message);
-      }
-    );
     let id = message.author.id;
+    // conn.query(`select count(*) from sugerencia`, (err, results) => {
+    //   if (err) console.log(err);
+    //   id = (results[0]['count(*)']);
+    // });
+    // console.log(id);
     let contenido = args.slice(0).join(" ");
     let date = message.createdAt
       .toISOString()
       .replace(/T/, " ")
       .replace(/\..+/, "");
     conn.query(
-      `INSERT INTO sugerencia (dname, sugerencia, fecha) VALUES (${message.member.user.tag}','${contenido}', '${date}')`,
+      `INSERT INTO sugerencia (id, dname, sugerencia, fecha) VALUES ('${id}',${message.member.user.tag}','${contenido}', '${date}')`,
       (message, err) => {
         if (err) console.log(err);
       }
