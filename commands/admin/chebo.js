@@ -19,7 +19,6 @@ module.exports = {
       if (err) {
         console.log("Base de datos no disponible");
         console.log(err);
-        return;
       } else {
         console.log(
           `- Se envio una nueva propuesta desde -> ${message.member.user.tag}`
@@ -46,9 +45,9 @@ module.exports = {
         }
       );
     });
-    // message.author.send(
-    //   `${message.member.user.tag}: Tu mensaje se envio correctamente, gracias por tu ayuda`
-    // );
+    message.author.send(
+      `${message.member.user.tag}: Tu mensaje se envio correctamente, gracias por tu ayuda`
+    );
     conn.end();
   },
 };
