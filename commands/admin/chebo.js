@@ -19,30 +19,36 @@ module.exports = {
       if (err) {
         console.log("Base de datos no disponible");
         console.log(err);
+        return;
       } else {
         console.log(
           `- Se envio una nueva propuesta desde -> ${message.member.user.tag}`
         );
       }
     });
-    let id = conn.query(`select count(*) from sugerencia`, (err, results) => {
-      if (err) console.log(err);
-    });
-    console.log(id);
     let contenido = args.slice(0).join(" ");
     let date = message.createdAt
       .toISOString()
       .replace(/T/, " ")
       .replace(/\..+/, "");
-    conn.query(
-      `INSERT INTO sugerencia (id, dname, sugerencia, fecha) VALUES ('${id}',${message.member.user.tag}','${contenido}', '${date}')`,
-      (message, err) => {
-        if (err) console.log(err);
-      }
-    );
-    message.author.send(
-      `${message.member.user.tag}: Tu mensaje se envio correctamente, gracias por tu ayuda`
-    );
+    conn.query(`SELECT count(*) AS count FROM sugerencia`,
+    (err, results) => {
+      if (err) console.log(err);
+      let id = results[0].count;
+      quest = conn.query(
+        `INSERT INTO sugerencia (id, dname, sugerencia, fecha) VALUES ('${id+1}', '${message.member.user.tag}','${contenido}', '${date}')`,
+        (message, err) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          
+        }
+      );
+    });
+    // message.author.send(
+    //   `${message.member.user.tag}: Tu mensaje se envio correctamente, gracias por tu ayuda`
+    // );
     conn.end();
   },
 };
