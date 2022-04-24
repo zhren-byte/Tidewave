@@ -1,7 +1,6 @@
 const { MessageAttachment, MessageEmbed } = require("discord.js");
-const { createCanvas, loadImage, registerFont } = require("canvas");
+// const { createCanvas, loadImage, registerFont } = require("canvas");
 const Guild = require("../models/guild");
-const { format } = require("express/lib/response");
 let x = 0;
 module.exports = {
   name: "guildMemberAdd",
