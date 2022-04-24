@@ -35,7 +35,7 @@ module.exports = {
       if (err) console.log(err);
       let id = results[0].count;
       quest = conn.query(
-        `INSERT INTO sugerencia (id, dname, sugerencia, fecha) VALUES ('${id+1}', '${message.member.user.tag}','${contenido}', '${date}')`,
+        `INSERT INTO sugerencia (dname, sugerencia, fecha) VALUES ('${message.member.user.tag}','${contenido}', '${date}')`,
         (message, err) => {
           if (err) {
             console.log(err);
