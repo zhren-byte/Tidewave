@@ -1,4 +1,4 @@
-const { Permissions } = require("discord.js");
+const { Permissions, MessageEmbed } = require("discord.js");
 const mysql = require("mysql");
 const conn = mysql.createConnection({
   host: `${process.env.DB_HOST}`,
@@ -15,6 +15,7 @@ module.exports = {
   usage: ">chebo [sugerencia, error, arreglo]",
   async execute(client, message, args) {
     if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return;
+    let contenidOne = args.slice(0).join(" ");
     let contenido = args
       .slice(0)
       .join(" ")
@@ -46,8 +47,17 @@ module.exports = {
         }
       );
     });
-    // message.author.send(
-    //   `${message.member.user.tag}: Tu mensaje se envio correctamente, gracias por tu ayuda`
-    // );
+    const chebembed = new MessageEmbed()
+      .setColor("#ff0000")
+      .setAuthor({
+        name: "Tidewave",
+        iconURL: client.user.displayAvatarURL(),
+        url: "https://hellhades.tk",
+      })
+      .setDescription(
+        `**Miembro:** ${member.user.tag} (${member.id})\n **Mensaje:**${contenidOne}\n **Conclusion:** Tu mensaje se envio correctamente, gracias por tu ayuda.`
+      )
+      .setTimestamp();
+    message.author.send({ embeds: [chebembed] });
   },
 };
