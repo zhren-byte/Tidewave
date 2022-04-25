@@ -36,28 +36,24 @@ module.exports = {
           id + 1
         }', '${message.member.user.tag}','${contenido}', '${date}')`,
         (third, err) => {
-          if (err) {
-            console.log(err);
-            return;
-          } else {
-            console.log(
-              `- Se envio una nueva propuesta desde -> ${message.member.user.tag}`
-            );
-          }
+          if (err) console.log(err);
+          const chebembed = new MessageEmbed()
+            .setColor("#00ff00")
+            .setAuthor({
+              name: "Tidewave",
+              iconURL: client.user.displayAvatarURL(),
+              url: "https://hellhades.tk",
+            })
+            .setDescription(
+              `**Miembro:** ${message.author.tag} (${message.author.id})\n **Mensaje:** ${contenidOne}\n **Conclusion:** Tu mensaje se envio correctamente, gracias por tu ayuda.`
+            )
+            .setTimestamp();
+          message.channel.send({ embeds: [chebembed] });
+          console.log(
+            `- Se envio una nueva propuesta desde -> ${message.member.user.tag}`
+          );
         }
       );
     });
-    const chebembed = new MessageEmbed()
-      .setColor("#ff0000")
-      .setAuthor({
-        name: "Tidewave",
-        iconURL: client.user.displayAvatarURL(),
-        url: "https://hellhades.tk",
-      })
-      .setDescription(
-        `**Miembro:** ${member.user.tag} (${member.id})\n **Mensaje:**${contenidOne}\n **Conclusion:** Tu mensaje se envio correctamente, gracias por tu ayuda.`
-      )
-      .setTimestamp();
-    message.author.send({ embeds: [chebembed] });
   },
 };
