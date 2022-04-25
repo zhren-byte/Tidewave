@@ -1,5 +1,5 @@
 const { MessageAttachment, MessageEmbed } = require("discord.js");
-// const { createCanvas, loadImage, registerFont } = require("canvas");
+const { createCanvas, loadImage, registerFont } = require("canvas");
 const Guild = require("../models/guild");
 let x = 0;
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
     const logChannel = client.channels.cache.get(welcomeSet.logChannelID) || undefined;
     const errembed = new MessageEmbed()
       .setColor("#ff0000")
-      .setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://exithades.tk' })
+      .setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
       .setDescription(
         `**Miembro:** ${member.user.tag} (${member.id})\n **Error:** No le pude dar rango`
       )
@@ -28,8 +28,8 @@ module.exports = {
     const channel = client.channels.cache.get(welcomeSet.welcomeChannelID);
     if (!channel) return;
     (x++ % 3) + 1;
-    registerFont("assets/seagram.ttf", { family: "Seagram" });
-    registerFont("assets/dalgona.ttf", { family: "Dalgona" });
+    registerFont("./assets/seagram.ttf", { family: "Seagram" });
+    registerFont("./assets/dalgona.ttf", { family: "Dalgona" });
     var autoRole = welcomeSet.autoRoleID;
     member.roles.add(autoRole)
     .catch((err) => {
