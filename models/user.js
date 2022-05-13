@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
-  guildID: String,
-  userID: String,
+  _id: Number,
   userName: String,
-  warns: { type: Number, default: 0, min: 0 },
+  warns: [
+    {
+      _id: Number,
+      warn: Number,
+    },
+  ],
 });
 
 module.exports = mongoose.model("User", userSchema, "user");
