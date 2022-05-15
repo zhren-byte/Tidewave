@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-	_id: Number,
+	_id: String,
 	userName: String,
 	warns: [
 		{
-			_id: Number,
+			_id: String,
 			warn: Number,
 		},
 	],

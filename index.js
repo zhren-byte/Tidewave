@@ -146,16 +146,19 @@ client.on('messageCreate', async (message) => {
 	);
 	// eslint-disable-next-line no-unused-vars
 	const userSet = await User.findOne(
-		{
-			_id: message.author.id,
-		},
+		{ _id: message.author.id },
 		(err, user) => {
 			if (err) console.error(err);
 			if (!user) {
 				const newUser = new User({
 					_id: message.author.id,
 					userName: message.author.username,
-					warns: [],
+					warns: [
+						{
+							_id: message.guild.id,
+							warn: 0,
+						},
+					],
 				});
 				newUser.save().catch((err) => console.error(err));
 			}
