@@ -11,6 +11,7 @@
 *.sass-cache
 
 .prettierrc
+.eslintrc.json
 
 emojis.js
 # OS or Editor folders
