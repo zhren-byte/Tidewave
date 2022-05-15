@@ -155,6 +155,7 @@ client.on('messageCreate', async (message) => {
 				const newUser = new User({
 					_id: message.author.id,
 					userName: message.author.username,
+					warns: [],
 				});
 				newUser.save().catch((err) => console.error(err));
 			}
