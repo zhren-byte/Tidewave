@@ -1,19 +1,25 @@
-const mongoose = require("mongoose");
-const Guild = require("../models/guild");
+const Guild = require('../models/guild');
 module.exports = {
-  name: "guildCreate",
-  on: true,
-  async execute(client, guild) {
-    const Settings = await Guild.findOne({ _id: guild.id }, (err, guildC) => {
-      if (err) console.error(err);
-      if (!guildC) {
-        const newGuild = new Guild({
-          _id: guild.id,
-          guildName: guild.name,
-          prefix: process.env.PREFIX,
-        });
-        newGuild.save().catch((err) => console.error(err));
-      }
-    });
-  },
+	name: 'guildCreate',
+	on: true,
+	async execute(client, guild) {
+		// eslint-disable-next-line no-unused-vars
+		const Settings = await Guild.findOne({ _id: guild.id }, (err, guildC) => {
+			if (err) console.error(err);
+			if (!guildC) {
+				const newGuild = new Guild({
+					_id: guild.id,
+					guildName: guild.name,
+					prefix: process.env.PREFIX,
+					logChannelID: null,
+					muteRoleID: null,
+					autoRoleID: null,
+					botRoleID: null,
+					sugestionChannelID: null,
+					welcomeChannelID: null,
+				});
+				newGuild.save().catch((err) => console.error(err));
+			}
+		});
+	},
 };
