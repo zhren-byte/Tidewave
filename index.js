@@ -146,21 +146,36 @@ client.on('messageCreate', async (message) => {
 	);
 	// eslint-disable-next-line no-unused-vars
 	const userSet = await User.findOne(
-		{ _id: message.author.id },
+		{
+			_id: message.author.id,
+			'warns._id': message.guild.id,
+		},
 		(err, user) => {
 			if (err) console.error(err);
 			if (!user) {
 				const newUser = new User({
 					_id: message.author.id,
 					userName: message.author.username,
-					warns: [
-						{
-							_id: message.guild.id,
-							warn: 0,
-						},
-					],
+					warns: [],
 				});
 				newUser.save().catch((err) => console.error(err));
+			}
+		},
+	);
+	// eslint-disable-next-line no-unused-vars
+	const warnsSet = await User.findOne(
+		{
+			_id: message.author.id,
+			'warns._id': message.guild.id,
+		},
+		(err, user) => {
+			if (err) console.error(err);
+			if (!user) {
+				user.warns.push({
+					_id: message.guild.id,
+					warn: 1,
+				});
+				user.save().catch((err) => console.error(err));
 			}
 		},
 	);
