@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const { MessageEmbed, Permissions } = require('discord.js');
 const Guild = require('../../models/guild');
 const User = require('../../models/user');
@@ -11,7 +10,7 @@ module.exports = {
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
 			return message.channel.send('No tienes permisos para hacer esto.');
 		}
-		warningSet = await Guild.findOne({ _id: message.guild.id });
+		const warningSet = await Guild.findOne({ _id: message.guild.id });
 		const channel =
 			client.channels.cache.get(warningSet.logChannelID) || message.channel;
 		const ids = args[0];
@@ -48,7 +47,7 @@ module.exports = {
 							`**Miembro:** ${user} (${user.id})\n**Warns:** 0\n**Ultimo warn:** undefined`,
 						)
 						.setTimestamp();
-					return channel.send({ embeds: [embed] });
+					return message.channel.send({ embeds: [embed] });
 				}
 				else {
 					const warn = usuario.warns.find((w) => w._id === message.guild.id);
