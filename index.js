@@ -149,35 +149,30 @@ client.on('messageCreate', async (message) => {
 		{
 			_id: message.author.id,
 		},
-		(err, user) => {
+		(err, usuario) => {
 			if (err) console.error(err);
-			if (!user) {
-				const newUser = new User({
+			if (!usuario) {
+				const newWarns = new User({
 					_id: message.author.id,
 					userName: message.author.username,
-					warns: [{
-						_id: message.author.id,
-						warn: 0,
-					}],
+					warns: [
+						{
+							_id: message.guild.id,
+							warn: 0,
+						},
+					],
 				});
-				newUser.save().catch((err) => console.error(err));
+				newWarns.save().catch((err) => console.error(err));
 			}
-		},
-	);
-	// eslint-disable-next-line no-unused-vars
-	const warnsSet = await User.findOne(
-		{
-			_id: message.author.id,
-			'warns._id': message.guild.id,
-		},
-		(err, user) => {
-			if (err) console.error(err);
-			if (!user) {
-				user.warns.push({
-					_id: message.guild.id,
-					warn: 1,
-				});
-				user.save().catch((err) => console.error(err));
+			else {
+				const warns = usuario.warns.find((w) => w._id === message.guild.id);
+				if (!warns) {
+					usuario.warns.push({
+						_id: message.guild.id,
+						warn: 0,
+					});
+					usuario.save().catch((err) => console.error(err));
+				}
 			}
 		},
 	);
