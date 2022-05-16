@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const { MessageAttachment, MessageEmbed } = require('discord.js');
 const { createCanvas, loadImage, registerFont } = require('canvas');
 const Guild = require('../models/guild');
@@ -7,7 +6,7 @@ module.exports = {
 	name: 'guildMemberAdd',
 	on: true,
 	async execute(client, member) {
-		welcomeSet = await Guild.findOne({
+		const welcomeSet = await Guild.findOne({
 			_id: member.guild.id,
 		});
 		const autoRoleBot = welcomeSet.botRoleID;
