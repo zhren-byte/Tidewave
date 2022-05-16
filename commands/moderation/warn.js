@@ -4,8 +4,9 @@ const User = require('../../models/user');
 module.exports = {
 	name: 'warn',
 	aliases: ['w', 'adv'],
-	description: 'Advierte al usuario por su comportamiento',
+	description: 'Advierte al usuario por su comportamiento o [?] comprueba si tiene advertencias.',
 	category: 'moderation',
+	usage: 'warn <usuario> ([?] or <razón>)',
 	async execute(client, message, args) {
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
 			return message.channel.send('No tienes permisos para hacer esto.');
