@@ -22,19 +22,59 @@ module.exports = {
 		let reason = args.slice(1).join(' ');
 		if (!user) return message.channel.send('Mencione un usuario.');
 		if (args[1] === '?') {
-			const UserSet = await User.findOne({ _id: user.id });
-			const embed = new MessageEmbed()
-				.setColor('#ff0000')
-				.setAuthor({
-					name: 'Tidewave',
-					iconURL: client.user.displayAvatarURL(),
-					url: 'https://www.hellhades.tk',
-				})
-				.setDescription(
-					`**Miembro:** ${user} (${user.id})\n**Warns:** 1\n**Ultimo warn:** ${UserSet.lastWarn}`,
-				)
-				.setTimestamp();
-			return message.channel.send({ embed });
+			await User.findOne({ _id: user.id }, (err, usuario) => {
+				if (err) console.error(err);
+				if (!usuario) {
+					const newWarns = new User({
+						_id: user.id,
+						userName: user.username,
+						warns: [
+							{
+								_id: message.guild.id,
+								warn: 0,
+								lastWarn: null,
+							},
+						],
+					});
+					newWarns.save().catch((err) => console.error(err));
+					const embed = new MessageEmbed()
+						.setColor('#ff0000')
+						.setAuthor({
+							name: 'Tidewave',
+							iconURL: client.user.displayAvatarURL(),
+							url: 'https://www.hellhades.tk',
+						})
+						.setDescription(
+							`**Miembro:** ${user} (${user.id})\n**Warns:** ${warn.warn}\n**Ultimo warn:** ${warn.lastWarn.toLocaleString()}`,
+						)
+						.setTimestamp();
+					return channel.send({ embeds: [embed] });
+				}
+				else {
+					const warn = usuario.warns.find((w) => w._id === message.guild.id);
+					if (!warn) {
+						usuario.warns.push({
+							_id: message.guild.id,
+							warn: 0,
+							lastWarn: null,
+						});
+						usuario.save().catch((err) => console.error(err));
+					}
+					const embed = new MessageEmbed()
+						.setColor('#ff0000')
+						.setAuthor({
+							name: 'Tidewave',
+							iconURL: client.user.displayAvatarURL(),
+							url: 'https://www.hellhades.tk',
+						})
+						.setDescription(
+							`**Miembro:** ${user} (${user.id})\n**Warns:** ${warn.warn}\n**Ultimo warn:** ${warn.lastWarn.toLocaleString()}`,
+						)
+						.setTimestamp();
+					return channel.send({ embeds: [embed] });
+				}
+			});
+			return;
 		}
 		// if (user.id === message.author.id) return message.channel.send('No te puedes warnear a ti mismo.');
 		if (user.id === client.user.id) return message.channel.send('No puedes warnearme.');
