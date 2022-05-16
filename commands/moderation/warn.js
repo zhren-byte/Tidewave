@@ -21,6 +21,21 @@ module.exports = {
 		const mod = message.author.username;
 		let reason = args.slice(1).join(' ');
 		if (!user) return message.channel.send('Mencione un usuario.');
+		if (args[1] === '?') {
+			const UserSet = await User.findOne({ _id: user.id });
+			const embed = new MessageEmbed()
+				.setColor('#ff0000')
+				.setAuthor({
+					name: 'Tidewave',
+					iconURL: client.user.displayAvatarURL(),
+					url: 'https://www.hellhades.tk',
+				})
+				.setDescription(
+					`**Miembro:** ${user} (${user.id})\n**Warns:** 1\n**Ultimo warn:** ${UserSet.lastWarn}`,
+				)
+				.setTimestamp();
+			return message.channel.send({ embed });
+		}
 		// if (user.id === message.author.id) return message.channel.send('No te puedes warnear a ti mismo.');
 		if (user.id === client.user.id) return message.channel.send('No puedes warnearme.');
 		if (!reason) reason = 'No hay razón provista';
@@ -38,6 +53,7 @@ module.exports = {
 							{
 								_id: message.guild.id,
 								warn: 1,
+								lastWarn: new Date(),
 							},
 						],
 					});
@@ -61,6 +77,7 @@ module.exports = {
 						usuario.warns.push({
 							_id: message.guild.id,
 							warn: 1,
+							lastWarn: new Date(),
 						});
 						return usuario.save().catch((err) => console.error(err));
 					}

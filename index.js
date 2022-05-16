@@ -86,8 +86,7 @@ client.on('messageCreate', async (message) => {
 			++msgCount;
 			if (parseInt(msgCount) === LIMIT) {
 				const warningSet = await Guild.findOne({ _id: message.guild.id });
-				const channel =
-          client.channels.cache.get(warningSet.logChannelID) || message.channel;
+				const channel = client.channels.cache.get(warningSet.logChannelID) || message.channel;
 				const role = await message.guild.roles.fetch(warningSet.muteRoleID);
 				message.member.roles.add(role);
 				const muted = new MessageEmbed()
@@ -158,6 +157,7 @@ client.on('messageCreate', async (message) => {
 						{
 							_id: message.guild.id,
 							warn: 0,
+							lastWarn: null,
 						},
 					],
 				});
@@ -169,6 +169,7 @@ client.on('messageCreate', async (message) => {
 					usuario.warns.push({
 						_id: message.guild.id,
 						warn: 0,
+						lastWarn: null,
 					});
 					usuario.save().catch((err) => console.error(err));
 				}

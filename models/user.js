@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema({
 		{
 			_id: String,
 			warn: Number,
+			lastWarn: Date,
 		},
 	],
 });
