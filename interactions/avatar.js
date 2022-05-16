@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { Client, Message, MessageEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('avatar')
@@ -8,9 +8,9 @@ module.exports = {
 	async execute(interaction) {
 		const user = interaction.options.getUser('avatar') || interaction.user;
 		const AvatarEmbed = new MessageEmbed()
-			.setImage(user.avatarURL({ dynamic: true , size: 2048 , format: "png" }))
+			.setImage(user.avatarURL({ dynamic: true, size: 2048, format: 'png' }))
 			.setColor(0x66b3ff)
-			.setFooter({ text: `Avatar de ${user.tag}`});
+			.setFooter({ text: `Avatar de ${user.tag}` });
 		if (user) return interaction.reply({ embeds: [AvatarEmbed] });
 	},
 };

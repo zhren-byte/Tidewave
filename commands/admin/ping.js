@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
 const { Permissions, MessageEmbed } = require('discord.js');
 module.exports = {
 	name: 'ping',
 	category: 'admin',
 	description: 'Command description',
 	usage: 'Devuelve el ping (ms) del bot',
-	async execute(client, message, args) {
+	async execute(client, message) {
 		message.delete();
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send('No tienes permisos para hacer esto.');
 		const pingEmbed = new MessageEmbed()
@@ -17,7 +16,7 @@ module.exports = {
 		// const channel = client.channels.cache.get("622624908995723285");
 		// const embed = new MessageEmbed()
 		//   .setColor("#ff0000")
-		//   .setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://exithades.tk' })
+		//   .setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
 		//   .setDescription(
 		//     `**Miembro:** ${
 		//       message.author

@@ -1,5 +1,4 @@
 const { MessageEmbed, Permissions } = require('discord.js');
-const mongoose = require('mongoose');
 const Guild = require('../../models/guild');
 const User = require('../../models/user');
 module.exports = {
@@ -23,45 +22,70 @@ module.exports = {
 			number = 1;
 		}
 		if (!user) return message.channel.send('Mencione un usuario.');
-		if (user.id === message.author.id) {return message.channel.send('No te puedes unwarnear a ti mismo.');}
+		// if (user.id === message.author.id) {return message.channel.send('No te puedes unwarnear a ti mismo.');}
 		if (user.id === client.user.id) {return message.channel.send('No puedes unwarnearme.');}
 		if (!reason) reason = 'No hay razón provista';
-		warnSet = await User.findOne(
+		await User.findOne(
 			{
-				guildID: message.guild.id,
-				userID: user.id,
+				_id: user.id,
 			},
 			(err, usuario) => {
 				if (err) console.error(err);
-				const warnembed = new MessageEmbed()
-					.setColor('#4697e1')
-					.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://exithades.tk' })
-					.setDescription(
-						`**Miembro:** ${user} (${
-							user.id
-						})\n**Accion:** UnWarn\n**Razon:** ${reason}\n**Warns:** ${
-							usuario.warns - number
-						}\n**Moderador:** ${mod}`,
-					)
-					.setTimestamp();
 				if (!usuario) {
 					const newUser = new User({
-						_id: mongoose.Types.ObjectId(),
-						guildID: message.guild.id,
-						userID: user.id,
-						userName: user.username,
-						warns: 0,
+						_id: message.author.id,
+						userName: message.author.username,
+						warns: [
+							{
+								_id: message.guild.id,
+								warn: 0,
+							},
+						],
 					});
 					newUser.save().catch((err) => console.error(err));
+					const warnembed = new MessageEmbed()
+						.setColor('#4697e1')
+						.setAuthor({
+							name: 'Tidewave',
+							iconURL: client.user.displayAvatarURL(),
+							url: 'https://www.hellhades.tk',
+						})
+						.setDescription(
+							`**Miembro:** ${user} (${user.id})\n**Accion:** UnWarn\n**Razon:** ${reason}\n**Warns:** 0\n**Moderador:** ${mod}`,
+						)
+						.setTimestamp();
 					return channel.send({ embeds: [warnembed] });
 				}
 				else {
-					usuario
-						.updateOne({
-							warns: usuario.warns - number,
-						})
-						.catch((err) => console.error(err));
-					return channel.send({ embeds: [warnembed] });
+					const warn = usuario.warns.find((w) => w._id === message.guild.id);
+					if (!warn) {
+						usuario.warns.push({
+							_id: message.guild.id,
+							warn: 1,
+						});
+						return usuario.save().catch((err) => console.error(err));
+					}
+					else {
+						const newWarn = warn.warn - number;
+						usuario.warns.find((w) => w._id === message.guild.id).warn = newWarn;
+						usuario.save().catch((err) => console.error(err));
+						const warnembed = new MessageEmbed()
+							.setColor('#4697e1')
+							.setAuthor({
+								name: 'Tidewave',
+								iconURL: client.user.displayAvatarURL(),
+								url: 'https://www.hellhades.tk',
+							})
+							.setDescription(
+								`**Miembro:** ${user} (${
+									user.id
+								})\n**Accion:** UnWarn\n**Razon:** ${reason}\n**Warns:** ${
+									newWarn
+								}\n**Moderador:** ${mod}`,
+							)
+							.setTimestamp();
+						return channel.send({ embeds: [warnembed] });
+					}
 				}
 			},
 		);

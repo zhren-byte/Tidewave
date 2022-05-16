@@ -43,7 +43,7 @@ async function helpMSG(client, message) {
 		)
 		.addField(
 			'Links',
-			'[Discord](https://discord.gg/rUADwcj4kf)\n[Pagina Web](https://exithades.tk)',
+			'[Discord](https://discord.gg/rUADwcj4kf)\n[Pagina Web](https://hellhades.tk)',
 		)
 		.setFooter({ text: 'Creado por Zhren#5164' });
 	message.channel.send({ embeds: [embed] });

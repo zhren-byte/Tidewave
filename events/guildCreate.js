@@ -3,8 +3,7 @@ module.exports = {
 	name: 'guildCreate',
 	on: true,
 	async execute(client, guild) {
-		// eslint-disable-next-line no-unused-vars
-		const Settings = await Guild.findOne({ _id: guild.id }, (err, guildC) => {
+		await Guild.findOne({ _id: guild.id }, (err, guildC) => {
 			if (err) console.error(err);
 			if (!guildC) {
 				const newGuild = new Guild({

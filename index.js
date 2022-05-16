@@ -92,7 +92,7 @@ client.on('messageCreate', async (message) => {
 				message.member.roles.add(role);
 				const muted = new MessageEmbed()
 					.setColor('#ff0000')
-					.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://exithades.tk' })
+					.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
 					.setDescription(
 						`**Miembro:** ${message.author} (${
 							message.author.id
@@ -106,7 +106,7 @@ client.on('messageCreate', async (message) => {
 					message.member.roles.remove(role);
 					const unmuted = new MessageEmbed()
 						.setColor('#00ff00')
-						.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://exithades.tk' })
+						.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
 						.setDescription(
 							`**Miembro:** ${message.author} (${message.author.id})\n **Accion:** Un-Mute\n **Moderador:** Tidewave`,
 						)
@@ -144,8 +144,7 @@ client.on('messageCreate', async (message) => {
 			}
 		},
 	);
-	// eslint-disable-next-line no-unused-vars
-	const userSet = await User.findOne(
+	await User.findOne(
 		{
 			_id: message.author.id,
 		},

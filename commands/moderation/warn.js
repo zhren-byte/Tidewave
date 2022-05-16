@@ -21,13 +21,10 @@ module.exports = {
 		const mod = message.author.username;
 		let reason = args.slice(1).join(' ');
 		if (!user) return message.channel.send('Mencione un usuario.');
-		// if (user.id === message.author.id)
-		//   return message.channel.send("No te puedes warnear a ti mismo.");
-		if (user.id === client.user.id) {
-			return message.channel.send('No puedes warnearme.');
-		}
+		// if (user.id === message.author.id) return message.channel.send('No te puedes warnear a ti mismo.');
+		if (user.id === client.user.id) return message.channel.send('No puedes warnearme.');
 		if (!reason) reason = 'No hay razón provista';
-		warnSet = await User.findOne(
+		await User.findOne(
 			{
 				_id: user.id,
 			},
@@ -40,7 +37,7 @@ module.exports = {
 						warns: [
 							{
 								_id: message.guild.id,
-								warn: 0,
+								warn: 1,
 							},
 						],
 					});
