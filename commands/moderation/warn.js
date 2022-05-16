@@ -83,7 +83,8 @@ module.exports = {
 					}
 					else {
 						const newWarn = warn.warn + 1;
-						usuario.warns.find((w) => w._id === message.guild.id).warn = newWarn;
+						warn.warn = newWarn;
+						warn.lastWarn = new Date();
 						usuario.save().catch((err) => console.error(err));
 						const warnembed = new MessageEmbed()
 							.setColor('#ff0000')
