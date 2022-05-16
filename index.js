@@ -148,7 +148,6 @@ client.on('messageCreate', async (message) => {
 	const userSet = await User.findOne(
 		{
 			_id: message.author.id,
-			'warns._id': message.guild.id,
 		},
 		(err, user) => {
 			if (err) console.error(err);
@@ -156,7 +155,10 @@ client.on('messageCreate', async (message) => {
 				const newUser = new User({
 					_id: message.author.id,
 					userName: message.author.username,
-					warns: [],
+					warns: [{
+						_id: message.author.id,
+						warn: 0,
+					}],
 				});
 				newUser.save().catch((err) => console.error(err));
 			}

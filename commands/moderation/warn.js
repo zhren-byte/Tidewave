@@ -30,14 +30,19 @@ module.exports = {
 		warnSet = await User.findOne(
 			{
 				_id: user.id,
-				'warns._id': message.guild.id,
 			},
 			(err, usuario) => {
 				if (err) console.error(err);
 				if (!usuario) {
-					usuario.warns.push({
-						_id: message.guild.id,
-						warn: 1,
+					const newUser = new User({
+						_id: message.author.id,
+						userName: message.author.username,
+						warns: [
+							{
+								_id: message.guild.id,
+								warn: 0,
+							},
+						],
 					});
 					newUser.save().catch((err) => console.error(err));
 					const warnembed = new MessageEmbed()
@@ -55,25 +60,34 @@ module.exports = {
 				}
 				else {
 					const warn = usuario.warns.find((w) => w._id === message.guild.id);
-					const newWarn = warn.warn + 1;
-					usuario.warns.find((w) => w._id === message.guild.id).warn = newWarn;
-					usuario.save().catch((err) => console.error(err));
-					const warnembed = new MessageEmbed()
-						.setColor('#ff0000')
-						.setAuthor({
-							name: 'Tidewave',
-							iconURL: client.user.displayAvatarURL(),
-							url: 'https://www.hellhades.tk',
-						})
-						.setDescription(
-							`**Miembro:** ${user} (${
-								user.id
-							})\n**Accion:** Warn\n**Razon:** ${reason}\n**Warns:** ${
-								newWarn
-							}\n**Moderador:** ${mod}`,
-						)
-						.setTimestamp();
-					return channel.send({ embeds: [warnembed] });
+					if (!warn) {
+						usuario.warns.push({
+							_id: message.guild.id,
+							warn: 1,
+						});
+						return usuario.save().catch((err) => console.error(err));
+					}
+					else {
+						const newWarn = warn.warn + 1;
+						usuario.warns.find((w) => w._id === message.guild.id).warn = newWarn;
+						usuario.save().catch((err) => console.error(err));
+						const warnembed = new MessageEmbed()
+							.setColor('#ff0000')
+							.setAuthor({
+								name: 'Tidewave',
+								iconURL: client.user.displayAvatarURL(),
+								url: 'https://www.hellhades.tk',
+							})
+							.setDescription(
+								`**Miembro:** ${user} (${
+									user.id
+								})\n**Accion:** Warn\n**Razon:** ${reason}\n**Warns:** ${
+									newWarn
+								}\n**Moderador:** ${mod}`,
+							)
+							.setTimestamp();
+						return channel.send({ embeds: [warnembed] });
+					}
 				}
 			},
 		);
