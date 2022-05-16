@@ -45,7 +45,7 @@ module.exports = {
 							url: 'https://www.hellhades.tk',
 						})
 						.setDescription(
-							`**Miembro:** ${user} (${user.id})\n**Warns:** ${warn.warn}\n**Ultimo warn:** ${warn.lastWarn.toLocaleString()}`,
+							`**Miembro:** ${user} (${user.id})\n**Warns:** 0\n**Ultimo warn:** undefined`,
 						)
 						.setTimestamp();
 					return channel.send({ embeds: [embed] });
