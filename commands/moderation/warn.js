@@ -61,7 +61,7 @@ module.exports = {
 						usuario.save().catch((err) => console.error(err));
 					}
 					const embed = new MessageEmbed()
-						.setColor('#ff0000')
+						.setColor('#4697e1')
 						.setAuthor({
 							name: 'Tidewave',
 							iconURL: client.user.displayAvatarURL(),
@@ -71,7 +71,7 @@ module.exports = {
 							`**Miembro:** ${user} (${user.id})\n**Warns:** ${warn.warn}\n**Ultimo warn:** ${warn.lastWarn}`,
 						)
 						.setTimestamp();
-					return channel.send({ embeds: [embed] });
+					return message.channel.send({ embeds: [embed] });
 				}
 			});
 			return;
