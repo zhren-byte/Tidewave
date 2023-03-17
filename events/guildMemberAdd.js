@@ -1,4 +1,4 @@
-const { MessageAttachment, MessageEmbed } = require('discord.js');
+const { MessageAttachment, EmbedBuilder } = require('discord.js');
 const { createCanvas, loadImage, registerFont } = require('canvas');
 const Guild = require('../models/guild');
 let x = 0;
@@ -11,7 +11,7 @@ module.exports = {
 		});
 		const autoRoleBot = welcomeSet.botRoleID;
 		const logChannel = client.channels.cache.get(welcomeSet.logChannelID) || undefined;
-		const errembed = new MessageEmbed()
+		const errembed = new EmbedBuilder()
 			.setColor('#ff0000')
 			.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
 			.setDescription(

@@ -1,4 +1,4 @@
-const { Permissions, MessageEmbed } = require('discord.js');
+const { Permissions, EmbedBuilder } = require('discord.js');
 module.exports = {
 	name: 'unban',
 	aliases: ['pardon', 'desban'],
@@ -20,7 +20,7 @@ module.exports = {
 		message.delete();
 		try {
 			message.guild.members.unban(bannedMember, reason);
-			const embed = new MessageEmbed()
+			const embed = new EmbedBuilder()
 				.setColor('#ff0000')
 				.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
 				.setDescription(

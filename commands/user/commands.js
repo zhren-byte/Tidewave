@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { stripIndents } = require('common-tags');
 const Guild = require('../../models/guild');
 module.exports = {
@@ -8,31 +8,31 @@ module.exports = {
 	description: 'Muestra la lista completa de comandos',
 	usage: 'commands',
 	async execute(client, message) {
-		await Guild.findOne(
-			{
-				_id: message.guild.id,
-			},
-			(err, guild) => {
-				if (err) console.error(err);
-				if (!guild) {
-					const newGuild = new Guild({
-						_id: message.guild.id,
-						guildName: message.guild.name,
-						prefix: '>',
-					});
-					newGuild.save().catch((err) => console.error(err));
-				}
-			},
-		);
+		// await Guild.findOne(
+		// 	{
+		// 		_id: message.guild.id,
+		// 	},
+		// 	(err, guild) => {
+		// 		if (err) console.error(err);
+		// 		if (!guild) {
+		// 			const newGuild = new Guild({
+		// 				_id: message.guild.id,
+		// 				guildName: message.guild.name,
+		// 				prefix: '>',
+		// 			});
+		// 			newGuild.save().catch((err) => console.error(err));
+		// 		}
+		// 	},
+		// );
 		return getAll(client, message);
 	},
 };
 async function getAll(client, message) {
 	const guildDB = await Guild.findOne({
 		_id: message.guild.id,
-	});
-	const embed = new MessageEmbed()
-		.setColor(process.env.COLOR)
+	}, 'prefix');
+	const embed = new EmbedBuilder()
+		.setColor('#ffffff')
 		.setTitle('Comandos')
 		.setThumbnail(client.user.avatarURL());
 	const commands = (category) => {

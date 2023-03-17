@@ -4,17 +4,13 @@ const usersMap = new Map();
 const LIMIT = 4;
 const TIME = '5m';
 const DIFF = 2000;
-const { Client, Collection, Intents, MessageEmbed } = require('discord.js');
-const client = new Client({
-	intents: [
-		Intents.FLAGS.GUILDS,
-		Intents.FLAGS.GUILD_MESSAGES,
-		Intents.FLAGS.GUILD_MEMBERS,
-		Intents.FLAGS.GUILD_BANS,
-		Intents.FLAGS.GUILD_INVITES,
-		Intents.FLAGS.GUILD_VOICE_STATES,
-	],
-});
+const { Client, Collection, EmbedBuilder, GatewayIntentBits	 } = require('discord.js');
+const client = new Client({ 	intents: [
+	GatewayIntentBits.Guilds,
+	GatewayIntentBits.GuildMessages,
+	GatewayIntentBits.MessageContent,
+	GatewayIntentBits.GuildMembers,
+] });
 // mongoose
 client.mongoose = require('./utils/mongoose');
 const Guild = require('./models/guild');
@@ -88,22 +84,35 @@ client.on('messageCreate', async (message) => {
 				const warningSet = await Guild.findOne({ _id: message.guild.id });
 				const channel = client.channels.cache.get(warningSet.logChannelID) || message.channel;
 				const role = await message.guild.roles.fetch(warningSet.muteRoleID);
-				message.member.roles.add(role);
-				const muted = new MessageEmbed()
-					.setColor('#ff0000')
-					.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
-					.setDescription(
-						`**Miembro:** ${message.author} (${
-							message.author.id
-						})\n **Accion:** Auto-Mute\n**Duracion:** ${ms(
-							ms(TIME),
-						)}\n **Moderador:** Tidewave`,
-					)
-					.setTimestamp();
-				channel.send({ embeds: [muted] });
+				message.member.roles
+					.add(role)
+					.then(() => {
+						const muted = new EmbedBuilder()
+							.setColor('#ff0000')
+							.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
+							.setDescription(
+								`**Miembro:** ${message.author} (${
+									message.author.id
+								})\n **Accion:** Auto-Mute\n**Duracion:** ${ms(
+									ms(TIME),
+								)}\n **Moderador:** Tidewave`,
+							)
+							.setTimestamp();
+						channel.send({ embeds: [muted] });
+					})
+					.catch((err) => {
+						const muted = new EmbedBuilder()
+							.setColor('#ff0000')
+							.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
+							.setDescription(
+								`**Error:** Auto-Mute\n**Duracion:** ${err}\n **Moderador:** Tidewave`,
+							)
+							.setTimestamp();
+						channel.send({ embeds: [muted] });
+					});
 				setTimeout(() => {
 					message.member.roles.remove(role);
-					const unmuted = new MessageEmbed()
+					const unmuted = new EmbedBuilder()
 						.setColor('#00ff00')
 						.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
 						.setDescription(
@@ -129,53 +138,33 @@ client.on('messageCreate', async (message) => {
 			timer: fn,
 		});
 	}
-	const settings = await Guild.findOne(
-		{ _id: message.guild.id },
-		(err, guild) => {
-			if (err) console.error(err);
-			if (!guild) {
-				const newGuild = new Guild({
-					_id: message.guild.id,
-					guildName: message.guild.name,
-					prefix: process.env.PREFIX,
-				});
-				newGuild.save().catch((err) => console.error(err));
-			}
-		},
-	);
-	await User.findOne(
-		{
+	const settings = await Guild.findOne({ _id: message.guild.id }, 'prefix');
+	const usuarios = await User.findOne({ _id: message.author.id }, 'warns');
+	if (!usuarios.warns) {
+		const newWarns = new User({
 			_id: message.author.id,
-		},
-		(err, usuario) => {
-			if (err) console.error(err);
-			if (!usuario) {
-				const newWarns = new User({
-					_id: message.author.id,
-					userName: message.author.username,
-					warns: [
-						{
-							_id: message.guild.id,
-							warn: 0,
-							lastWarn: null,
-						},
-					],
-				});
-				newWarns.save().catch((err) => console.error(err));
-			}
-			else {
-				const warns = usuario.warns.find((w) => w._id === message.guild.id);
-				if (!warns) {
-					usuario.warns.push({
-						_id: message.guild.id,
-						warn: 0,
-						lastWarn: null,
-					});
-					usuario.save().catch((err) => console.error(err));
-				}
-			}
-		},
-	);
+			userName: message.author.username,
+			warns: [
+				{
+					_id: message.guild.id,
+					warn: 0,
+					lastWarn: null,
+				},
+			],
+		});
+		newWarns.save().catch((err) => console.error(err));
+	}
+	else {
+		const warns = usuarios.warns.find((w) => w._id === message.guild.id);
+		if (!warns) {
+			usuarios.warns.push({
+				_id: message.guild.id,
+				warn: 0,
+				lastWarn: null,
+			});
+			usuarios.save().catch((err) => console.error(err));
+		}
+	}
 	const prefix = settings.prefix || process.env.PREFIX;
 	if (!message.content.startsWith(prefix)) return;
 	if (!message.member) {message.member = await message.guild.fetchMember(message);}

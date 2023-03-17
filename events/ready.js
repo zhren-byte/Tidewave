@@ -2,7 +2,7 @@ module.exports = {
 	name: 'ready',
 	once: true,
 	execute(client) {
-		console.log(`Login in ${client.user.tag}!`);
+		console.log(`Login in ${client.user.tag}`);
 		client.user.setPresence({
 			activities: [
 				{

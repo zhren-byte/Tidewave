@@ -1,4 +1,4 @@
-const { Permissions, MessageEmbed } = require('discord.js');
+const { Permissions, EmbedBuilder } = require('discord.js');
 module.exports = {
 	name: 'ping',
 	category: 'admin',
@@ -7,14 +7,14 @@ module.exports = {
 	async execute(client, message) {
 		message.delete();
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send('No tienes permisos para hacer esto.');
-		const pingEmbed = new MessageEmbed()
+		const pingEmbed = new EmbedBuilder()
 			.setColor('#ffffff')
 			.setTitle('Pong!')
 			.setDescription(`${client.ws.ping}ms`)
 			.setFooter({ text: 'Tidewave', iconURL: client.user.displayAvatarURL() });
 		return message.channel.send({ embeds: [pingEmbed] });
 		// const channel = client.channels.cache.get("622624908995723285");
-		// const embed = new MessageEmbed()
+		// const embed = new EmbedBuilder()
 		//   .setColor("#ff0000")
 		//   .setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
 		//   .setDescription(

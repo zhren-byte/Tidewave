@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const Guild = require('../../models/guild');
 module.exports = {
 	name: 'help',
@@ -6,23 +6,23 @@ module.exports = {
 	description: 'Muestra el mensaje de ayuda',
 	usage: 'help [commandName]',
 	async execute(client, message, args) {
-		await Guild.findOne(
-			{
-				_id: message.guild.id,
-			},
-			(err, guild) => {
-				if (err) console.error(err);
-				if (!guild) {
-					const newGuild = new Guild({
-						_id: message.guild.id,
-						guildName: message.guild.name,
-						prefix: process.env.PREFIX,
-						logChannelID: null,
-					});
-					newGuild.save().catch((err) => console.error(err));
-				}
-			},
-		);
+		// await Guild.findOne(
+		// 	{
+		// 		_id: message.guild.id,
+		// 	},
+		// 	(err, guild) => {
+		// 		if (err) console.error(err);
+		// 		if (!guild) {
+		// 			const newGuild = new Guild({
+		// 				_id: message.guild.id,
+		// 				guildName: message.guild.name,
+		// 				prefix: process.env.PREFIX,
+		// 				logChannelID: null,
+		// 			});
+		// 			newGuild.save().catch((err) => console.error(err));
+		// 		}
+		// 	},
+		// );
 
 		if (args[0]) {
 			return getCMD(client, message, args[0]);
@@ -34,30 +34,30 @@ module.exports = {
 };
 async function helpMSG(client, message) {
 	const guildDB = await Guild.findOne({ _id: message.guild.id });
-	const embed = new MessageEmbed()
+	const embed = new EmbedBuilder()
 		.setColor('#ffffff')
 		.setTitle('Tidewave')
 		.setThumbnail(client.user.displayAvatarURL())
 		.setDescription(
 			`Para ver la lista completa de comandos: \`${guildDB.prefix}commands\` \n\n`,
 		)
-		.addField(
-			'Links',
-			'[Discord](https://discord.gg/rUADwcj4kf)\n[Pagina Web](https://hellhades.tk)',
-		)
+		.addFields([{
+			name: 'Links',
+			value: '[Discord](https://discord.gg/rUADwcj4kf)\n[Pagina Web](https://hellhades.tk)',
+		}])
 		.setFooter({ text: 'Creado por Zhren#5164' });
 	message.channel.send({ embeds: [embed] });
 }
 async function getCMD(client, message, input) {
-	const guildDB = await Guild.findOne({ _id: message.guild.id });
-	const embed = new MessageEmbed();
+	const guildDB = await Guild.findOne({ _id: message.guild.id }, 'prefix');
+	const embed = new EmbedBuilder();
 	const cmd =
     client.commands.get(input.toLowerCase()) ||
     client.commands.get(client.aliases.get(input.toLowerCase()));
 	let info = `No hay informacion para **${input.toLowerCase()}**`;
 	if (!cmd) {
 		embed
-			.setColor('#ff0000')
+			.setColor('#ffffff')
 			.setDescription(info);
 		return message.channel.send({ embeds: [embed] });
 	}

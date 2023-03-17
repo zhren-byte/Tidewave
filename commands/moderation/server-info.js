@@ -1,4 +1,4 @@
-const { MessageEmbed, Permissions } = require('discord.js');
+const { EmbedBuilder, Permissions } = require('discord.js');
 const Guild = require('../../models/guild');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -45,7 +45,7 @@ module.exports = {
 		const autoRole = message.guild.roles.cache.get(serverSettings.autoRoleID);
 		const botRole = message.guild.roles.cache.get(serverSettings.botRoleID);
 		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return;
-		const ServedEmbed = new MessageEmbed()
+		const ServedEmbed = new EmbedBuilder()
 			.setColor('#ffffff')
 			.setTitle(srvname)
 			.setThumbnail(icon)

@@ -1,4 +1,4 @@
-const { MessageEmbed, Permissions } = require('discord.js');
+const { EmbedBuilder, Permissions } = require('discord.js');
 const Guild = require('../../models/guild');
 module.exports = {
 	name: 'mute',
@@ -20,7 +20,7 @@ module.exports = {
 		if (!user) return message.channel.send('Utilice el ID de un usuario.');
 		if (!reason) reason = 'No hay razón provista';
 		user.roles.add(role).catch(console.error);
-		const muteembed = new MessageEmbed()
+		const muteembed = new EmbedBuilder()
 			.setColor('#ff0000')
 			.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
 			.setDescription(

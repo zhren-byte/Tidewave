@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 module.exports = {
 	name: 'avatar',
 	category: 'users',
@@ -9,7 +9,7 @@ module.exports = {
       message.mentions.users.first() ||
       client.users.cache.get(args[0]) ||
       message.author;
-		const AvatarEmbed = new MessageEmbed()
+		const AvatarEmbed = new EmbedBuilder()
 			.setImage(user.avatarURL({ dynamic: true, size: 2048, format: 'png' }))
 			.setColor(0x66b3ff)
 			.setFooter({ text: `Avatar de ${user.tag}` });

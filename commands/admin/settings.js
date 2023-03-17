@@ -1,4 +1,4 @@
-const { MessageEmbed, Permissions } = require('discord.js');
+const { EmbedBuilder, Permissions } = require('discord.js');
 const Guild = require('../../models/guild');
 
 module.exports = {
@@ -55,7 +55,7 @@ async function serverInfo(client, message, guildDB) {
 	const botr = message.guild.roles.cache.get(guildDB.botRoleID);
 	const warnc = message.guild.channels.cache.get(guildDB.logChannelID);
 	const welc = message.guild.channels.cache.get(guildDB.welcomeChannelID);
-	const embed = new MessageEmbed()
+	const embed = new EmbedBuilder()
 		.setColor('#ffffff')
 		.setTitle('Tidewave')
 		.setThumbnail(client.user.displayAvatarURL())
@@ -70,7 +70,7 @@ async function serverInfo(client, message, guildDB) {
 async function sugerencias(client, message, sugestionSettings, input) {
 	const avtTW = client.user.displayAvatarURL();
 	if (!input) {
-		const embedNone = new MessageEmbed();
+		const embedNone = new EmbedBuilder();
 		const suger = message.guild.channels.cache.get(sugestionSettings.sugestionChannelID);
 		embedNone
 			.setColor('#ffffff')
@@ -82,7 +82,7 @@ async function sugerencias(client, message, sugestionSettings, input) {
 	await sugestionSettings.updateOne({
 		sugestionChannelID: channel.id,
 	});
-	const embed = new MessageEmbed()
+	const embed = new EmbedBuilder()
 		.setColor('#ffffff')
 		.addField('Sugerencias', `${channel}`)
 		.setFooter({ text: 'Tidewave', iconURL: avtTW });
@@ -91,7 +91,7 @@ async function sugerencias(client, message, sugestionSettings, input) {
 async function auto(client, message, autoRoleSettings, input) {
 	const avtTW = client.user.displayAvatarURL();
 	if (!input) {
-		const embedNone = new MessageEmbed();
+		const embedNone = new EmbedBuilder();
 		const autor = message.guild.roles.cache.get(autoRoleSettings.autoRoleID);
 		embedNone
 			.setColor('#ffffff')
@@ -103,7 +103,7 @@ async function auto(client, message, autoRoleSettings, input) {
 	await autoRoleSettings.updateOne({
 		autoRoleID: autoRole.id,
 	});
-	const autoRoleEmbed = new MessageEmbed()
+	const autoRoleEmbed = new EmbedBuilder()
 		.setColor('#ffffff')
 		.addField('Auto Role', `${autoRole}`)
 		.setFooter({ text: 'Tidewave', iconURL: avtTW });
@@ -112,7 +112,7 @@ async function auto(client, message, autoRoleSettings, input) {
 async function mute(client, message, muteRoleSettings, input) {
 	const avtTW = client.user.displayAvatarURL();
 	if (!input) {
-		const embedNone = new MessageEmbed();
+		const embedNone = new EmbedBuilder();
 		const muter = message.guild.roles.cache.get(muteRoleSettings.muteRoleID);
 		embedNone
 			.setColor('#ffffff')
@@ -124,7 +124,7 @@ async function mute(client, message, muteRoleSettings, input) {
 	await muteRoleSettings.updateOne({
 		muteRoleID: muteRole.id,
 	});
-	const muteRoleEmbed = new MessageEmbed()
+	const muteRoleEmbed = new EmbedBuilder()
 		.setColor('#ffffff')
 		.addField('Mute Role', `${muteRole}`)
 		.setFooter({ text: 'Tidewave', iconURL: avtTW });
@@ -133,7 +133,7 @@ async function mute(client, message, muteRoleSettings, input) {
 async function bot(client, message, botRoleSettings, input) {
 	const avtTW = client.user.displayAvatarURL();
 	if (!input) {
-		const embedNone = new MessageEmbed();
+		const embedNone = new EmbedBuilder();
 		const botr = message.guild.roles.cache.get(botRoleSettings.botRoleID);
 		embedNone
 			.setColor('#ffffff')
@@ -145,7 +145,7 @@ async function bot(client, message, botRoleSettings, input) {
 	await botRoleSettings.updateOne({
 		botRoleID: botRole.id,
 	});
-	const botRoleEmbed = new MessageEmbed()
+	const botRoleEmbed = new EmbedBuilder()
 		.setColor('#ffffff')
 		.addField('BotRole', `${botRole}`)
 		.setFooter({ text: 'Tidewave', iconURL: avtTW });
@@ -154,7 +154,7 @@ async function bot(client, message, botRoleSettings, input) {
 async function warning(client, message, warningSet, input) {
 	const avtTW = client.user.displayAvatarURL();
 	if (!input) {
-		const embedNone = new MessageEmbed();
+		const embedNone = new EmbedBuilder();
 		const warningc = message.guild.channels.cache.get(warningSet.logChannelID);
 		embedNone
 			.setColor('#ffffff')
@@ -166,7 +166,7 @@ async function warning(client, message, warningSet, input) {
 	await warningSet.updateOne({
 		logChannelID: channel.id,
 	});
-	const warningChEmbed = new MessageEmbed()
+	const warningChEmbed = new EmbedBuilder()
 		.setColor('#ffffff')
 		.addField('Warnings', `${channel}`)
 		.setFooter({ text: 'Tidewave', iconURL: avtTW });
@@ -175,7 +175,7 @@ async function warning(client, message, warningSet, input) {
 async function welcome(client, message, welcomeSet, input) {
 	const avtTW = client.user.displayAvatarURL();
 	if (!input) {
-		const embedNone = new MessageEmbed();
+		const embedNone = new EmbedBuilder();
 		const welcomec = message.guild.channels.cache.get(
 			welcomeSet.welcomeChannelID,
 		);
@@ -189,7 +189,7 @@ async function welcome(client, message, welcomeSet, input) {
 	await welcomeSet.updateOne({
 		welcomeChannelID: channel.id,
 	});
-	const welcomeChEmbed = new MessageEmbed()
+	const welcomeChEmbed = new EmbedBuilder()
 		.setColor('#ffffff')
 		.addField('Welcome', `${channel}`)
 		.setFooter({ text: 'Tidewave', iconURL: avtTW });

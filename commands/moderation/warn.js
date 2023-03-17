@@ -1,4 +1,4 @@
-const { MessageEmbed, Permissions } = require('discord.js');
+const { EmbedBuilder, Permissions } = require('discord.js');
 const Guild = require('../../models/guild');
 const User = require('../../models/user');
 module.exports = {
@@ -37,7 +37,7 @@ module.exports = {
 						],
 					});
 					newWarns.save().catch((err) => console.error(err));
-					const embed = new MessageEmbed()
+					const embed = new EmbedBuilder()
 						.setColor('#ff0000')
 						.setAuthor({
 							name: 'Tidewave',
@@ -60,7 +60,7 @@ module.exports = {
 						});
 						usuario.save().catch((err) => console.error(err));
 					}
-					const embed = new MessageEmbed()
+					const embed = new EmbedBuilder()
 						.setColor('#4697e1')
 						.setAuthor({
 							name: 'Tidewave',
@@ -98,7 +98,7 @@ module.exports = {
 						],
 					});
 					newUser.save().catch((err) => console.error(err));
-					const warnembed = new MessageEmbed()
+					const warnembed = new EmbedBuilder()
 						.setColor('#ff0000')
 						.setAuthor({
 							name: 'Tidewave',
@@ -126,7 +126,7 @@ module.exports = {
 						warn.warn = newWarn;
 						warn.lastWarn = new Date();
 						usuario.save().catch((err) => console.error(err));
-						const warnembed = new MessageEmbed()
+						const warnembed = new EmbedBuilder()
 							.setColor('#ff0000')
 							.setAuthor({
 								name: 'Tidewave',

@@ -1,4 +1,4 @@
-const { Permissions, MessageEmbed } = require('discord.js');
+const { Permissions, EmbedBuilder } = require('discord.js');
 const mysql = require('mysql');
 const conn = mysql.createConnection({
 	host: `${process.env.DB_HOST}`,
@@ -37,7 +37,7 @@ module.exports = {
 				}', '${message.member.user.tag}','${contenido}', '${date}')`,
 				(third, err) => {
 					if (err) console.log(err);
-					const chebembed = new MessageEmbed()
+					const chebembed = new EmbedBuilder()
 						.setColor('#00ff00')
 						.setAuthor({
 							name: 'Tidewave',

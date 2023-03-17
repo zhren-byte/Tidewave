@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const Guild = require('../../models/guild');
 module.exports = {
 	name: 'sugerencia',
@@ -29,7 +29,7 @@ module.exports = {
 			guildDB.sugestionChannelID,
 		);
 		if (!sugestionChannel) return 'No hay un canal de sugerencias';
-		const sugerencia = new MessageEmbed()
+		const sugerencia = new EmbedBuilder()
 			.setColor('#ffffff')
 			.setAuthor({ name: `${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
 			.setDescription(args.join(' '))

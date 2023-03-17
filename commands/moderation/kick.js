@@ -1,4 +1,4 @@
-const { MessageEmbed, Permissions } = require('discord.js');
+const { EmbedBuilder, Permissions } = require('discord.js');
 const Guild = require('../../models/guild');
 module.exports = {
 	name: 'kick',
@@ -23,7 +23,7 @@ module.exports = {
 		message.guild.members
 			.kick(user, [reason])
 			.then(() => {
-				const kickembed = new MessageEmbed()
+				const kickembed = new EmbedBuilder()
 					.setColor('#ff0000')
 					.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
 					.setDescription(

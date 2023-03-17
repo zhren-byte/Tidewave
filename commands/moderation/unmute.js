@@ -11,7 +11,7 @@ module.exports = {
 		);
 		member.roles.remove(role).catch(console.error);
 		const channel = client.channels.cache.get('675585949983440897');
-		const embed = new Discord.MessageEmbed()
+		const embed = new Discord.EmbedBuilder()
 			.setColor('#ff0000')
 			.setAuthor({ name: 'Tidewave', iconURL: client.user.displayAvatarURL(), url: 'https://hellhades.tk' })
 			.setDescription(
