@@ -1,4 +1,4 @@
-const { EmbedBuilder, Permissions } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField  } = require('discord.js');
 const Guild = require('../../models/guild');
 module.exports = {
 	name: 'mute',
@@ -8,7 +8,7 @@ module.exports = {
 	description:
     'Le quita el derecho a la voz al usuario mencionado, para que no pueda hablar en el servidor',
 	async execute(client, message, args) {
-		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {return message.channel.send('No tienes permisos para hacer esto.');}
+		if (!message.member.permissions.has(PermissionsBitField.Flags.ManageGuild)) {return message.channel.send('No tienes permisos para hacer esto.');}
 		const warningSet = await Guild.findOne({ _id: message.guild.id });
 		const channel =
       client.channels.cache.get(warningSet.logChannelID) || message.channel;

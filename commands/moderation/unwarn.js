@@ -1,4 +1,4 @@
-const { EmbedBuilder, Permissions } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const Guild = require('../../models/guild');
 const User = require('../../models/user');
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
 	description: 'Saca un warn o mas a un usuario',
 	category: 'moderation',
 	async execute(client, message, args) {
-		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {return message.channel.send('No tienes permisos para hacer esto.');}
+		if (!message.member.permissions.has(PermissionsBitField.Flags.ManageGuild)) {return message.channel.send('No tienes permisos para hacer esto.');}
 		const warningSet = await Guild.findOne({ _id: message.guild.id });
 		const channel =
       client.channels.cache.get(warningSet.logChannelID) || message.channel;

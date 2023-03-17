@@ -1,4 +1,4 @@
-const { Permissions, EmbedBuilder } = require('discord.js');
+const { PermissionsBitField, EmbedBuilder } = require('discord.js');
 const mysql = require('mysql');
 const conn = mysql.createConnection({
 	host: `${process.env.DB_HOST}`,
@@ -14,7 +14,7 @@ module.exports = {
     'Envia una sugerencia, error, o arreglo hacia los creadores de este humilde bot',
 	usage: '>chebo [sugerencia, error, arreglo]',
 	async execute(client, message, args) {
-		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return;
+		if (!message.member.permissions.has(PermissionsBitField.Flags.ManageGuild)) return;
 		const contenidOne = args.slice(0).join(' ');
 		const contenido = args
 			.slice(0)

@@ -1,4 +1,4 @@
-const { Permissions } = require('discord.js');
+const { PermissionsBitField } = require('discord.js');
 module.exports = {
 	name: 'purge',
 	aliases: ['clear', 'nuke'],
@@ -9,7 +9,7 @@ module.exports = {
 		if (message.deletable) {
 			message.delete();
 		}
-		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
+		if (!message.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
 			return message
 				.reply('No puedo borrar mensajes, panflin.')
 				.then((m) => m.delete(5000));

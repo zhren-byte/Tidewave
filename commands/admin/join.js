@@ -1,4 +1,4 @@
-const { Permissions } = require('discord.js');
+const { PermissionsBitField } = require('discord.js');
 module.exports = {
 	name: 'join',
 	category: 'admin',
@@ -6,7 +6,7 @@ module.exports = {
 	usage: '>join',
 	async execute(client, message) {
 		message.delete();
-		if (!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
+		if (!message.member.permissions.has(PermissionsBitField.Flags.Administrator)) return;
 		client.emit('guildMemberAdd', message.member);
 	},
 };

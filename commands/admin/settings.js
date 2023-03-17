@@ -1,6 +1,6 @@
-const { EmbedBuilder, Permissions } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const Guild = require('../../models/guild');
-
+const undefinedText = 'Ningun canal seleccionado';
 module.exports = {
 	name: 'settings',
 	aliases: ['set'],
@@ -8,27 +8,24 @@ module.exports = {
 	description: 'Configuracion del servidor',
 	usage: 'settings [sugerencias, auto, mute, warning, welcome]',
 	async execute(client, message, args) {
-		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
+		if (!message.member.permissions.has(PermissionsBitField.Flags.ManageGuild)) {
 			return message.channel.send('No tienes permisos para utilizar este comando');
 		}
-		const SETTINGS = await Guild.findOne({ _id: message.guild.id },
-			async (err, guild) => {
-				if (err) console.error(err);
-				if (!guild) {
-					const newGuild = new Guild({
-						_id: message.guild.id,
-						guildName: message.guild.name,
-						logChannelID: null,
-						muteRoleID: null,
-						autoRoleID: null,
-						botRoleID: null,
-						sugestionChannelID: null,
-						welcomeChannelID: null,
-					});
-					await newGuild.save().catch((err) => console.error(err));
-				}
-			},
-		);
+		const SETTINGS = await Guild.findOne({ _id: message.guild.id });
+		if (!SETTINGS) {
+			const newGuild = new Guild({
+				_id: message.guild.id,
+				guildName: message.guild.name,
+				prefix: '>',
+				logChannelID: null,
+				muteRoleID: null,
+				autoRoleID: null,
+				botRoleID: null,
+				sugestionChannelID: null,
+				welcomeChannelID: null,
+			});
+			await newGuild.save().catch((err) => console.error(err));
+		}
 		switch (args[0]) {
 		case 'sugerencias':
 			return sugerencias(client, message, SETTINGS, args[1]);
@@ -49,20 +46,14 @@ module.exports = {
 };
 
 async function serverInfo(client, message, guildDB) {
-	const suger = message.guild.channels.cache.get(guildDB.sugestionChannelID);
-	const autor = message.guild.roles.cache.get(guildDB.autoRoleID);
-	const muter = message.guild.roles.cache.get(guildDB.muteRoleID);
-	const botr = message.guild.roles.cache.get(guildDB.botRoleID);
-	const warnc = message.guild.channels.cache.get(guildDB.logChannelID);
-	const welc = message.guild.channels.cache.get(guildDB.welcomeChannelID);
 	const embed = new EmbedBuilder()
 		.setColor('#ffffff')
 		.setTitle('Tidewave')
 		.setThumbnail(client.user.displayAvatarURL())
-		.addField(
-			'Configuracion disponible:',
-			`\`[sugerencias]\` = ${suger}\n\`[auto]\` = ${autor}\n\`[mute]\` = ${muter}\n\`[bot]\` = ${botr}\n\`[warning]\` = ${warnc}\n\`[welcome]\` = ${welc}`,
-		)
+		.addFields([{
+			name: 'Configuracion disponible:',
+			value: `\`[sugerencias]\` = ${message.guild.channels.cache.get(guildDB.sugestionChannelID) || undefinedText }\n\`[auto]\` = ${message.guild.roles.cache.get(guildDB.autoRoleID) || undefinedText }\n\`[mute]\` = ${message.guild.roles.cache.get(guildDB.muteRoleID) || undefinedText }\n\`[bot]\` = ${message.guild.roles.cache.get(guildDB.botRoleID) || undefinedText }\n\`[warning]\` = ${message.guild.channels.cache.get(guildDB.logChannelID) || undefinedText }\n\`[welcome]\` = ${message.guild.channels.cache.get(guildDB.welcomeChannelID) || undefinedText }`,
+		}])
 		.setDescription(`\n**Uso**: ${guildDB.prefix}settings [opcion]`)
 		.setFooter({ text: '<> = REQUERIDO | [] = OPCIONAL' });
 	message.channel.send({ embeds: [embed] });
@@ -70,11 +61,9 @@ async function serverInfo(client, message, guildDB) {
 async function sugerencias(client, message, sugestionSettings, input) {
 	const avtTW = client.user.displayAvatarURL();
 	if (!input) {
-		const embedNone = new EmbedBuilder();
-		const suger = message.guild.channels.cache.get(sugestionSettings.sugestionChannelID);
-		embedNone
+		const embedNone = new EmbedBuilder()
 			.setColor('#ffffff')
-			.addField('Sugerencias', `${suger}`)
+			.addFields({ name: 'Sugerencias', value: `${message.guild.channels.cache.get(sugestionSettings.sugestionChannelID) || undefinedText}` })
 			.setFooter({ text: 'Tidewave', iconURL: avtTW });
 		return message.channel.send({ embeds: [embedNone] });
 	}
@@ -84,18 +73,16 @@ async function sugerencias(client, message, sugestionSettings, input) {
 	});
 	const embed = new EmbedBuilder()
 		.setColor('#ffffff')
-		.addField('Sugerencias', `${channel}`)
+		.addFields({ name: 'Sugerencias', value: `${channel}` })
 		.setFooter({ text: 'Tidewave', iconURL: avtTW });
 	return message.channel.send({ embeds: [embed] });
 }
 async function auto(client, message, autoRoleSettings, input) {
 	const avtTW = client.user.displayAvatarURL();
 	if (!input) {
-		const embedNone = new EmbedBuilder();
-		const autor = message.guild.roles.cache.get(autoRoleSettings.autoRoleID);
-		embedNone
+		const embedNone = new EmbedBuilder()
 			.setColor('#ffffff')
-			.addField('AutoRole', `${autor}`)
+			.addFields({ name: 'AutoRole', value: `${message.guild.roles.cache.get(autoRoleSettings.autoRoleID) || undefinedText}` })
 			.setFooter({ text: 'Tidewave', iconURL: avtTW });
 		return message.channel.send({ embeds: [embedNone] });
 	}
@@ -105,18 +92,16 @@ async function auto(client, message, autoRoleSettings, input) {
 	});
 	const autoRoleEmbed = new EmbedBuilder()
 		.setColor('#ffffff')
-		.addField('Auto Role', `${autoRole}`)
+		.addFields({ name: 'Auto Role', value: `${autoRole}` })
 		.setFooter({ text: 'Tidewave', iconURL: avtTW });
 	return message.channel.send({ embeds: [autoRoleEmbed] });
 }
 async function mute(client, message, muteRoleSettings, input) {
 	const avtTW = client.user.displayAvatarURL();
 	if (!input) {
-		const embedNone = new EmbedBuilder();
-		const muter = message.guild.roles.cache.get(muteRoleSettings.muteRoleID);
-		embedNone
+		const embedNone = new EmbedBuilder()
 			.setColor('#ffffff')
-			.addField('MuteRole', `${muter}`)
+			.addFields({ name: 'MuteRole', value: `${message.guild.roles.cache.get(muteRoleSettings.muteRoleID) || undefinedText}` })
 			.setFooter({ text: 'Tidewave', iconURL: avtTW });
 		return message.channel.send({ embeds: [embedNone] });
 	}
@@ -126,18 +111,16 @@ async function mute(client, message, muteRoleSettings, input) {
 	});
 	const muteRoleEmbed = new EmbedBuilder()
 		.setColor('#ffffff')
-		.addField('Mute Role', `${muteRole}`)
+		.addFields({ name: 'Mute Role', value:`${muteRole}` })
 		.setFooter({ text: 'Tidewave', iconURL: avtTW });
 	return message.channel.send({ embeds: [muteRoleEmbed] });
 }
 async function bot(client, message, botRoleSettings, input) {
 	const avtTW = client.user.displayAvatarURL();
 	if (!input) {
-		const embedNone = new EmbedBuilder();
-		const botr = message.guild.roles.cache.get(botRoleSettings.botRoleID);
-		embedNone
+		const embedNone = new EmbedBuilder()
 			.setColor('#ffffff')
-			.addField('BotRole', `${botr}`)
+			.addFields({ name: 'BotRole', value: `${message.guild.roles.cache.get(botRoleSettings.botRoleID) || undefinedText}` })
 			.setFooter({ text: 'Tidewave', iconURL: avtTW });
 		return message.channel.send({ embeds: [embedNone] });
 	}
@@ -147,18 +130,16 @@ async function bot(client, message, botRoleSettings, input) {
 	});
 	const botRoleEmbed = new EmbedBuilder()
 		.setColor('#ffffff')
-		.addField('BotRole', `${botRole}`)
+		.addFields({ name: 'BotRole', value: `${botRole}` })
 		.setFooter({ text: 'Tidewave', iconURL: avtTW });
 	return message.channel.send({ embeds: [botRoleEmbed] });
 }
 async function warning(client, message, warningSet, input) {
 	const avtTW = client.user.displayAvatarURL();
 	if (!input) {
-		const embedNone = new EmbedBuilder();
-		const warningc = message.guild.channels.cache.get(warningSet.logChannelID);
-		embedNone
+		const embedNone = new EmbedBuilder()
 			.setColor('#ffffff')
-			.addField('Warnings', `${warningc}`)
+			.addFields({ name: 'Warnings', value: `${message.guild.channels.cache.get(warningSet.logChannelID) || undefinedText}` })
 			.setFooter({ text: 'Tidewave', iconURL: avtTW });
 		return message.channel.send({ embeds: [embedNone] });
 	}
@@ -168,30 +149,29 @@ async function warning(client, message, warningSet, input) {
 	});
 	const warningChEmbed = new EmbedBuilder()
 		.setColor('#ffffff')
-		.addField('Warnings', `${channel}`)
+		.addFields({ name: 'Warnings', value: `${channel}` })
 		.setFooter({ text: 'Tidewave', iconURL: avtTW });
 	return message.channel.send({ embeds: [warningChEmbed] });
 }
 async function welcome(client, message, welcomeSet, input) {
 	const avtTW = client.user.displayAvatarURL();
 	if (!input) {
-		const embedNone = new EmbedBuilder();
-		const welcomec = message.guild.channels.cache.get(
-			welcomeSet.welcomeChannelID,
-		);
-		embedNone
+		const embedNone = new EmbedBuilder()
 			.setColor('#ffffff')
-			.addField('Welcome', `${welcomec}`)
+			.addFields({ name: 'Welcome', value: `${message.guild.channels.cache.get(welcomeSet.welcomeChannelID)}` })
 			.setFooter({ text: 'Tidewave', iconURL: avtTW });
 		return message.channel.send({ embeds: [embedNone] });
 	}
 	const channel = (await message.mentions.channels.first()) || message.guild.channels.cache.get(input);
+	if (!channel) {
+		return message.channel.send('Canal no encontrado');
+	}
 	await welcomeSet.updateOne({
 		welcomeChannelID: channel.id,
 	});
 	const welcomeChEmbed = new EmbedBuilder()
 		.setColor('#ffffff')
-		.addField('Welcome', `${channel}`)
+		.addFields({ name: 'Welcome', value: `${channel}` })
 		.setFooter({ text: 'Tidewave', iconURL: avtTW });
 	return message.channel.send({ embeds: [welcomeChEmbed] });
 }

@@ -9,22 +9,15 @@ module.exports = {
 	async execute(client, message, args) {
 		message.delete();
 		if (!args[0]) return message.channel.send('Escribe una sugerencia');
-		const guildDB = await Guild.findOne(
-			{
+		const guildDB = await Guild.findOne({ _id: message.guild.id });
+		if (!guildDB) {
+			const newGuild = new Guild({
 				_id: message.guild.id,
-			},
-			async (err, guild) => {
-				if (err) console.error(err);
-				if (!guild) {
-					const newGuild = new Guild({
-						_id: message.guild.id,
-						guildName: message.guild.name,
-						sugestionChannelID: null,
-					});
-					await newGuild.save().catch((err) => console.error(err));
-				}
-			},
-		);
+				guildName: message.guild.name,
+				sugestionChannelID: null,
+			});
+			await newGuild.save().catch((err) => console.error(err));
+		}
 		const sugestionChannel = client.channels.cache.get(
 			guildDB.sugestionChannelID,
 		);

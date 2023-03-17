@@ -1,4 +1,4 @@
-const { Permissions, EmbedBuilder } = require('discord.js');
+const { PermissionsBitField, EmbedBuilder } = require('discord.js');
 module.exports = {
 	name: 'unban',
 	aliases: ['pardon', 'desban'],
@@ -7,7 +7,7 @@ module.exports = {
 	category: 'moderation',
 	run: async (client, message, args) => {
 		const channel = client.channels.cache.get('675585949983440897');
-		if (!message.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
+		if (!message.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
 			return message.channel.send(
 				'No tienes permiso para utilizar este comando',
 			);

@@ -1,11 +1,11 @@
-const { Permissions } = require('discord.js');
+const { PermissionsBitField } = require('discord.js');
 module.exports = {
 	name: 'say',
 	category: 'admin',
 	description: 'Envia un mensaje al canal',
 	usage: 'say <mensaje>',
 	async execute(client, message, args) {
-		if (!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+		if (!message.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
 			return message.channel
 				.send('No tienes permisos para utilizar este comando')
 				.then((m) => m.delete({ timeout: 5000 }));

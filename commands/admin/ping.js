@@ -1,4 +1,4 @@
-const { Permissions, EmbedBuilder } = require('discord.js');
+const { PermissionsBitField, EmbedBuilder } = require('discord.js');
 module.exports = {
 	name: 'ping',
 	category: 'admin',
@@ -6,7 +6,7 @@ module.exports = {
 	usage: 'Devuelve el ping (ms) del bot',
 	async execute(client, message) {
 		message.delete();
-		if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return message.channel.send('No tienes permisos para hacer esto.');
+		if (!message.member.permissions.has(PermissionsBitField.Flags.ManageGuild)) return message.channel.send('No tienes permisos para hacer esto.');
 		const pingEmbed = new EmbedBuilder()
 			.setColor('#ffffff')
 			.setTitle('Pong!')
