@@ -1,3 +1,5 @@
+const express = require('express');
+const app = express();
 const fs = require('fs');
 const ms = require('ms');
 const usersMap = new Map();
@@ -15,16 +17,6 @@ const client = new Client({ 	intents: [
 client.mongoose = require('./utils/mongoose');
 const Guild = require('./models/guild');
 const User = require('./models/user');
-// // Handler Interactions
-// client.interactions = new Collection();
-// const interactionFiles = fs
-// 	.readdirSync('./interactions')
-// 	.filter((file) => file.endsWith('.js'));
-// for (const file of interactionFiles) {
-// 	const interactionn = require(`./interactions/${file}`);
-// 	client.interactions.set(interactionn.data.name, interactionn);
-// }
-// Handler Commands
 client.commands = new Collection();
 client.aliases = new Collection();
 client.categories = fs.readdirSync('./commands/');
@@ -192,5 +184,7 @@ client.on('messageCreate', async (message) => {
 	}
 });
 
-client.mongoose.init();
-client.login(process.env.TOKEN);
+app.listen(3030, () => {
+	client.mongoose.init();
+	client.login(process.env.TOKEN);
+});
