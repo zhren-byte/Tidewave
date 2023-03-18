@@ -35,7 +35,7 @@
   <title>Hades</title>
 </head>
 
-<body id="app" class="bg-neutral-900">
+<body id="app" class="bg-white dark:bg-neutral-900">
   <div class="aft-loader"></div>
   <div class="loader"></div>
   <script type="text/javascript">
@@ -45,9 +45,9 @@
     });
   </script>
     <%- include('header'); -%>
-  <section class="text-gray-400 body-font text-center px-0 md:px-40 lg:px-52 xl:px-80 2xl:px-96">
+  <section class="text-gray-600 dark:text-gray-400 body-font text-center px-0 md:px-40 lg:px-52 xl:px-80 2xl:px-96">
     <div class="container mx-auto pt-24 justify-center w-full md:w-2/3 flex flex-col mb-16 items-center text-center">
-      <h1 class="sm:text-4xl text-3xl mb-4 font-medium text-white">Hades</h1>
+      <h1 class="sm:text-4xl text-3xl mb-4 font-medium text-black dark:text-white">Hades</h1>
       <p class="mb-8 leading-relaxed px-6">Un servidor con lo necesario para jugar con tus amigos<br> y divertirte con muchas cosas mas!</p>
       <a href="https://discord.com/invite/rUADwcj4kf">
         <button class="text-white inline-flex items-center bg-purple-800/50 border-0 py-2 px-8 focus:outline-none hover:bg-purple-600 rounded-lg text-lg">Entrar al servidor
@@ -57,8 +57,8 @@
         </button>
       </a>
     </div>
-    <div class="flex flex-col w-full shadow-lg rounded-lg gap-1 p-4">
-      <div class="flex justify-between items-center flex-grow bg-opacity-0 bg-neutral-800 hover:bg-opacity-50 px-2 py-1 rounded-lg transition">
+    <div class="flex flex-col w-full shadow-lg rounded-lg gap-1 p-4 bg-gray-500 dark:bg-transparent text-white dark:text-inherit">
+      <div class="flex justify-between items-center flex-grow bg-opacity-0 dark:bg-neutral-800 hover:bg-opacity-50 px-2 py-1 rounded-lg transition">
         <p class="text-lg text-opacity-75">
           Canales de chat
         </p>
@@ -287,7 +287,6 @@
   </footer>
   <script>
     const darkwhite = document.querySelector('#dark-white');
-
     const userTheme = localStorage.getItem('theme');
     const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -301,7 +300,6 @@
       if (document.documentElement.classList.contains("dark")) {
         document.documentElement.classList.remove("dark");
         localStorage.setItem('theme', 'light');
-        toggleTheme();
         return;
       }
       document.documentElement.classList.add("dark");
