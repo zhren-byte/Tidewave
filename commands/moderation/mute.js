@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField  } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const Guild = require('../../models/guild');
 module.exports = {
 	name: 'mute',

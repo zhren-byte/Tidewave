@@ -15,15 +15,15 @@ const client = new Client({ 	intents: [
 client.mongoose = require('./utils/mongoose');
 const Guild = require('./models/guild');
 const User = require('./models/user');
-// Handler Interactions
-client.interactions = new Collection();
-const interactionFiles = fs
-	.readdirSync('./interactions')
-	.filter((file) => file.endsWith('.js'));
-for (const file of interactionFiles) {
-	const interactionn = require(`./interactions/${file}`);
-	client.interactions.set(interactionn.data.name, interactionn);
-}
+// // Handler Interactions
+// client.interactions = new Collection();
+// const interactionFiles = fs
+// 	.readdirSync('./interactions')
+// 	.filter((file) => file.endsWith('.js'));
+// for (const file of interactionFiles) {
+// 	const interactionn = require(`./interactions/${file}`);
+// 	client.interactions.set(interactionn.data.name, interactionn);
+// }
 // Handler Commands
 client.commands = new Collection();
 client.aliases = new Collection();
@@ -139,6 +139,14 @@ client.on('messageCreate', async (message) => {
 		});
 	}
 	const settings = await Guild.findOne({ _id: message.guild.id }, 'prefix');
+	if (!settings) {
+		const newGuild = new Guild({
+			_id: message.guild.id,
+			guildName: message.guild.name,
+			prefix: '>',
+		});
+		await newGuild.save().catch((err) => console.error(err));
+	}
 	const usuarios = await User.findOne({ _id: message.author.id }, 'warns');
 	if (!usuarios.warns) {
 		const newWarns = new User({
@@ -178,7 +186,7 @@ client.on('messageCreate', async (message) => {
 	}
 	catch (error) {
 		return message.reply({
-			content: 'El comando ejecutado no es correcto',
+			content: 'El comando ejecutado no es correcto o esta en mantenimiento',
 			ephemeral: true,
 		});
 	}

@@ -16,7 +16,6 @@
     "url": "git+https://github.com/zhren-byte/tidewave.git"
   },
   "keywords": [
-    "heroku",
     "discord.js"
   ],
   "author": "zhren, jojo",
@@ -26,10 +25,6 @@
   },
   "homepage": "https://github.com/zhren-byte/tidewave#readme",
   "dependencies": {
-    "@discordjs/builders": "^0.6.0",
-    "@discordjs/node-pre-gyp": "^0.4.5",
-    "@discordjs/rest": "^0.1.0-canary.0",
-    "@discordjs/voice": "^0.6.0",
     "ascii-table": "^0.0.9",
     "canvas": "^2.11.0",
     "common-tags": "^1.8.2",
