@@ -1,8 +1,10 @@
+const path = require('path');
 const express = require('express');
 const app = express();
-app.get('/', function(peticion, respuesta) {
-	respuesta.render('index.ejs');
+app.get('/', function(req, res) {
+	res.render('index.ejs');
 });
+app.use(express.static(path.join(__dirname, 'public')));
 const fs = require('fs');
 const ms = require('ms');
 const usersMap = new Map();
