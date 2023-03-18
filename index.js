@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 app.get('/', function(peticion, respuesta) {
-	respuesta.render('inicio.ejs');
+	respuesta.render('index.ejs');
 });
 const fs = require('fs');
 const ms = require('ms');

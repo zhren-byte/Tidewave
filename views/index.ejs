@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="title" content="Hades" />
+  <meta name="abstract" content="-" />
+  <meta name="subject" content="-" />
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Hellhades">
+  <meta property="og:title" content="Hellhades - Servidor de discord">
+  <meta property="og:description" content="Login to start sharing and connecting with your friends.">
+  <meta property="og:image" content="https://www.hellhades.tk/assets/icon.png">
+  <meta name="description" content="Servidor de discord" />
+  <meta name="keywords" content="discord, hades, hellhades, dashboard, discordbot, discord server, server discord" />
+  <meta name="author" content="Zhren" />
+  <meta name="designer" content="Zhren" />
+  <meta name="copyright" content="2022 HellHades" />
+  <meta name="language" content="es" />
+  <meta name="rating" content="general" />
+  <meta name="theme-color" content="#000" />
+  <meta name="distribution" content="global" />
+  <meta name="robots" content="index" />
+  <meta name="url" content="https://www.hellhades.tk" />
+  <meta name="identifier-URL" content="https://www.hellhades.tk" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&amp;display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/icon.png" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function() {
+      $(".disclaimer").hide(0);
+      $("#user").click(function() {
+        $("#salir").slideToggle("slow");
+      });
+    });
+  </script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <style>
+    .mode {
+      background-color: rgba(255, 255, 255, 0.192);
+      border-radius: 30px;
+      width: 58px;
+      position: relative;
+      height: 32px;
+      flex-shrink: 0;
+      margin-left: 16px;
+    }
+
+    .mode::before {
+      width: 32px;
+      height: 100%;
+      content: "";
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' stroke='white' stroke-width='2.4' fill='white' stroke-linecap='round' stroke-linejoin='round' class='css-i6dzq1' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='5'/%3E%3Cpath d='M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42'/%3E%3C/svg%3E");
+      background-size: cover;
+      left: 0;
+      position: absolute;
+      top: 0;
+      background-repeat: no-repeat;
+      background-size: 50%;
+      transition: .3s;
+      background-position: center;
+    }
+
+    .mode::after {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      right: 6px;
+      top: 6px;
+      background-color: var(--main-500);
+      content: "";
+      border-radius: 50%;
+      transition: transform .3s;
+    }
+
+    html.dark .mode {
+      background-color: rgba(0, 0, 0, 0.171);
+    }
+
+    html.dark .mode::after {
+      transform: translateX(-24px);
+    }
+
+    html.dark .mode::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' stroke='white' stroke-width='2' fill='white' stroke-linecap='round' stroke-linejoin='round' class='css-i6dzq1' viewBox='0 0 24 24'%3E%3Cpath d='M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z'/%3E%3C/svg%3E");
+      transform: translateX(26px);
+    }
+
+    /* 
+    #nav-links a::before {
+      content: "";
+      position: absolute;
+      height: 2px;
+      width: 0;
+      bottom: 10px;
+      background: rgb(106, 23, 189);
+      transition: all 0.4s ease;
+    }
+
+    #nav-links a:hover:before {
+      width: 50px;
+    } */
+  </style>
+  <title>Hades</title>
+</head>
+
+<body id="app" class="bg-neutral-900">
+  <script>
+    AOS.init({
+      duration: 1000,
+    });
+  </script>
+  <div class="aft-loader"></div>
+  <div class="loader"></div>
+  <script type="text/javascript">
+    $(window).on('load', function() {
+      $(".loader").fadeOut("slow");
+      $(".aft-loader").fadeOut("slow");
+    });
+  </script>
+  <?php include './includes/header.php'; ?>
+  <section class="text-gray-400 body-font text-center px-0 md:px-40 lg:px-52 xl:px-80 2xl:px-96">
+    <div class="container mx-auto pt-24 justify-center w-full md:w-2/3 flex flex-col mb-16 items-center text-center">
+      <h1 class="sm:text-4xl text-3xl mb-4 font-medium text-white">Hades</h1>
+      <p class="mb-8 leading-relaxed px-6">Un servidor con lo necesario para jugar con tus amigos<br> y divertirte con muchas cosas mas!</p>
+      <a href="https://discord.com/invite/rUADwcj4kf">
+        <button class="text-white inline-flex items-center bg-purple-800/50 border-0 py-2 px-8 focus:outline-none hover:bg-purple-600 rounded-lg text-lg">Entrar al servidor
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6 ml-2" viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </a>
+    </div>
+    <div class="flex flex-col w-full shadow-lg rounded-lg gap-1 p-4">
+      <div class="flex justify-between items-center flex-grow bg-opacity-0 bg-neutral-800 hover:bg-opacity-50 px-2 py-1 rounded-lg transition">
+        <p class="text-lg text-opacity-75">
+          Canales de chat
+        </p>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="text-base text-emerald-400 w-4 mr-1 svg-inline--fa fa-check fa-w-16">
+          <path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path>
+        </svg>
+      </div>
+      <div class="flex justify-between items-center flex-grow bg-opacity-0 bg-neutral-800 hover:bg-opacity-50 px-2 py-1 rounded-lg transition">
+        <p class="text-lg text-opacity-75">
+          Canales de voz
+        </p>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="text-base text-emerald-400 w-4 mr-1 svg-inline--fa fa-check fa-w-16">
+          <path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path>
+        </svg>
+      </div>
+      <div class="flex justify-between items-center flex-grow bg-opacity-0 bg-neutral-800 hover:bg-opacity-50 px-2 py-1 rounded-lg transition">
+        <p class="text-lg text-opacity-75">Roles</p>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="text-base text-emerald-400 w-4 mr-1 svg-inline--fa fa-check fa-w-16">
+          <path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path>
+        </svg>
+      </div>
+      <div class="flex justify-between items-center flex-grow bg-opacity-0 bg-neutral-800 hover:bg-opacity-50 px-2 py-1 rounded-lg transition">
+        <p class="text-lg text-opacity-75">Moderadores 24/7</p>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="text-base text-emerald-400 w-4 mr-1 svg-inline--fa fa-check fa-w-16">
+          <path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path>
+        </svg>
+      </div>
+      <div class="flex justify-between items-center flex-grow bg-opacity-0 bg-neutral-800 hover:bg-opacity-50 px-2 py-1 rounded-lg transition">
+        <p class="text-lg text-opacity-75">Amplia diversidad de gustos</p>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="text-base text-emerald-400 w-4 mr-1 svg-inline--fa fa-check fa-w-16">
+          <path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path>
+        </svg>
+      </div>
+      <div class="flex justify-between items-center flex-grow bg-opacity-0 bg-neutral-800 hover:bg-opacity-50 px-2 py-1 rounded-lg transition">
+        <p class="text-lg text-opacity-75">
+          Tienda de Rangos para el servidor
+        </p>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="text-base text-emerald-400 w-4 mr-1 svg-inline--fa fa-check fa-w-16">
+          <path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path>
+        </svg>
+      </div>
+    </div>
+  </section>
+  <section class="text-gray-400 body-font">
+    <div class="container px-5 py-24 mx-auto">
+      <div data-aos="fade-right" class="flex items-center lg:w-3/5 mx-auto border-b pb-10 mb-10 border-neutral-800 sm:flex-row flex-col">
+        <div class="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full text-purple-400 bg-neutral-800 flex-shrink-0">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="sm:w-16 sm:h-16 w-10 h-10" viewBox="0 0 24 24">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+          </svg>
+        </div>
+        <div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
+          <h2 class="text-white text-lg title-font font-medium mb-2">¿Que buscamos?</h2>
+          <p class="leading-relaxed text-base">Somos una comunidad de jugadores que buscan conseguir abrir grupos sociales a las personas que
+            tengan la necesidad que jugar con otras de una manera accesible.</p>
+        </div>
+      </div>
+      <div data-aos="fade-left" class="flex items-center lg:w-3/5 mx-auto border-b pb-10 mb-10 border-neutral-800 sm:flex-row flex-col">
+        <div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
+          <h2 class="text-white text-lg title-font font-medium mb-2">¿Que te podemos dar?</h2>
+          <p class="leading-relaxed text-base"> Todo lo necesario para conectarte con otros jugadores.
+            Y la facilidad de encontrar exactamente las personas
+            que quieran jugar con vos, sin tener que buscar en una
+            larga lista de servidores.</p>
+        </div>
+        <div class="sm:w-32 order-first sm:order-none sm:h-32 h-20 w-20 sm:ml-10 inline-flex items-center justify-center rounded-full text-purple-400 bg-neutral-800 flex-shrink-0">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="sm:w-16 sm:h-16 w-10 h-10" viewBox="0 0 24 24">
+            <circle cx="6" cy="6" r="3"></circle>
+            <circle cx="6" cy="18" r="3"></circle>
+            <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path>
+          </svg>
+        </div>
+      </div>
+      <div data-aos="fade-right" class="flex items-center lg:w-3/5 mx-auto sm:flex-row flex-col">
+        <div class="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full text-purple-400 bg-neutral-800 flex-shrink-0">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="sm:w-16 sm:h-16 w-10 h-10" viewBox="0 0 24 24">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
+          <h2 class="text-white text-lg title-font font-medium mb-2">Reglas</h2>
+          <p class="leading-relaxed text-base">Se debe ser respetuoso con todo el mundo y no tener una actitud tóxica.
+            No toleramos la discriminación o burla a otros usuarios por los
+            motivos que sean.
+            El spam está prohibido tanto dentro de Chats
+            o salas de voz.
+            No se debe entorpecer o “llenar” las salas de
+            texto con mensajes basura o spam.
+            Tampoco compartir ningún tipo de información personal
+            por el servidor, sea tuya o de otra persona.</p>
+          <!-- Modal toggle -->
+          <button onclick="openReglas()" class="mt-3 text-purple-400 inline-flex items-center" type="button" data-modal-toggle="reglasModal">
+            Ver extendido de reglas
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </button>
+
+          <!-- Main modal -->
+          <div id="reglasModal" tabindex="-1" class="bg-neutral-900/75 hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
+            <div class="relative p-4 w-full max-w-7xl h-full md:h-auto">
+              <!-- Modal content -->
+              <div class="relative bg-white rounded-lg shadow dark:bg-neutral-700">
+                <!-- Modal header -->
+                <div class="flex justify-between items-center p-5 rounded-t border-b dark:border-gray-600">
+                  <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                    Terminos de servicio
+                  </h3>
+                  <button onclick="closeReglas()" type="button" class="text-gray-400 bg-transparent hover:bg-neutral-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-neutral-600 dark:hover:text-white" data-modal-toggle="reglasModal">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                  </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-6 space-y-6 overflow-auto">
+                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    El desconocimiento de las normas no te exime de la sanción acorde.
+                    El staff se reserva el derecho de juzgar situaciones que pueden no
+                    ser tratadas con exactitud en las normas. En caso de incumplir las
+                    normas se advertirá una primera vez y a partir de la segunda
+                    podrás ser expulsado dependiendo de la gravedad de la infracción.
+                    Así mismo si la infracción es muy grave podrás ser baneado sin
+                    previo aviso.
+                  </p>
+                  <ol class="md:ml-4 list-decimal text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    <li>Ser respetuoso con todo el mundo y no tener una actitud tóxica.
+                      No toleramos la discriminación o burla a otros usuarios por los
+                      motivos que sean (Raza, sexo, religión, etc.)
+                    </li>
+                    <li>Respetar
+                      las temáticas de los canales (Esta norma se aplica a todos los
+                      canales con temática propia).
+                    </li>
+                    <li>No entorpecer o “llenar”
+                      las salas de texto con mensajes basura (La repetición continuada
+                      de emotes, mensajes sin sentido continuados, cadenas, reacciones
+                      en exceso, flood y wall texts)</li>
+                    <li> No compartir ningún tipo
+                      de información personal por el servidor, sea tuya o de otra
+                      persona. Con esto nos referimos a números de teléfono, correos
+                      electrónicos, direcciones...</li>
+                    <li>No envíes virus ni links
+                      maliciosos.</li>
+                    <li>No usar las menciones a todos los
+                      mods/ayudantes para temas “no urgentes”, por favor usar este
+                      comando cuando realmente sea necesario.</li>
+                    <li>No suplantar a
+                      nadie (Usando su imagen o su Nickname)</li>
+                    <li>El spam está
+                      prohibido tanto dentro de Chats o salas de voz. Entendemos como
+                      spam cualquier tipo de publicidad/promoción no deseada a temas
+                      ajenos al servidor o no relacionados con el de forma directa, que
+                      el video tenga que ver con la temática del canal al que se lo
+                      manda, siguiendo la norma de no publicitar. </li>
+                    <li>No enviar el
+                      siguiente contenido: Desnudos explícitos, violencia, polémicas, ni
+                      imágenes desagradables.</li>
+                  </ol>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-neutral-600">
+                  <button onclick="closeReglas()" data-modal-toggle="reglasModal" type="button" class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">I accept</button>
+                  <button onclick="closeReglas()" data-modal-toggle="reglasModal" type="button" class="text-gray-500 bg-white hover:bg-neutral-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-neutral-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-neutral-600 dark:focus:ring-gray-600">Decline</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <script>
+            function openReglas() {
+              document.getElementById("reglasModal").style.display = "flex";
+            }
+
+            function closeReglas() {
+              document.getElementById("reglasModal").style.display = "none";
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="text-gray-400 bg-neutral-800/50 body-font">
+    <div class="container px-5 py-4 mx-auto flex items-center sm:flex-row flex-col">
+      <div class="flex flex-col md:flex-row">
+        <a class="flex title-font font-medium items-center md:justify-start justify-center text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-10 h-10 text-white p-2 rounded-full" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8.217 5.243C9.145 3.988 10.171 3 11.483 3 13.96 3 16 6.153 16.001 9.907c0 2.29-.986 3.725-2.757 3.725-1.543 0-2.395-.866-3.924-3.424l-.667-1.123-.118-.197a54.944 54.944 0 0 0-.53-.877l-1.178 2.08c-1.673 2.925-2.615 3.541-3.923 3.541C1.086 13.632 0 12.217 0 9.973 0 6.388 1.995 3 4.598 3c.319 0 .625.039.924.122.31.086.611.22.913.407.577.359 1.154.915 1.782 1.714Zm1.516 2.224c-.252-.41-.494-.787-.727-1.133L9 6.326c.845-1.305 1.543-1.954 2.372-1.954 1.723 0 3.102 2.537 3.102 5.653 0 1.188-.39 1.877-1.195 1.877-.773 0-1.142-.51-2.61-2.87l-.937-1.565ZM4.846 4.756c.725.1 1.385.634 2.34 2.001A212.13 212.13 0 0 0 5.551 9.3c-1.357 2.126-1.826 2.603-2.581 2.603-.777 0-1.24-.682-1.24-1.9 0-2.602 1.298-5.264 2.846-5.264.091 0 .181.006.27.018Z" />
+          </svg>
+          <span class="ml-3 text-xl">Hades</span>
+        </a>
+        <p class="text-sm text-gray-400 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-purple-800 sm:py-2 sm:mt-0 mt-4 sm:px-3">© 2022 Hellhades —
+          <a href="https://github.com/zhren-byte" class="text-gray-500" target="_blank" rel="noopener noreferrer">@zhren-byte</a>
+        </p>
+      </div>
+      <nav class="inline-flex ml-6 sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+        <?php
+        if (isset($_SESSION['level'])) {
+          $nivel = $_SESSION['level'];
+          if ($nivel >= 100) { ?>
+            <a class="mr-5 cursor-default hover:text-white" href="./admin/propuestas">Propuestas</a>
+            <a class="mr-5 cursor-default hover:text-white" href="./admin/ideas">Ideas</a>
+            <a class="mr-5 cursor-default hover:text-white" href="./admin/usuarios">Usuarios</a>
+          <?php
+          } elseif ($nivel >= 50) { ?>
+            <a class="mr-5 cursor-default hover:text-white" href="./admin/propuestas">Propuestas</a>
+            <a class="mr-5 cursor-default hover:text-white" href="./admin/ideas">Ideas</a>
+          <?php
+          } elseif ($nivel >= 20) { ?>
+            <a class="mr-5 cursor-default hover:text-white" href="./admin/propuestas">Propuestas</a>
+        <?php
+          }
+        }
+        ?>
+      </nav>
+      <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+        <a href="https://discord.com/invite/rUADwcj4kf" class="ml-3 text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hover:text-purple-300" fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
+            <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z" />
+          </svg>
+        </a>
+      </span>
+
+    </div>
+
+  </footer>
+  <script>
+    const darkwhite = document.querySelector('#dark-white');
+
+    const userTheme = localStorage.getItem('theme');
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const themeCheck = () => {
+      if (userTheme === 'dark' || (systemTheme && !userTheme)) {
+        document.documentElement.classList.add("dark");
+      }
+    }
+
+    const themeSwitch = () => {
+      if (document.documentElement.classList.contains("dark")) {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem('theme', 'light');
+        toggleTheme();
+        return;
+      }
+      document.documentElement.classList.add("dark");
+      localStorage.setItem('theme', 'dark');
+    }
+
+    darkwhite.addEventListener('click', themeSwitch);
+
+    themeCheck();
+  </script>
+</body>
+
+</html>
