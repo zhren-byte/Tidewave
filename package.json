@@ -7,10 +7,6 @@
     "node": "18.x",
     "npm": "9.x"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zhren-byte/tidewave.git"
