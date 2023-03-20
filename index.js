@@ -1,11 +1,116 @@
 const path = require('path');
+// const bcrypt = require('bcryptjs');
+const mysql = require('mysql');
+const conn = mysql.createConnection({
+	host: `${process.env.DB_HOST}`,
+	port: `${process.env.DB_PORT}`,
+	user: `${process.env.DB_USER}`,
+	password: `${process.env.DB_PASS}`,
+	database: 'tidewave',
+});
+conn.connect(function(err) {
+	if (err) {
+		console.error('Error connecting to MySQL: ' + err.stack);
+		return;
+	}
+	console.log('connected as id ' + conn.threadId);
+});
 const express = require('express');
 const app = express();
+app.use(express.urlencoded({
+	extended: true,
+}));
 app.get('/', function(req, res) {
 	res.render('index.ejs', {
 		title : 'Hades',
 	});
 });
+app.get('/auth/', function(req, res) {
+	res.render('auth/index.ejs', {
+		title : 'Bienvenido a Hades',
+	});
+});
+app.post('/auth/signup', function(req, res) {
+	conn.query(`SELECT COUNT(*) FROM usuarios WHERE user = '${req.body.userL}'`, (err, results) => {
+		if (err) console.log(err);
+		console.log(results);
+		const id = results[0].count;
+		if (id === 0) {
+			conn.query(`INSERT INTO sugerencias (user, password) VALUES ('${req.body.userL}','${req.body.userL}')`,
+				(third, err) => {
+					if (err) console.log(err);
+					res.send(`
+						Usuario: ${third.user} \n 
+						Contraseña: ${third.password}
+					`);
+				},
+			);
+		}
+		else {
+			res.send(`
+				Usuario: Ya existe
+			`);
+		}
+	});
+	// bcrypt.hash(req.body.passwordS, 5, (err, newPass) => {
+	// 	if (err) {
+	// 		res.send(`
+	// 			Usuario: ${req.body.userS} \n
+	// 			Contraseña: ${req.body.passwordS}
+	// 		`);
+	// 	}
+	// 	else {
+	// 		res.send(`
+	// 			Usuario: ${req.body.userS} \n
+	// 			Contraseña: ${newPass}
+	// 		`);
+	// 	}
+	// });
+});
+app.post('/auth/login', function(req, res) {
+	conn.query(`SELECT COUNT(*) FROM usuarios WHERE user = ${req.body.userL} AND password = ${req.body.userL}`, (err, results) => {
+		if (err) console.log(err);
+		const id = results[0].count;
+		if (id > 0) {
+			conn.query(`SELECT user, password FROM usuarios WHERE user = ${req.body.userL} AND password = ${req.body.userL}`,
+				(third, err) => {
+					if (err) console.log(err);
+					res.send(`
+						Usuario: ${third.user} \n 
+						Contraseña: ${third.password}
+					`);
+				},
+			);
+		}
+	});
+	// const hash = '';
+	// bcrypt.compare(req.body.passwordL, hash, (err, coinciden) => {
+	// 	if (err) {
+	// 		res.send(`
+	// 			Usuario: ${req.body.userL} \n
+	// 			Contraseña: ${req.body.passwordL}
+	// 			Coinciden: ${coinciden},
+	// 		`);
+	// 	}
+	// 	else {
+	// 		res.send(`
+	// 			Usuario: ${req.body.userL} \n
+	// 			Contraseña: ${req.body.passwordL},
+	// 			Coinciden: ${coinciden},
+	// 		`);
+	// 	}
+	// });
+});
+// app.route('/book')
+// 	.get(function(req, res) {
+// 		res.send('Get a random book');
+// 	})
+// 	.post(function(req, res) {
+// 		res.send('Add a book');
+// 	})
+// 	.put(function(req, res) {
+// 		res.send('Update the book');
+// 	});
 app.use(express.static(path.join(__dirname, 'public')));
 const fs = require('fs');
 const ms = require('ms');

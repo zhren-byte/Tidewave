@@ -87,3 +87,42 @@
       transform: rotate(360deg);
     }
   }
+  .alert-login {
+    margin: 10px 0 0 0;
+    padding: 10px;
+    background-color: #f44336;
+    color: white;
+}
+
+.alert-db {
+    position: fixed;
+    top: 90%;
+    padding: 10px;
+    background-color: #f44336;
+    color: white;
+}
+
+.tab-group:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.tab-group .active a {
+    background: #b11a40;
+    color: #fff;
+}
+
+.tab-content>div:last-child {
+    display: none;
+}
+
+.top-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.top-row>div:last-child {
+    margin: 0 0 20px 0;
+}
