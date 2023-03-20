@@ -1,6 +1,7 @@
 const path = require('path');
 // const bcrypt = require('bcryptjs');
 const mysql = require('mysql');
+const cookieParser = require('cookie-parser');
 const conn = mysql.createConnection({
 	host: `${process.env.DB_HOST}`,
 	port: `${process.env.DB_PORT}`,
@@ -17,40 +18,50 @@ conn.connect(function(err) {
 });
 const express = require('express');
 const app = express();
+app.use(cookieParser());
 app.use(express.urlencoded({
 	extended: true,
 }));
 app.get('/', function(req, res) {
+	if (req.cookies.user) {
+		res.render('index.ejs', {
+			title : 'Hades',
+			user : req.cookies.user,
+		});
+		return;
+	}
 	res.render('index.ejs', {
 		title : 'Hades',
 	});
 });
 app.get('/auth/', function(req, res) {
+	if (req.cookies.user) {
+		res.render('index.ejs', {
+			title : 'Bienvenido a Hades',
+			user : req.cookies.user,
+		});
+		return;
+	}
 	res.render('auth/index.ejs', {
 		title : 'Bienvenido a Hades',
 	});
 });
 app.post('/auth/signup', function(req, res) {
-	conn.query(`SELECT COUNT(*) FROM usuarios WHERE user = '${req.body.userL}'`, (err, results) => {
+	conn.query(`SELECT COUNT(*) AS count FROM usuarios WHERE user = '${req.body.userS}'`, (err, results) => {
 		if (err) console.log(err);
-		console.log(results);
-		const id = results[0].count;
-		if (id === 0) {
-			conn.query(`INSERT INTO sugerencias (user, password) VALUES ('${req.body.userL}','${req.body.userL}')`,
-				(third, err) => {
-					if (err) console.log(err);
-					res.send(`
-						Usuario: ${third.user} \n 
-						Contraseña: ${third.password}
-					`);
-				},
-			);
-		}
-		else {
-			res.send(`
-				Usuario: Ya existe
-			`);
-		}
+		if (results[0].count != 0) return res.redirect('/auth/');
+		conn.query(`INSERT INTO usuarios (user, password) VALUES ('${req.body.userS}','${req.body.passwordS}')`,
+			(third, err) => {
+				if (err) console.log(err);
+				res.cookie('user', req.body.userS, {
+					maxAge: 60 * 60 * 1000,
+					httpOnly: true,
+					secure: true,
+					sameSite: true,
+				});
+				res.redirect('/auth');
+			},
+		);
 	});
 	// bcrypt.hash(req.body.passwordS, 5, (err, newPass) => {
 	// 	if (err) {
@@ -68,20 +79,21 @@ app.post('/auth/signup', function(req, res) {
 	// });
 });
 app.post('/auth/login', function(req, res) {
-	conn.query(`SELECT COUNT(*) FROM usuarios WHERE user = ${req.body.userL} AND password = ${req.body.userL}`, (err, results) => {
-		if (err) console.log(err);
-		const id = results[0].count;
-		if (id > 0) {
-			conn.query(`SELECT user, password FROM usuarios WHERE user = ${req.body.userL} AND password = ${req.body.userL}`,
-				(third, err) => {
-					if (err) console.log(err);
-					res.send(`
-						Usuario: ${third.user} \n 
-						Contraseña: ${third.password}
-					`);
-				},
-			);
-		}
+	conn.query(`SELECT COUNT(*) AS count FROM usuarios WHERE user = '${req.body.userL}' AND password = '${req.body.passwordL}'`, (err, results) => {
+		if (err) return console.log(err);
+		if (results[0].count === 0) return res.redirect('/auth/');
+		conn.query(`SELECT user, password FROM usuarios WHERE user = '${req.body.userL}' AND password = '${req.body.passwordL}'`,
+			(third, err) => {
+				if (err) console.log(err);
+				res.cookie('user', req.body.userL, {
+					maxAge: 60 * 60 * 1000,
+					httpOnly: true,
+					secure: true,
+					sameSite: true,
+				});
+				res.redirect('/');
+			},
+		);
 	});
 	// const hash = '';
 	// bcrypt.compare(req.body.passwordL, hash, (err, coinciden) => {
@@ -100,6 +112,10 @@ app.post('/auth/login', function(req, res) {
 	// 		`);
 	// 	}
 	// });
+});
+app.get('/auth/logout', function(req, res) {
+	res.clearCookie('user');
+	res.redirect('/');
 });
 // app.route('/book')
 // 	.get(function(req, res) {
