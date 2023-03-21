@@ -13,9 +13,10 @@ app.use(session({
 	key: 'session_cookie_name',
 	secret: 'session_cookie_secret',
 	store: new MySQLStore({
-		host:'localhost',
-		port:3306,
-		user:'root',
+		host: `186.22.246.15`,
+  port: `3306`,
+  user: `zhren`,
+	 password: `777zhren777`,
 		database:'cookie_user',
 	}),
 	resave: false,
