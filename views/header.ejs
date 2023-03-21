@@ -22,16 +22,14 @@
         </button> -->
         <% if (typeof user != 'undefined') { %>
           <a href="./profile">
-        <% } %>
-        <% if (typeof user === 'undefined') { %>
+        <%} else { %>
           <a href="./auth/">
         <% } %>
             
           <button class=" dark:text-gray-400 md:inline-flex items-center bg-neutral-100 dark:md:bg-neutral-800 border-0 md:py-1 md:px-3 focus:outline-none md:hover:bg-neutral-200 dark:md:hover:bg-neutral-700 rounded text-base md:mt-0">
             <% if (typeof user != 'undefined') { %>
-              <span><%= user %></span>
-            <% } %>
-            <% if (typeof user === 'undefined') { %>
+              <span>Profile</span>
+            <%} else { %>
               <span>Login</span>
             <% } %>
           </button>

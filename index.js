@@ -1,132 +1,184 @@
 const path = require('path');
-// const bcrypt = require('bcryptjs');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
 const mysql = require('mysql');
-const cookieParser = require('cookie-parser');
+const crypto = require('crypto');
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+const multer = require('multer');
+app.use(session({
+	key: 'session_cookie_name',
+	secret: 'session_cookie_secret',
+	store: new MySQLStore({
+		host:'localhost',
+		port:3306,
+		user:'root',
+		database:'cookie_user',
+	}),
+	resave: false,
+	saveUninitialized: false,
+	cookie:{
+		maxAge:1000 * 60 * 60 * 24,
+
+	},
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+	extended: true,
+}));
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
 const conn = mysql.createConnection({
 	host: `${process.env.DB_HOST}`,
 	port: `${process.env.DB_PORT}`,
 	user: `${process.env.DB_USER}`,
 	password: `${process.env.DB_PASS}`,
 	database: 'tidewave',
+	multipleStatements: true,
 });
-conn.connect(function(err) {
+conn.connect((err) => {
 	if (err) {
-		console.error('Error connecting to MySQL: ' + err.stack);
-		return;
+		return console.log('Evento: MySQL Coneccion Fallida');
 	}
-	console.log('connected as id ' + conn.threadId);
+	return console.log('Evento: MySQL Conectado');
 });
-const express = require('express');
-const app = express();
-app.use(cookieParser());
-app.use(express.urlencoded({
-	extended: true,
-}));
-app.get('/', function(req, res) {
-	if (req.cookies.user) {
-		res.render('index.ejs', {
-			title : 'Hades',
-			user : req.cookies.user,
-		});
-		return;
-	}
-	res.render('index.ejs', {
-		title : 'Hades',
+const customFields = {
+	usernameField:'uname',
+	passwordField:'pw',
+};
+const verifyCallback = (username, password, done) => {
+	conn.query('SELECT * FROM usuarios WHERE username = ? ', [username], function(error, results) {
+		if (error) return done(error);
+		if (results.length == 0) return done(null, false);
+		const isValid = validPassword(password, results[0].hash, results[0].salt);
+		const user = { id:results[0].id, username:results[0].username, hash:results[0].hash, salt:results[0].salt };
+		if (isValid) {
+			return done(null, user);
+		}
+		else {
+			return done(null, false);
+		}
+	});
+};
+
+const strategy = new LocalStrategy(customFields, verifyCallback);
+
+passport.use(strategy);
+passport.serializeUser((user, done) => { done(null, user.id); });
+passport.deserializeUser(function(userId, done) {
+	conn.query('SELECT * FROM usuarios WHERE id = ?', [userId], function(error, results) {
+		done(null, results[0]);
 	});
 });
-app.get('/auth/', function(req, res) {
-	if (req.cookies.user) {
-		res.render('index.ejs', {
-			title : 'Bienvenido a Hades',
-			user : req.cookies.user,
-		});
-		return;
+
+function validPassword(password, hash, salt) {
+	const hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 60, 'sha512').toString('hex');
+	return hash === hashVerify;
+}
+
+function genPassword(password) {
+	const salt = crypto.randomBytes(32).toString('hex');
+	const genhash = crypto.pbkdf2Sync(password, salt, 10000, 60, 'sha512').toString('hex');
+	return { salt:salt, hash:genhash };
+}
+
+function isAuth(req, res, next) {
+	if (req.isAuthenticated()) {
+		next();
 	}
+	else {
+		res.redirect('/notAuthorized');
+	}
+}
+
+function isAdmin(req, res, next) {
+	if (!req.isAuthenticated() && req.user.isAdmin > 0) {
+		return res.redirect('/');
+	}
+	next();
+}
+
+function userExists(req, res, next) {
+	conn.query('SELECT * FROM usuarios WHERE username = ? ', [req.body.uname], function(err, results) {
+		if (err) return console.log('Error');
+		// if (results.length > 0) return res.redirect('/userAlreadyExists');
+		if (results.length > 0) return res.redirect('/auth/');
+		next();
+	});
+}
+app.use(function(req, res, next) {
+	res.locals.title = 'Hades';
+	res.locals.user = req.user ? req.user.username : undefined;
+	next();
+});
+app.get('/', function(req, res) {
+	res.render('index.ejs');
+});
+app.get('/auth/', function(req, res) {
 	res.render('auth/index.ejs', {
 		title : 'Bienvenido a Hades',
 	});
 });
-app.post('/auth/signup', function(req, res) {
-	conn.query(`SELECT COUNT(*) AS count FROM usuarios WHERE user = '${req.body.userS}'`, (err, results) => {
-		if (err) console.log(err);
-		if (results[0].count != 0) return res.redirect('/auth/');
-		conn.query(`INSERT INTO usuarios (user, password) VALUES ('${req.body.userS}','${req.body.passwordS}')`,
-			(third, err) => {
-				if (err) console.log(err);
-				res.cookie('user', req.body.userS, {
-					maxAge: 60 * 60 * 1000,
-					httpOnly: true,
-					secure: true,
-					sameSite: true,
-				});
-				res.redirect('/auth');
-			},
-		);
+app.post('/auth/signup', userExists, (req, res) => {
+	const saltHash = genPassword(req.body.pw);
+	const salt = saltHash.salt;
+	const hash = saltHash.hash;
+	conn.query('INSERT INTO usuarios(username,hash,salt,isAdmin) VALUES (?,?,?,0) ', [req.body.uname, hash, salt], function(err) {
+		if (err) return console.log('Error');
 	});
-	// bcrypt.hash(req.body.passwordS, 5, (err, newPass) => {
-	// 	if (err) {
-	// 		res.send(`
-	// 			Usuario: ${req.body.userS} \n
-	// 			Contraseña: ${req.body.passwordS}
-	// 		`);
-	// 	}
-	// 	else {
-	// 		res.send(`
-	// 			Usuario: ${req.body.userS} \n
-	// 			Contraseña: ${newPass}
-	// 		`);
-	// 	}
-	// });
+	res.redirect('/auth/');
 });
-app.post('/auth/login', function(req, res) {
-	conn.query(`SELECT COUNT(*) AS count FROM usuarios WHERE user = '${req.body.userL}' AND password = '${req.body.passwordL}'`, (err, results) => {
+app.post('/auth/login', passport.authenticate('local', { failureRedirect:'/auth/', successRedirect:'/' }));
+
+app.get('/auth/logout', (req, res, next) => {
+	req.logout(function(err) {
+		if (err) { return next(err); }
+		res.redirect('/');
+	});
+});
+
+app.get('/profile', isAuth, (req, res) => {
+	res.render('profile.ejs', {
+		title : 'Profile',
+		image: req.user.profile ? req.user.profile : 'image',
+		rank: req.user.isAdmin == 1 ? 'Ayudante' : (req.user.isAdmin == 2 ? 'Moderador' : (req.user.isAdmin == 3 ? 'Administrador' : 'Usuario')),
+	});
+});
+
+const upload = multer({
+	dest: path.join(__dirname, './public/uploads/'),
+});
+
+app.post('/upload', upload.single('fileToUpload'), (req, res) => {
+	if (!req.file) {
+		return res.redirect('/profile');
+	}
+	const tempPath = req.file.path;
+	const targetPath = path.join(__dirname, `./public/uploads/${req.file.filename}.png`);
+	if (path.extname(req.file.originalname).toLowerCase() != '.png') {
+		return fs.unlink(tempPath, err => {
+			if (err) return console.log(err);
+			res.redirect('/profile');
+		});
+	}
+	fs.rename(tempPath, targetPath, err => {
 		if (err) return console.log(err);
-		if (results[0].count === 0) return res.redirect('/auth/');
-		conn.query(`SELECT user, password FROM usuarios WHERE user = '${req.body.userL}' AND password = '${req.body.passwordL}'`,
-			(third, err) => {
-				if (err) console.log(err);
-				res.cookie('user', req.body.userL, {
-					maxAge: 60 * 60 * 1000,
-					httpOnly: true,
-					secure: true,
-					sameSite: true,
-				});
-				res.redirect('/');
-			},
-		);
+		conn.query('UPDATE usuarios SET profile = ? WHERE username = ?', [`${req.file.filename}`, req.user.username], function(err) {
+			if (err) return console.log(err);
+		});
+		return res.redirect('/profile');
 	});
-	// const hash = '';
-	// bcrypt.compare(req.body.passwordL, hash, (err, coinciden) => {
-	// 	if (err) {
-	// 		res.send(`
-	// 			Usuario: ${req.body.userL} \n
-	// 			Contraseña: ${req.body.passwordL}
-	// 			Coinciden: ${coinciden},
-	// 		`);
-	// 	}
-	// 	else {
-	// 		res.send(`
-	// 			Usuario: ${req.body.userL} \n
-	// 			Contraseña: ${req.body.passwordL},
-	// 			Coinciden: ${coinciden},
-	// 		`);
-	// 	}
-	// });
 });
-app.get('/auth/logout', function(req, res) {
-	res.clearCookie('user');
-	res.redirect('/');
+
+app.get('/admin-route', isAdmin, (req, res) => {
+	res.send('<h1>You are admin</h1><p><a href="/logout">Logout and reload</a></p>');
 });
-// app.route('/book')
-// 	.get(function(req, res) {
-// 		res.send('Get a random book');
-// 	})
-// 	.post(function(req, res) {
-// 		res.send('Add a book');
-// 	})
-// 	.put(function(req, res) {
-// 		res.send('Update the book');
-// 	});
+
 app.use(express.static(path.join(__dirname, 'public')));
 const fs = require('fs');
 const ms = require('ms');
