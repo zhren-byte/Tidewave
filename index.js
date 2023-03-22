@@ -14,6 +14,7 @@ console.log({
   	port: `${process.env.DB_PORT}`,
   	user: `${process.env.DB_USER}`,
 	password: `${process.env.DB_PASS}`,
+	tok: `${process.env.TOKEN}`,
 	database:'cookie_user',
 	});
 app.use(session({
