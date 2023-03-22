@@ -9,7 +9,6 @@ const crypto = require('crypto');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const multer = require('multer');
-console.log(
 app.use(session({
 	key: 'session_cookie_name',
 	secret: 'session_cookie_secret',
