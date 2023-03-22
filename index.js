@@ -13,17 +13,16 @@ app.use(session({
 	key: 'session_cookie_name',
 	secret: 'session_cookie_secret',
 	store: new MySQLStore({
-		host: `186.22.246.15`,
-  port: `3306`,
-  user: `zhren`,
-	 password: `777zhren777`,
-		database:'cookie_user',
+	host: `process.env.DB_HOST`,
+  	port: `process.env.DB_PORT`,
+  	user: `process.env.DB_USER`,
+	password: `process.env.DB_PASS`,
+	database:'cookie_user',
 	}),
 	resave: false,
 	saveUninitialized: false,
 	cookie:{
 		maxAge:1000 * 60 * 60 * 24,
-
 	},
 }));
 app.use(passport.initialize());
@@ -35,10 +34,10 @@ app.use(bodyParser.urlencoded({
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 const conn = mysql.createConnection({
-	host: `186.22.246.15`,
-	port: `3306`,
-	user: `zhren`,
-	password: `777zhren777`,
+	host: `process.env.DB_HOST`,
+  	port: `process.env.DB_PORT`,
+  	user: `process.env.DB_USER`,
+	password: `process.env.DB_PASS`,
 	database: 'tidewave',
 	multipleStatements: true,
 });
