@@ -9,6 +9,13 @@ const crypto = require('crypto');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const multer = require('multer');
+console.log({
+	host: `${process.env.DB_HOST}`,
+  	port: `${process.env.DB_PORT}`,
+  	user: `${process.env.DB_USER}`,
+	password: `${process.env.DB_PASS}`,
+	database:'cookie_user',
+	});
 app.use(session({
 	key: 'session_cookie_name',
 	secret: 'session_cookie_secret',
