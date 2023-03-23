@@ -1,5 +1,6 @@
 const path = require('path');
 const passport = require('passport');
+const dotenv = require('dotenv');
 const LocalStrategy = require('passport-local').Strategy;
 const express = require('express');
 const app = express();
@@ -9,13 +10,15 @@ const crypto = require('crypto');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const multer = require('multer');
+dotenv.config();
 app.use(session({
 	key: 'session_cookie_name',
 	secret: 'session_cookie_secret',
 	store: new MySQLStore({
-		host:'localhost',
-		port:3306,
-		user:'root',
+		host: `${process.env.DB_HOST}`,
+		port: process.env.DB_PORT,
+		user: `${process.env.DB_USER}`,
+		password: `${process.env.DB_PASS}`,
 		database:'cookie_user',
 	}),
 	resave: false,
@@ -34,10 +37,10 @@ app.use(bodyParser.urlencoded({
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 const conn = mysql.createConnection({
-	host: `186.22.246.15`,
-	port: `3306`,
-	user: `zhren`,
-	password: `777zhren777`,
+	host: `${process.env.DB_HOST}`,
+	port: process.env.DB_PORT,
+	user: `${process.env.DB_USER}`,
+	password: `${process.env.DB_PASS}`,
 	database: 'tidewave',
 	multipleStatements: true,
 });
@@ -363,7 +366,6 @@ client.on('messageCreate', async (message) => {
 		});
 	}
 });
-
 app.listen(3030, () => {
 	client.mongoose.init();
 	client.login(process.env.TOKEN);
